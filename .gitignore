@@ -31,3 +31,9 @@ coverage/
 # Build outputs
 dist/
 build/
+
+# Ignore documentation files
+*.docx
+*.txt
+requirements.txt
+"non project related/"

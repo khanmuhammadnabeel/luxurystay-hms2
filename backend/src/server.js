@@ -1,6 +1,14 @@
 require('dotenv').config();
 const connectDB = require('./config/db');
 const app = require('./app');
+const http = require('http');
+const { Server } = require('socket.io');
+
+/**
+ * Exposed socket.io instance.
+ * Use `getIO()` to obtain the initialized io after server start.
+ */
+let io;
 
 const PORT = process.env.PORT || 5000;
 const HOST = process.env.HOST || 'localhost';
@@ -12,7 +20,35 @@ const startServer = async () => {
     
     await connectDB();
     
-    const server = app.listen(PORT, HOST, () => {
+    const httpServer = http.createServer(app);
+
+    // initialize Socket.io with the HTTP server
+io = new Server(httpServer, {
+  cors: {
+    origin: process.env.NODE_ENV === 'production' 
+      ? process.env.FRONTEND_URL || 'http://localhost:3000'
+      : 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+    credentials: true
+  }
+});
+
+// Initialize socket helper
+const socketHelper = require('./utils/socketHelper');
+socketHelper.setIO(io);
+    
+
+    // initialize application-level socket event handlers (defined in src/socket/socketServer.js)
+    try {
+      const socketServer = require('./socket/socketServer');
+      if (socketServer && typeof socketServer.initializeSocketEvents === 'function') {
+        socketServer.initializeSocketEvents(io);  // NEEDS io PARAMETER!
+      }
+    } catch (err) {
+      console.error('Failed to initialize socket events:', err);
+    }
+
+    httpServer.listen(PORT, HOST, () => {
       console.log(`Server running at http://${HOST}:${PORT}`);
       console.log(`Health check: http://${HOST}:${PORT}/api/health`);
       console.log(`API Documentation: http://${HOST}:${PORT}/`);
@@ -20,8 +56,16 @@ const startServer = async () => {
 
     const shutdown = () => {
       console.log('Received shutdown signal');
-      server.close(() => {
+      httpServer.close(() => {
         console.log('Server closed gracefully');
+        if (io) {
+          try {
+            io.close();
+            console.log('Socket.io server closed');
+          } catch (err) {
+            console.error('Error closing Socket.io server:', err);
+          }
+        }
         process.exit(0);
       });
     };
@@ -45,3 +89,6 @@ const startServer = async () => {
 };
 
 startServer();
+
+module.exports.getIO = () => io;
+module.exports.startServer = startServer;
