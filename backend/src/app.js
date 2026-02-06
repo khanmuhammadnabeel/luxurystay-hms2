@@ -8,6 +8,7 @@ const roomRoutes = require('./routes/room.routes');
 const healthRoutes = require('./routes/health.routes');
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
+const invoiceRoutes = require('./routes/invoice.routes');
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/rooms', roomRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/invoices', invoiceRoutes); 
 
 app.use((req, res) => {
   res.status(404).json({ 
