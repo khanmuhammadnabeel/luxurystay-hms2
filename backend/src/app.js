@@ -9,6 +9,9 @@ const healthRoutes = require('./routes/health.routes');
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
 const invoiceRoutes = require('./routes/invoice.routes');
+const paymentRoutes = require('./routes/payment.routes');
+const housekeepingRoutes = require('./routes/housekeeping.routes');
+const maintenanceRoutes = require('./routes/maintenance.routes'); 
 
 const app = express();
 
@@ -18,7 +21,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
+// Root endpoint
 app.get('/', (req, res) => {
   res.json({ 
     message: 'LuxuryStay Hotel Management System API',
@@ -28,13 +31,18 @@ app.get('/', (req, res) => {
   });
 });
 
+// API Routes
 app.use('/api/health', healthRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/rooms', roomRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/invoices', invoiceRoutes); 
+app.use('/api/payments', paymentRoutes);
+app.use('/api/housekeeping', housekeepingRoutes);
+app.use('/api/maintenance', maintenanceRoutes);
 
+// 404 handler
 app.use((req, res) => {
   res.status(404).json({ 
     error: 'Endpoint not found',
@@ -43,6 +51,7 @@ app.use((req, res) => {
   });
 });
 
+// Global error handler
 app.use((err, req, res, next) => {
   console.error('Server error:', err);
   res.status(500).json({ 
