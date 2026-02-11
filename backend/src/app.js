@@ -12,6 +12,10 @@ const invoiceRoutes = require('./routes/invoice.routes');
 const paymentRoutes = require('./routes/payment.routes');
 const housekeepingRoutes = require('./routes/housekeeping.routes');
 const maintenanceRoutes = require('./routes/maintenance.routes'); 
+const servicesRoutes = require('./routes/services.routes');
+const serviceOrdersRoutes = require('./routes/serviceOrders.routes');
+const analyticsRoutes = require('./routes/analytics.routes');
+const adminRoutes = require('./routes/admin.routes');
 
 const app = express();
 
@@ -41,6 +45,10 @@ app.use('/api/invoices', invoiceRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/housekeeping', housekeepingRoutes);
 app.use('/api/maintenance', maintenanceRoutes);
+app.use('/api/services', servicesRoutes);
+app.use('/api/service-orders', serviceOrdersRoutes);
+app.use('/api/analytics', analyticsRoutes);
+app.use('/api/admin', adminRoutes);
 
 // 404 handler
 app.use((req, res) => {
