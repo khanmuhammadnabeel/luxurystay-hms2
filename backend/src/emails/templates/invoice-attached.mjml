@@ -1,0 +1,157 @@
+<mjml>
+  <mj-body background-color="#f5f5f5">
+    <!-- Header -->
+    <mj-section background-color="#1a1a1a" padding="20px 0">
+      <mj-column>
+        <mj-image src="{{hotelLogo}}" alt="{{hotelName}}" width="180px" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Invoice Banner -->
+    <mj-section background-color="#d4af37" padding="30px 20px">
+      <mj-column>
+        <mj-text font-size="24px" color="#1a1a1a" font-weight="bold" align="center" padding="0">
+          Invoice Attached
+        </mj-text>
+        <mj-text font-size="14px" color="#1a1a1a" align="center" padding="10px 0 0 0">
+          Your detailed invoice is ready for download
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Guest Greeting -->
+    <mj-section background-color="#ffffff" padding="40px 20px">
+      <mj-column>
+        <mj-text font-size="16px" color="#1a1a1a" font-weight="bold" padding="0 0 15px 0">
+          Dear {{guestName}},
+        </mj-text>
+        <mj-text font-size="14px" color="#555555" line-height="1.6">
+          Your invoice for your stay at {{hotelName}} is now available for download. Please find the attached invoice details below.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Invoice Summary -->
+    <mj-section background-color="#ffffff" padding="20px">
+      <mj-column>
+        <mj-text font-size="14px" color="#1a1a1a" font-weight="bold" padding="0 0 15px 0">
+          Invoice Summary
+        </mj-text>
+        
+        <mj-table cellpadding="10px" border="1px solid #d4af37">
+          <tr style="background-color: #f9f9f9; border-bottom: 2px solid #d4af37;">
+            <td style="color: #1a1a1a; font-weight: bold;">Detail</td>
+            <td style="color: #1a1a1a; font-weight: bold;">Information</td>
+          </tr>
+          <tr>
+            <td style="color: #555555;">Invoice Number</td>
+            <td style="color: #d4af37; font-weight: bold;">{{invoiceNumber}}</td>
+          </tr>
+          <tr style="background-color: #f9f9f9;">
+            <td style="color: #555555;">Total Amount</td>
+            <td style="color: #d4af37; font-weight: bold; font-size: 16px;">{{totalAmount}}</td>
+          </tr>
+          <tr>
+            <td style="color: #555555;">Due Date</td>
+            <td style="color: #1a1a1a;">{{dueDate}}</td>
+          </tr>
+        </mj-table>
+      </mj-column>
+    </mj-section>
+
+    <!-- Download Invoice CTA -->
+    <mj-section background-color="#ffffff" padding="30px 20px">
+      <mj-column>
+        <mj-button background-color="#d4af37" color="#1a1a1a" font-weight="bold" href="{{downloadLink}}" padding="15px" width="100%">
+          📥 Download Invoice (PDF)
+        </mj-button>
+      </mj-column>
+    </mj-section>
+
+    <!-- Payment Instructions -->
+    <mj-section background-color="#ffffff" padding="20px">
+      <mj-column>
+        <mj-text font-size="14px" color="#1a1a1a" font-weight="bold" padding="0 0 15px 0">
+          Payment Instructions
+        </mj-text>
+        
+        <mj-text font-size="12px" color="#555555" line-height="1.6" padding="0 0 15px 0">
+          <strong>Payment Methods Accepted:</strong><br/>
+          • Credit Card (Visa, Mastercard, American Express)<br/>
+          • Debit Card<br/>
+          • Bank Transfer<br/>
+          • Digital Wallets
+        </mj-text>
+
+        <mj-text font-size="12px" color="#555555" line-height="1.6" padding="0 0 15px 0">
+          <strong>Bank Transfer Details:</strong><br/>
+          Please refer to the invoice PDF for complete banking information including account number, IBAN, and routing codes.
+        </mj-text>
+
+        <mj-text font-size="12px" color="#555555">
+          <strong>Payment Due By:</strong> {{dueDate}}<br/>
+          Please include the invoice number {{invoiceNumber}} as reference when making payment.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- PDF Attachment Info -->
+    <mj-section background-color="#fffaf0" padding="20px" border-left="4px solid #d4af37">
+      <mj-column>
+        <mj-text font-size="13px" color="#d4af37" font-weight="bold" padding="0 0 10px 0">
+          📎 Invoice PDF
+        </mj-text>
+        <mj-text font-size="12px" color="#555555" line-height="1.5">
+          The invoice is attached to this email for your records. You can also download the latest copy using the button above.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- What's Included -->
+    <mj-section background-color="#ffffff" padding="30px 20px">
+      <mj-column>
+        <mj-text font-size="14px" color="#1a1a1a" font-weight="bold" padding="0 0 15px 0">
+          Invoice Details Include
+        </mj-text>
+        <mj-text font-size="12px" color="#555555" padding="5px 0">
+          ✓ Complete stay summary<br/>
+          ✓ Itemized charges breakdown<br/>
+          ✓ Applied discounts and promos<br/>
+          ✓ Taxes and service fees<br/>
+          ✓ Payment terms and conditions<br/>
+          ✓ Company tax identification numbers
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Contact Information -->
+    <mj-section background-color="#ffffff" padding="30px 20px" border-top="2px solid #e0e0e0">
+      <mj-column>
+        <mj-text font-size="12px" color="#1a1a1a" font-weight="bold" padding="0 0 10px 0">
+          Questions About Your Invoice?
+        </mj-text>
+        <mj-text font-size="12px" color="#555555" padding="0 0 5px 0">
+          📧 {{hotelEmail}}
+        </mj-text>
+        <mj-text font-size="12px" color="#555555" padding="0 0 5px 0">
+          📞 {{hotelPhone}}
+        </mj-text>
+        <mj-text font-size="12px" color="#555555">
+          💬 Visit our support portal for billing inquiries
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Footer -->
+    <mj-section background-color="#1a1a1a" padding="20px">
+      <mj-column>
+        <mj-text font-size="11px" color="#999999" align="center">
+          © {{year}} {{hotelName}}. All rights reserved.
+        </mj-text>
+        <mj-text font-size="11px" color="#999999" align="center" padding="5px 0 0 0">
+          This is an automated invoice notification. Please do not reply directly.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

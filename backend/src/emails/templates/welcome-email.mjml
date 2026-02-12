@@ -1,0 +1,198 @@
+<mjml>
+  <mj-body background-color="#f5f5f5">
+    <!-- Header -->
+    <mj-section background-color="#1a1a1a" padding="20px 0">
+      <mj-column>
+        <mj-image src="{{hotelLogo}}" alt="{{hotelName}}" width="180px" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Welcome Banner -->
+    <mj-section background-color="#d4af37" padding="40px 20px">
+      <mj-column>
+        <mj-text font-size="28px" color="#1a1a1a" font-weight="bold" align="center" padding="0">
+          Welcome to {{hotelName}}!
+        </mj-text>
+        <mj-text font-size="14px" color="#1a1a1a" align="center" padding="10px 0 0 0">
+          Your account is ready to go
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Personal Greeting -->
+    <mj-section background-color="#ffffff" padding="40px 20px">
+      <mj-column>
+        <mj-text font-size="16px" color="#1a1a1a" font-weight="bold" padding="0 0 15px 0">
+          Hello {{guestName}},
+        </mj-text>
+        
+        <mj-text font-size="14px" color="#555555" line-height="1.6" padding="0 0 15px 0">
+          Welcome to our luxury hotel family! We're thrilled to have you join us. Your account has been created and is ready to use. Start exploring our world of elegance, comfort, and exceptional service.
+        </mj-text>
+
+        <mj-text font-size="14px" color="#555555" line-height="1.6">
+          Whether you're planning your first stay or your tenth visit, we're committed to making every moment memorable.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Login CTA -->
+    <mj-section background-color="#ffffff" padding="30px 20px">
+      <mj-column>
+        <mj-button background-color="#d4af37" color="#1a1a1a" font-weight="bold" href="{{loginLink}}" padding="15px" width="100%">
+          Log In to Your Account
+        </mj-button>
+      </mj-column>
+    </mj-section>
+
+    <!-- Loyalty Program -->
+    <mj-section background-color="#fffaf0" padding="30px 20px" border-left="4px solid #d4af37">
+      <mj-column>
+        <mj-text font-size="16px" color="#1a1a1a" font-weight="bold" align="center" padding="0 0 20px 0">
+          ⭐ Loyalty Program Benefits
+        </mj-text>
+
+        <mj-table cellpadding="12px" width="100%">
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="color: #d4af37; font-weight: bold; font-size: 20px; width: 20%;">🎁</td>
+            <td style="color: #1a1a1a;">
+              <strong>Reward Points</strong><br/>
+              <span style="font-size: 12px; color: #555555;">Earn points on every booking</span>
+            </td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="color: #d4af37; font-weight: bold; font-size: 20px;">💎</td>
+            <td style="color: #1a1a1a;">
+              <strong>Exclusive Perks</strong><br/>
+              <span style="font-size: 12px; color: #555555;">Early check-in & late check-out</span>
+            </td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="color: #d4af37; font-weight: bold; font-size: 20px;">🏆</td>
+            <td style="color: #1a1a1a;">
+              <strong>VIP Upgrades</strong><br/>
+              <span style="font-size: 12px; color: #555555;">Room upgrades & special treatment</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="color: #d4af37; font-weight: bold; font-size: 20px;">🎉</td>
+            <td style="color: #1a1a1a;">
+              <strong>Birthday Bonuses</strong><br/>
+              <span style="font-size: 12px; color: #555555;">Special offers on your birthday month</span>
+            </td>
+          </tr>
+        </mj-table>
+      </mj-column>
+    </mj-section>
+
+    <!-- Special Welcome Offer -->
+    <mj-section background-color="#ffffff" padding="30px 20px">
+      <mj-column>
+        <mj-text font-size="16px" color="#1a1a1a" font-weight="bold" align="center" padding="0 0 15px 0">
+          🎉 Welcome Offer
+        </mj-text>
+        
+        <mj-text font-size="14px" color="#d4af37" font-weight="bold" align="center" padding="0 0 10px 0">
+          15% Discount on Your First Booking
+        </mj-text>
+
+        <mj-text font-size="12px" color="#555555" align="center" line-height="1.6" padding="0 0 15px 0">
+          Use code <strong style="color: #1a1a1a;">WELCOME15</strong> when booking your first stay and enjoy 15% off room rates.
+        </mj-text>
+
+        <mj-text font-size: 11px; color="#999999" align="center">
+          Valid for 30 days from account creation
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Mobile App Download -->
+    <mj-section background-color="#ffffff" padding="30px 20px" border-top="2px solid #e0e0e0">
+      <mj-column>
+        <mj-text font-size="14px" color="#1a1a1a" font-weight="bold" padding="0 0 20px 0" align="center">
+          📱 Download Our Mobile App
+        </mj-text>
+
+        <mj-table align="center" cellpadding="15px">
+          <tr align="center">
+            <td style="width: 50%;">
+              <mj-button background-color="#1a1a1a" color="#ffffff" text-transform="uppercase" href="{{iosAppLink}}" padding="10px">
+                iOS App
+              </mj-button>
+            </td>
+            <td style="width: 50%;">
+              <mj-button background-color="#1a1a1a" color="#ffffff" text-transform="uppercase" href="{{androidAppLink}}" padding="10px">
+                Android App
+              </mj-button>
+            </td>
+          </tr>
+        </mj-table>
+
+        <mj-text font-size="12px" color="#555555" align="center" padding="15px 0 0 0">
+          Book on the go, receive exclusive mobile-only offers, and manage your stay anytime, anywhere.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Quick Links -->
+    <mj-section background-color="#ffffff" padding="30px 20px">
+      <mj-column>
+        <mj-text font-size="13px" color="#1a1a1a" font-weight="bold" padding="0 0 15px 0">
+          Quick Links
+        </mj-text>
+
+        <mj-table cellpadding="8px">
+          <tr>
+            <td style="color: #d4af37;">→</td>
+            <td><mj-link href="{{hotelWebsite}}/about" color="#1a1a1a" text-decoration="none">About {{hotelName}}</mj-link></td>
+          </tr>
+          <tr>
+            <td style="color: #d4af37;">→</td>
+            <td><mj-link href="{{hotelWebsite}}/rooms" color="#1a1a1a" text-decoration="none">Explore Our Rooms</mj-link></td>
+          </tr>
+          <tr>
+            <td style="color: #d4af37;">→</td>
+            <td><mj-link href="{{hotelWebsite}}/facilities" color="#1a1a1a" text-decoration="none">Facilities & Amenities</mj-link></td>
+          </tr>
+          <tr>
+            <td style="color: #d4af37;">→</td>
+            <td><mj-link href="{{hotelWebsite}}/dining" color="#1a1a1a" text-decoration="none">Dining & Restaurants</mj-link></td>
+          </tr>
+        </mj-table>
+      </mj-column>
+    </mj-section>
+
+        <!-- Contact Information -->
+    <mj-section background-color="#ffffff" padding="30px 20px" border-top="2px solid #e0e0e0">
+      <mj-column>
+        <mj-text font-size="12px" color="#1a1a1a" font-weight="bold" padding="0 0 10px 0">
+          Get in Touch
+        </mj-text>
+        <mj-text font-size="12px" color="#555555" padding="0 0 3px 0">
+          📧 <a href="mailto:{{hotelEmail}}" style="color: #d4af37; text-decoration: none;">{{hotelEmail}}</a>
+        </mj-text>
+        <mj-text font-size="12px" color="#555555" padding="0 0 3px 0">
+          📞 <a href="tel:{{hotelPhone}}" style="color: #d4af37; text-decoration: none;">{{hotelPhone}}</a>
+        </mj-text>
+        <mj-text font-size="12px" color="#555555" padding="0 0 3px 0">
+          💬 <a href="{{hotelWebsite}}/support" style="color: #d4af37; text-decoration: none;">24/7 Live Chat</a>
+        </mj-text>
+        <mj-text font-size="12px" color="#555555" padding="0 0 3px 0">
+          🌐 <a href="{{hotelWebsite}}" style="color: #d4af37; text-decoration: none;">{{hotelWebsite}}</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Footer -->
+    <mj-section background-color="#1a1a1a" padding="20px">
+      <mj-column>
+        <mj-text font-size="11px" color="#999999" align="center">
+          © {{year}} {{hotelName}}. All rights reserved.
+        </mj-text>
+        <mj-text font-size="11px" color="#999999" align="center" padding="5px 0 0 0">
+          This is an automated welcome email. Please do not reply directly.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

@@ -1,0 +1,176 @@
+<mjml>
+  <mj-body background-color="#f5f5f5">
+    <!-- Header -->
+    <mj-section background-color="#1a1a1a" padding="20px 0">
+      <mj-column>
+        <mj-image src="{{hotelLogo}}" alt="{{hotelName}}" width="180px" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Cancellation Banner -->
+    <mj-section background-color="#c44444" padding="30px 20px">
+      <mj-column>
+        <mj-text font-size="24px" color="#ffffff" font-weight="bold" align="center" padding="0">
+          Booking Cancelled
+        </mj-text>
+        <mj-text font-size="14px" color="#ffffff" align="center" padding="10px 0 0 0">
+          Your reservation has been successfully cancelled
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Guest Greeting -->
+    <mj-section background-color="#ffffff" padding="40px 20px">
+      <mj-column>
+        <mj-text font-size="16px" color="#1a1a1a" font-weight="bold" padding="0 0 15px 0">
+          Dear {{guestName}},
+        </mj-text>
+        <mj-text font-size="14px" color="#555555" line-height="1.6">
+          We have successfully processed the cancellation of your reservation with {{hotelName}}. Below you'll find the details of your cancelled booking and refund information.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Cancellation Summary -->
+    <mj-section background-color="#ffffff" padding="20px">
+      <mj-column>
+        <mj-text font-size="14px" color="#1a1a1a" font-weight="bold" padding="0 0 15px 0">
+          Cancelled Booking Details
+        </mj-text>
+        
+        <mj-table cellpadding="10px" border="1px solid #c44444">
+          <tr style="background-color: #f9f9f9; border-bottom: 2px solid #c44444;">
+            <td style="color: #1a1a1a; font-weight: bold;">Detail</td>
+            <td style="color: #1a1a1a; font-weight: bold;">Information</td>
+          </tr>
+          <tr>
+            <td style="color: #555555;">Room Number</td>
+            <td style="color: #1a1a1a;">{{roomNumber}}</td>
+          </tr>
+          <tr style="background-color: #f9f9f9;">
+            <td style="color: #555555;">Original Check-in</td>
+            <td style="color: #1a1a1a;">{{checkInDate}}</td>
+          </tr>
+          <tr>
+            <td style="color: #555555;">Original Check-out</td>
+            <td style="color: #1a1a1a;">{{checkOutDate}}</td>
+          </tr>
+        </mj-table>
+      </mj-column>
+    </mj-section>
+
+    <!-- Refund Information -->
+    <mj-section background-color="#e8f5e9" padding="20px" border-left="4px solid #2d7a4d">
+      <mj-column>
+        <mj-text font-size="14px" color="#2d7a4d" font-weight="bold" padding="0 0 15px 0">
+          ✓ Refund Status
+        </mj-text>
+        
+        <mj-table cellpadding="10px" width="100%">
+          <tr style="border-bottom: 1px solid #c9e6ca;">
+            <td style="color: #555555;">Refund Amount</td>
+            <td style="color: #2d7a4d; font-weight: bold; font-size: 16px;">{{refundAmount}}</td>
+          </tr>
+          <tr style="background-color: #f1f8f4;">
+            <td style="color: #555555;">Processing Time</td>
+            <td style="color: #1a1a1a;">3-5 business days</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #c9e6ca;">
+            <td style="color: #555555;">Refund Method</td>
+            <td style="color: #1a1a1a;">Original payment method</td>
+          </tr>
+        </mj-table>
+
+        <mj-text font-size="12px" color="#555555" padding="15px 0 0 0">
+          The refund will be processed to your original payment method within 3-5 business days. Depending on your bank, it may take an additional 1-2 business days to appear in your account.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Cancellation Policy -->
+    <mj-section background-color="#ffffff" padding="20px">
+      <mj-column>
+        <mj-text font-size="14px" color="#1a1a1a" font-weight="bold" padding="0 0 15px 0">
+          Cancellation Policy Applied
+        </mj-text>
+        <mj-text font-size="12px" color="#555555" line-height="1.6">
+          {{cancellationPolicy}}
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Future Booking Offer -->
+    <mj-section background-color="#fffaf0" padding="25px 20px" border-radius="5px">
+      <mj-column>
+        <mj-text font-size="16px" color="#1a1a1a" font-weight="bold" align="center" padding="0 0 15px 0">
+          📅 We'd Love to See You Again!
+        </mj-text>
+        
+        <mj-text font-size="13px" color="#d4af37" font-weight="bold" align="center" padding="0 0 10px 0">
+          10% Discount on Your Next Booking
+        </mj-text>
+
+        <mj-text font-size="12px" color="#555555" align="center" line-height="1.6" padding="0 0 15px 0">
+          We appreciate your understanding. Use code <strong style="color: #1a1a1a;">COMEBACK10</strong> when you rebook with us and enjoy 10% off your next stay.
+        </mj-text>
+
+        <mj-text font-size="11px" color="#999999" align="center">
+          Valid for 90 days from cancellation
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Important Information -->
+    <mj-section background-color="#ffffff" padding="30px 20px">
+      <mj-column>
+        <mj-text font-size="14px" color="#1a1a1a" font-weight="bold" padding="0 0 15px 0">
+          Important Information
+        </mj-text>
+        
+        <mj-text font-size="12px" color="#555555" line-height="1.6" padding="0 0 15px 0">
+          <strong>Booking Reference:</strong> {{bookingReference}}<br/>
+Keep this for your records in case you need to follow up on your refund status. You can reference this if you have any questions about your cancellation.
+        </mj-text>
+
+        <mj-text font-size="12px" color="#555555">
+          <strong>Outstanding Items:</strong> If you have any items left at the hotel or have outstanding charges, please contact us immediately.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+        <!-- Contact Information -->
+    <mj-section background-color="#ffffff" padding="30px 20px" border-top="2px solid #e0e0e0">
+      <mj-column>
+        <mj-text font-size="12px" color="#1a1a1a" font-weight="bold" padding="0 0 15px 0">
+          Questions About Your Cancellation?
+        </mj-text>
+        <mj-text font-size="12px" color="#555555" padding="0 0 8px 0">
+          We're sorry to see you go. If you'd like to discuss your cancellation or have any concerns:
+        </mj-text>
+        <mj-text font-size="12px" color="#555555" padding="0 0 5px 0">
+          📧 <a href="mailto:{{hotelEmail}}" style="color: #d4af37; text-decoration: none;">{{hotelEmail}}</a>
+        </mj-text>
+        <mj-text font-size="12px" color="#555555" padding="0 0 5px 0">
+          📞 <a href="tel:{{hotelPhone}}" style="color: #d4af37; text-decoration: none;">{{hotelPhone}}</a>
+        </mj-text>
+        <mj-text font-size="12px" color="#555555" padding="0 0 5px 0">
+          💬 <a href="{{hotelWebsite}}/support" style="color: #d4af37; text-decoration: none;">
+     24/7 Live Chat
+   </a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Footer -->
+    <mj-section background-color="#1a1a1a" padding="20px">
+      <mj-column>
+        <mj-text font-size="11px" color="#999999" align="center">
+          © {{year}} {{hotelName}}. All rights reserved.
+        </mj-text>
+        <mj-text font-size="11px" color="#999999" align="center" padding="5px 0 0 0">
+          This is an automated cancellation confirmation. Please do not reply directly.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

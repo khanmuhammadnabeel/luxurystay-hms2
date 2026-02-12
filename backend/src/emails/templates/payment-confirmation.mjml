@@ -1,0 +1,152 @@
+<mjml>
+  <mj-body background-color="#f5f5f5">
+    <!-- Header -->
+    <mj-section background-color="#1a1a1a" padding="20px 0">
+      <mj-column>
+        <mj-image src="{{hotelLogo}}" alt="{{hotelName}}" width="180px" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Success Banner -->
+    <mj-section background-color="#2d7a4d" padding="30px 20px">
+      <mj-column>
+        <mj-text font-size="24px" color="#ffffff" font-weight="bold" align="center" padding="0">
+          ✓ Payment Confirmed
+        </mj-text>
+        <mj-text font-size="14px" color="#ffffff" align="center" padding="10px 0 0 0">
+          Your payment has been successfully processed
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Guest Greeting -->
+    <mj-section background-color="#ffffff" padding="40px 20px">
+      <mj-column>
+        <mj-text font-size="16px" color="#1a1a1a" font-weight="bold" padding="0 0 15px 0">
+          Dear {{guestName}},
+        </mj-text>
+        <mj-text font-size="14px" color="#555555" line-height="1.6">
+          Thank you for your payment! We have successfully received your payment for your upcoming stay at {{hotelName}}. Your reservation is now confirmed and secured.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Payment Summary -->
+    <mj-section background-color="#ffffff" padding="20px">
+      <mj-column>
+        <mj-text font-size="14px" color="#1a1a1a" font-weight="bold" padding="0 0 15px 0">
+          Payment Summary
+        </mj-text>
+        
+        <mj-table cellpadding="10px" border="1px solid #d4af37">
+          <tr style="background-color: #f9f9f9; border-bottom: 2px solid #d4af37;">
+            <td style="color: #1a1a1a; font-weight: bold;">Detail</td>
+            <td style="color: #1a1a1a; font-weight: bold;">Information</td>
+          </tr>
+          <tr>
+            <td style="color: #555555;">Transaction ID</td>
+            <td style="color: #d4af37; font-weight: bold;">{{transactionId}}</td>
+          </tr>
+          <tr style="background-color: #f9f9f9;">
+            <td style="color: #555555;">Payment Date</td>
+            <td style="color: #1a1a1a;">{{date}}</td>
+          </tr>
+          <tr>
+            <td style="color: #555555;">Payment Method</td>
+            <td style="color: #1a1a1a;">{{paymentMethod}}</td>
+          </tr>
+          <tr style="background-color: #f9f9f9;">
+            <td style="color: #555555;">Amount Paid</td>
+            <td style="color: #2d7a4d; font-weight: bold; font-size: 16px;">{{amount}}</td>
+          </tr>
+        </mj-table>
+      </mj-column>
+    </mj-section>
+
+    <!-- Booking Details -->
+    <mj-section background-color="#ffffff" padding="20px">
+      <mj-column>
+        <mj-text font-size="14px" color="#1a1a1a" font-weight="bold" padding="0 0 15px 0">
+          Booking Details
+        </mj-text>
+        
+        <mj-table cellpadding="10px">
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="color: #555555;">Booking Reference</td>
+            <td style="color: #d4af37; font-weight: bold;">{{bookingReference}}</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0; background-color: #f9f9f9;">
+            <td style="color: #555555;">Hotel</td>
+            <td style="color: #1a1a1a;">{{hotelName}}</td>
+          </tr>
+        </mj-table>
+      </mj-column>
+    </mj-section>
+
+    <!-- Payment Status Alert -->
+    <mj-section background-color="#e8f5e9" padding="20px" border-left="4px solid #2d7a4d">
+      <mj-column>
+        <mj-text font-size="13px" color="#2d7a4d" font-weight="bold" padding="0 0 10px 0">
+          ✓ Payment Status: Confirmed
+        </mj-text>
+        <mj-text font-size="12px" color="#555555" line-height="1.5">
+          Your payment has been securely processed and confirmed. You will receive a further confirmation when your room is ready for check-in.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Next Steps -->
+    <mj-section background-color="#ffffff" padding="30px 20px">
+      <mj-column>
+        <mj-text font-size="14px" color="#1a1a1a" font-weight="bold" padding="0 0 15px 0">
+          What's Next?
+        </mj-text>
+        <mj-text font-size="12px" color="#555555" padding="0 0 8px 0">
+          1. You will receive a check-in reminder 48 hours before your arrival<br/>
+          2. Download our mobile app for easier check-in and hotel services<br/>
+          3. Contact us if you need any pre-arrival arrangements<br/>
+          4. Keep your booking reference for future communications
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- CTA -->
+    <mj-section background-color="#ffffff" padding="30px 20px">
+      <mj-column>
+        <mj-button background-color="#d4af37" color="#1a1a1a" font-weight="bold" href="{{bookingLink}}" padding="15px" width="100%">
+          View Your Booking & Payment Receipt
+        </mj-button>
+      </mj-column>
+    </mj-section>
+
+        <!-- Contact Information -->
+    <mj-section background-color="#ffffff" padding="30px 20px" border-top="2px solid #e0e0e0">
+      <mj-column>
+        <mj-text font-size="12px" color="#1a1a1a" font-weight="bold" padding="0 0 10px 0">
+          Contact Us for Payment Inquiries
+        </mj-text>
+        <mj-text font-size="12px" color="#555555" padding="0 0 5px 0">
+          📧 <a href="mailto:{{hotelEmail}}" style="color: #d4af37; text-decoration: none;">{{hotelEmail}}</a>
+        </mj-text>
+        <mj-text font-size="12px" color="#555555" padding="0 0 5px 0">
+          📞 <a href="tel:{{hotelPhone}}" style="color: #d4af37; text-decoration: none;">{{hotelPhone}}</a>
+        </mj-text>
+        <mj-text font-size="12px" color="#555555">
+          🌐 <a href="{{hotelWebsite}}" style="color: #d4af37; text-decoration: none;">{{hotelWebsite}}</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Footer -->
+    <mj-section background-color="#1a1a1a" padding="20px">
+      <mj-column>
+        <mj-text font-size="11px" color="#999999" align="center">
+          © {{year}} {{hotelName}}. All rights reserved.
+        </mj-text>
+        <mj-text font-size="11px" color="#999999" align="center" padding="5px 0 0 0">
+          This is an automated payment confirmation. Please do not reply directly.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

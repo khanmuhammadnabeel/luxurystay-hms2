@@ -17,6 +17,7 @@ const serviceOrdersRoutes = require('./routes/serviceOrders.routes');
 const analyticsRoutes = require('./routes/analytics.routes');
 const adminRoutes = require('./routes/admin.routes');
 const feedbackRoutes = require('./routes/feedback.routes');
+const emailRoutes = require('./routes/email.routes');
 
 const app = express();
 
@@ -51,6 +52,7 @@ app.use('/api/service-orders', serviceOrdersRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/feedback', feedbackRoutes);
+app.use('/api/email', emailRoutes);
 
 // 404 handler
 app.use((req, res) => {
