@@ -1,3 +1,36 @@
+/**
+ * @swagger
+ * /api/analytics/dashboard:
+ *   get:
+ *     tags:
+ *       - Analytics
+ *     summary: Get dashboard statistics
+ *     description: Retrieve occupancy, revenue, and other metrics
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Dashboard data retrieved
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     occupancyRate:
+ *                       type: number
+ *                     revenue:
+ *                       type: number
+ *                     totalGuests:
+ *                       type: integer
+ */
+
+// Your existing analytics routes code below...
+
 const express = require('express');
 const router = express.Router();
 const analyticsController = require('../controllers/analyticsController');

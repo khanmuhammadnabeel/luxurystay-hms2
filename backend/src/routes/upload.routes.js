@@ -1,3 +1,36 @@
+/**
+ * @swagger
+ * /api/upload:
+ *   post:
+ *     tags:
+ *       - Uploads
+ *     summary: Upload single file
+ *     description: Upload a file with metadata
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               file:
+ *                 type: string
+ *                 format: binary
+ *               description:
+ *                 type: string
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: File uploaded successfully
+ */
+
+// Your existing upload routes code below...
+
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');

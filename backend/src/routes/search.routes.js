@@ -1,4 +1,99 @@
 /**
+ * @swagger
+ * /api/search/suggest:
+ *   get:
+ *     tags:
+ *       - Search
+ *     summary: Get search suggestions
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: q
+ *         in: query
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - name: limit
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           default: 5
+ *     responses:
+ *       200:
+ *         description: Suggestions
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       type:
+ *                         type: string
+ *                         enum: [booking, room, user]
+ *                       value:
+ *                         type: string
+ *                       label:
+ *                         type: string
+ */
+/**
+ * @swagger
+ * /api/search/global:
+ *   get:
+ *     tags:
+ *       - Search
+ *     summary: Global search across all collections
+ *     description: Search bookings, rooms, users, invoices, etc.
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: q
+ *         in: query
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: luxury double room
+ *       - name: page
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - name: limit
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *     responses:
+ *       200:
+ *         description: Search results
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     bookings:
+ *                       type: object
+ *                     rooms:
+ *                       type: object
+ *                     users:
+ *                       type: object
+ *                 pagination:
+ *                   $ref: '#/components/schemas/Pagination'
+ */
+
+// Your existing search routes code below...
+
+/**
  * Search Routes
  * Global search and filtering endpoints for hotel management system
  */

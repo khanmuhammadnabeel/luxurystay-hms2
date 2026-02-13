@@ -22,6 +22,9 @@ const uploadRoutes = require('./routes/upload.routes');
 const searchRoutes = require('./routes/search.routes');
 const exportRoutes = require('./routes/export.routes');
 
+// ===== SWAGGER DOCUMENTATION =====
+const { specs, swaggerUi } = require('./docs/swagger');
+
 const app = express();
 
 app.use(helmet());
@@ -59,6 +62,9 @@ app.use('/api/email', emailRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/search', searchRoutes);
 app.use('/api/exports', exportRoutes);
+
+// ===== API DOCUMENTATION =====
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // 404 handler
 app.use((req, res) => {

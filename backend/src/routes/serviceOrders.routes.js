@@ -1,3 +1,98 @@
+/**
+ * @swagger
+ * tags:
+ *   name: Service Orders
+ *   description: Staff service order management
+ */
+
+/**
+ * @swagger
+ * /api/service-orders:
+ *   post:
+ *     tags:
+ *       - Service Orders
+ *     summary: Create service order
+ *     description: Staff creates order from service request
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [serviceRequestId]
+ *             properties:
+ *               serviceRequestId:
+ *                 type: string
+ *               notes:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Order created
+ */
+
+/**
+ * @swagger
+ * /api/service-orders/active:
+ *   get:
+ *     tags:
+ *       - Service Orders
+ *     summary: Get active orders
+ *     description: List orders not yet delivered
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: status
+ *         in: query
+ *         schema:
+ *           type: string
+ *           enum: [received, preparing, ready]
+ *       - name: page
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - name: limit
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           default: 20
+ *     responses:
+ *       200:
+ *         description: Active orders
+ */
+
+/**
+ * @swagger
+ * /api/service-orders/{id}/status:
+ *   put:
+ *     tags:
+ *       - Service Orders
+ *     summary: Update order status
+ *     description: Update order progress (received → preparing → ready → delivered)
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [status]
+ *             properties:
+ *               status:
+ *                 type: string
+ *                 enum: [received, preparing, ready, delivered]
+ *     responses:
+ *       200:
+ *         description: Status updated
+ */
+
 const express = require('express');
 const router = express.Router();
 const serviceOrdersController = require('../controllers/serviceOrdersController');

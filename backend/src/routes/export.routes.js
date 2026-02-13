@@ -1,6 +1,71 @@
 /**
- * Export Routes
+ * @swagger
+ * /api/exports/bookings:
+ *   post:
+ *     tags:
+ *       - Exports
+ *     summary: Export bookings
+ *     description: Export bookings in CSV, Excel, or PDF format
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               format:
+ *                 type: string
+ *                 enum: [csv, excel, pdf]
+ *                 default: csv
+ *               filters:
+ *                 type: object
+ *               options:
+ *                 type: object
+ *     responses:
+ *       200:
+ *         description: Export job created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 jobId:
+ *                   type: string
  */
+
+/**
+ * @swagger
+ * /api/exports/{jobId}/download:
+ *   get:
+ *     tags:
+ *       - Exports
+ *     summary: Download export file
+ *     description: Download a completed export file
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: jobId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: File download
+ *         content:
+ *           application/octet-stream:
+ *             schema:
+ *               type: string
+ *               format: binary
+ *       404:
+ *         $ref: '#/components/responses/NotFoundError'
+ */
+
+// Your existing export routes code below...
 
 const express = require('express');
 const router = express.Router();

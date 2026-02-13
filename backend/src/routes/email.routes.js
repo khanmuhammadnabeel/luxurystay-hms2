@@ -1,3 +1,205 @@
+/**
+ * @swagger
+ * tags:
+ *   name: Email
+ *   description: Email automation
+ */
+
+/**
+ * @swagger
+ * /api/email/send:
+ *   post:
+ *     tags:
+ *       - Email
+ *     summary: Send transactional email
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [templateName, recipient]
+ *             properties:
+ *               templateName:
+ *                 type: string
+ *               recipient:
+ *                 type: string
+ *                 format: email
+ *               data:
+ *                 type: object
+ *               priority:
+ *                 type: string
+ *                 enum: [low, normal, high, urgent]
+ *     responses:
+ *       202:
+ *         description: Email queued
+ */
+
+/**
+ * @swagger
+ * /api/email/bulk:
+ *   post:
+ *     tags:
+ *       - Email
+ *     summary: Send bulk email
+ *     description: Admin/manager only
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [templateName, recipients]
+ *             properties:
+ *               templateName:
+ *                 type: string
+ *               recipients:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: email
+ *               data:
+ *                 type: object
+ *               scheduleDate:
+ *                 type: string
+ *                 format: date
+ *     responses:
+ *       202:
+ *         description: Bulk emails queued
+ */
+
+/**
+ * @swagger
+ * /api/email/logs:
+ *   get:
+ *     tags:
+ *       - Email
+ *     summary: Get email logs
+ *     description: Admin/manager only
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: status
+ *         in: query
+ *         schema:
+ *           type: string
+ *           enum: [queued, sent, delivered, opened, clicked, failed, bounced]
+ *       - name: category
+ *         in: query
+ *         schema:
+ *           type: string
+ *           enum: [booking, payment, feedback, auth, promotional, alert, report]
+ *       - name: page
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - name: limit
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           default: 20
+ *     responses:
+ *       200:
+ *         description: Email logs
+ */
+
+/**
+ * @swagger
+ * /api/email/stats:
+ *   get:
+ *     tags:
+ *       - Email
+ *     summary: Get email statistics
+ *     description: Admin/manager only
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: period
+ *         in: query
+ *         schema:
+ *           type: string
+ *           enum: [day, week, month, year]
+ *           default: month
+ *     responses:
+ *       200:
+ *         description: Email stats
+ */
+
+/**
+ * @swagger
+ * /api/email/track/open/{id}:
+ *   get:
+ *     tags:
+ *       - Email
+ *     summary: Track email open (tracking pixel)
+ *     description: Public endpoint - returns 1x1 GIF
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: GIF pixel
+ *         content:
+ *           image/gif:
+ *             schema:
+ *               type: string
+ *               format: binary
+ */
+
+/**
+ * @swagger
+ * /api/email/track/click/{id}:
+ *   get:
+ *     tags:
+ *       - Email
+ *     summary: Track email click
+ *     description: Public endpoint - redirects to destination
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - name: url
+ *         in: query
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: url
+ *     responses:
+ *       302:
+ *         description: Redirect to destination
+ */
+
+/**
+ * @swagger
+ * /api/email/preview/{templateName}:
+ *   get:
+ *     tags:
+ *       - Email
+ *     summary: Preview email template
+ *     description: Staff/admin only
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: templateName
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Template preview
+ */
+
 const express = require('express');
 const router = express.Router();
 const { body, param, query, validationResult } = require('express-validator');

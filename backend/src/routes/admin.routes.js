@@ -1,3 +1,228 @@
+/**
+ * @swagger
+ * tags:
+ *   name: Admin
+ *   description: Administrative operations
+ */
+
+/**
+ * @swagger
+ * /api/admin/overview:
+ *   get:
+ *     tags:
+ *       - Admin
+ *     summary: Get system overview
+ *     description: Dashboard statistics (admin only)
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: System overview
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     totalBookings:
+ *                       type: integer
+ *                     activeGuests:
+ *                       type: integer
+ *                     revenueToday:
+ *                       type: number
+ *                     totalRooms:
+ *                       type: integer
+ *                     occupiedRooms:
+ *                       type: integer
+ *                     occupancyRate:
+ *                       type: number
+ */
+
+/**
+ * @swagger
+ * /api/admin/users:
+ *   get:
+ *     tags:
+ *       - Admin
+ *     summary: Get all users
+ *     description: List users with pagination and filters (admin only)
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: page
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - name: limit
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           default: 20
+ *       - name: role
+ *         in: query
+ *         schema:
+ *           type: string
+ *           enum: [admin, manager, staff, receptionist, guest]
+ *       - name: isActive
+ *         in: query
+ *         schema:
+ *           type: boolean
+ *       - name: search
+ *         in: query
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Users retrieved
+ */
+
+/**
+ * @swagger
+ * /api/admin/users/{id}/role:
+ *   put:
+ *     tags:
+ *       - Admin
+ *     summary: Update user role
+ *     description: Change user role (admin only)
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [role]
+ *             properties:
+ *               role:
+ *                 type: string
+ *                 enum: [admin, manager, staff, receptionist, guest]
+ *     responses:
+ *       200:
+ *         description: Role updated
+ */
+
+/**
+ * @swagger
+ * /api/admin/financial:
+ *   get:
+ *     tags:
+ *       - Admin
+ *     summary: Get financial overview
+ *     description: Revenue, payments, trends (admin only)
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Financial data
+ */
+
+/**
+ * @swagger
+ * /api/admin/rooms:
+ *   post:
+ *     tags:
+ *       - Admin
+ *     summary: Create new room
+ *     description: Add room to inventory (admin only)
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Room'
+ *     responses:
+ *       201:
+ *         description: Room created
+ */
+
+/**
+ * @swagger
+ * /api/admin/rooms/{id}:
+ *   put:
+ *     tags:
+ *       - Admin
+ *     summary: Update room
+ *     description: Modify room details (admin only)
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Room'
+ *     responses:
+ *       200:
+ *         description: Room updated
+ *   delete:
+ *     tags:
+ *       - Admin
+ *     summary: Delete room
+ *     description: Remove room from inventory (admin only)
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Room deleted
+ */
+
+/**
+ * @swagger
+ * /api/admin/staff-performance:
+ *   get:
+ *     tags:
+ *       - Admin
+ *     summary: Get staff performance metrics
+ *     description: Housekeeping and service staff stats (admin only)
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Performance data
+ */
+
+/**
+ * @swagger
+ * /api/admin/logs:
+ *   get:
+ *     tags:
+ *       - Admin
+ *     summary: Get system logs
+ *     description: Audit logs for all activities (admin only)
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: limit
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           default: 50
+ *     responses:
+ *       200:
+ *         description: System logs
+ */
+
 const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/adminController');

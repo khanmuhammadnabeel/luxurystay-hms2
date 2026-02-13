@@ -1,3 +1,103 @@
+/**
+ * @swagger
+ * /api/feedback/{id}:
+ *   get:
+ *     tags:
+ *       - Feedback
+ *     summary: Get feedback by ID
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Feedback details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Feedback'
+ */
+
+/**
+ * @swagger
+ * /api/feedback:
+ *   post:
+ *     tags:
+ *       - Feedback
+ *     summary: Submit feedback
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [bookingId, rating, comment]
+ *             properties:
+ *               bookingId:
+ *                 type: string
+ *               rating:
+ *                 type: integer
+ *                 minimum: 1
+ *                 maximum: 5
+ *               title:
+ *                 type: string
+ *               comment:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Feedback submitted
+ */
+/**
+ * @swagger
+ * /api/feedback:
+ *   get:
+ *     tags:
+ *       - Feedback
+ *     summary: Get all feedback
+ *     description: Retrieve list of guest feedback
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: page
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - name: limit
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           default: 20
+ *       - name: rating
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 5
+ *     responses:
+ *       200:
+ *         description: Feedback retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Feedback'
+ *                 pagination:
+ *                   $ref: '#/components/schemas/Pagination'
+ */
+
+// Your existing feedback routes code below...
+
 const express = require('express');
 const { body, param, query, validationResult } = require('express-validator');
 const { authenticate, authorize } = require('../middleware/auth');

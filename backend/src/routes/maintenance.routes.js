@@ -1,3 +1,145 @@
+/**
+ * @swagger
+ * tags:
+ *   name: Maintenance
+ *   description: Maintenance request management
+ */
+
+/**
+ * @swagger
+ * /api/maintenance/requests:
+ *   post:
+ *     tags:
+ *       - Maintenance
+ *     summary: Create maintenance request
+ *     description: Report maintenance issue
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [roomId, description]
+ *             properties:
+ *               roomId:
+ *                 type: string
+ *               issueType:
+ *                 type: string
+ *                 enum: [plumbing, electrical, furniture, appliance, other]
+ *               description:
+ *                 type: string
+ *               attachments:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       201:
+ *         description: Request created
+ *   get:
+ *     tags:
+ *       - Maintenance
+ *     summary: Get all requests
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: status
+ *         in: query
+ *         schema:
+ *           type: string
+ *           enum: [reported, assigned, in_progress, resolved]
+ *       - name: page
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - name: limit
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           default: 20
+ *     responses:
+ *       200:
+ *         description: Requests list
+ */
+
+/**
+ * @swagger
+ * /api/maintenance/requests/{id}:
+ *   put:
+ *     tags:
+ *       - Maintenance
+ *     summary: Update request
+ *     description: Update status, assign staff
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               status:
+ *                 type: string
+ *                 enum: [reported, assigned, in_progress, resolved]
+ *               assignedTo:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Request updated
+ */
+
+/**
+ * @swagger
+ * /api/maintenance/requests/{id}/assign:
+ *   post:
+ *     tags:
+ *       - Maintenance
+ *     summary: Assign to staff
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [assignedTo]
+ *             properties:
+ *               assignedTo:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Request assigned
+ */
+
+/**
+ * @swagger
+ * /api/maintenance/requests/{id}/resolve:
+ *   post:
+ *     tags:
+ *       - Maintenance
+ *     summary: Mark as resolved
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Request resolved
+ */
+
 const express = require('express');
 const router = express.Router();
 const maintenanceController = require('../controllers/maintenanceController');
