@@ -19,6 +19,8 @@ const adminRoutes = require('./routes/admin.routes');
 const feedbackRoutes = require('./routes/feedback.routes');
 const emailRoutes = require('./routes/email.routes');
 const uploadRoutes = require('./routes/upload.routes');
+const searchRoutes = require('./routes/search.routes');
+const exportRoutes = require('./routes/export.routes');
 
 const app = express();
 
@@ -55,6 +57,8 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/feedback', feedbackRoutes);
 app.use('/api/email', emailRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/search', searchRoutes);
+app.use('/api/exports', exportRoutes);
 
 // 404 handler
 app.use((req, res) => {

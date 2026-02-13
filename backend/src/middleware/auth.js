@@ -14,8 +14,11 @@ const authenticate = (req, res, next) => {
     return res.status(401).json({ error: 'Invalid or expired token' });
   }
   
-  // Set both for flexibility
-  req.user = decoded;
+  // Set user object with _id for compatibility
+  req.user = {
+    ...decoded,
+    _id: decoded.userId  // Add _id field
+  };
   req.userId = decoded.userId;
   req.userRole = decoded.role;
   

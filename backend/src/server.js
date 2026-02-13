@@ -87,6 +87,14 @@ socketHelper.setIO(io);
     process.exit(1);
   }
 };
+// Start the export queue processor
+try {
+  const exportQueue = require('./services/exportQueue');
+  exportQueue.startProcessor(5000); // Process queue every 5 seconds
+  console.log('✅ Export queue processor started');
+} catch (err) {
+  console.error('❌ Failed to start export queue:', err.message);
+}
 
 startServer();
 
