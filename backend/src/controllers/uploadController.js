@@ -24,7 +24,7 @@ function canAccessFile(user, file) {
   // Admin can access any file
   if (user.role === 'admin') return true;
   // User can access own files
-  return file.uploadedBy.toString() === user._id.toString();
+  return file.uploadedBy.toString() === userId.toString();
 }
 
 /**
@@ -60,6 +60,7 @@ function parseTags(tagsString) {
  */
 const uploadSingle = asyncHandler(async (req, res) => {
   const user = getAuthenticatedUser(req);
+  const userId = user?.userId || user?._id;
   if (!user) {
     return res.status(401).json({
       success: false,
@@ -86,7 +87,7 @@ const uploadSingle = asyncHandler(async (req, res) => {
     }
 
     // Check storage quota
-    const storageUsage = await uploadService.getStorageUsage(user._id);
+    const storageUsage = await uploadService.getStorageUsage(userId);
     if (storageUsage && storageUsage.isFull) {
       return res.status(413).json({
         success: false,
@@ -105,7 +106,7 @@ const uploadSingle = asyncHandler(async (req, res) => {
       req.file.mimetype,
       {
         isPublic: isPublic === 'true' || isPublic === true,
-        uploadedBy: user._id,
+        uploadedBy: userId,
         referenceId,
         referenceModel,
         tags
@@ -161,7 +162,7 @@ const uploadMultiple = asyncHandler(async (req, res) => {
 
   try {
     // Check storage quota
-    const storageUsage = await uploadService.getStorageUsage(user._id);
+    const storageUsage = await uploadService.getStorageUsage(userId);
     if (storageUsage && storageUsage.isFull) {
       return res.status(413).json({
         success: false,
@@ -208,7 +209,7 @@ const uploadMultiple = asyncHandler(async (req, res) => {
       })),
       {
         isPublic: isPublic === 'true' || isPublic === true,
-        uploadedBy: user._id,
+        uploadedBy: userId,
         referenceId,
         referenceModel,
         tags
@@ -242,7 +243,7 @@ const getFile = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   try {
-    const file = await File.findById(id).populate('uploadedBy', 'name email');
+        const file = await File.findById(id).populate('uploadedByDetails', 'name email');
     if (!file) {
       return res.status(404).json({
         success: false,
@@ -491,7 +492,7 @@ const getUserFiles = asyncHandler(async (req, res) => {
 
   // Check authorization
   // Handle both _id and userId from token
-  const userIdFromToken = user._id || user.userId;
+  const userIdFromToken = userId || user.userId;
   if (!userIdFromToken) {
     return res.status(401).json({
       success: false,
@@ -499,7 +500,7 @@ const getUserFiles = asyncHandler(async (req, res) => {
     });
   }
   const isOwnProfile = userIdFromToken.toString() === userId;
-  
+
   const isAdmin = user.role === 'admin';
   if (!isOwnProfile && !isAdmin) {
     return res.status(403).json({

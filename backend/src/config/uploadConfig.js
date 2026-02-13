@@ -60,8 +60,8 @@ const config = {
     uploadDir: process.env.UPLOAD_DIR || 'uploads',
     baseUrl: process.env.BASE_URL || 'http://localhost:5000',
     tempDir: 'uploads/temp',
-    publicDir: 'uploads/public', // For public files
-    privateDir: 'uploads/private' // For private files
+    publicDir: 'uploads/public',
+    privateDir: 'uploads/private'
   },
 
   // Cloudinary storage settings
@@ -84,7 +84,7 @@ const config = {
     region: process.env.AWS_REGION || 'us-east-1',
     bucket: process.env.AWS_S3_BUCKET || '',
     endpoint: process.env.AWS_S3_ENDPOINT || null,
-    acl: 'private', // private | public-read
+    acl: 'private',
     folder: 'luxurystay'
   },
 
@@ -93,72 +93,30 @@ const config = {
     enabled: true,
     maxWidth: 1920,
     maxHeight: 1080,
-    quality: 80, // 0-100
-    format: 'webp', // Convert to WebP for web
+    quality: 80,
+    format: 'webp',
     stripMetadata: true,
     thumbnailSizes: [
-      {
-        width: 150,
-        height: 150,
-        suffix: 'small',
-        description: 'Avatar size'
-      },
-      {
-        width: 300,
-        height: 200,
-        suffix: 'medium',
-        description: 'Thumbnail size'
-      },
-      {
-        width: 800,
-        height: 600,
-        suffix: 'large',
-        description: 'Preview size'
-      }
+      { width: 150, height: 150, suffix: 'small', description: 'Avatar size' },
+      { width: 300, height: 200, suffix: 'medium', description: 'Thumbnail size' },
+      { width: 800, height: 600, suffix: 'large', description: 'Preview size' }
     ]
   },
 
   // Security settings
   security: {
     scanEnabled: process.env.VIRUS_SCAN_ENABLED === 'true' || false,
-    scanProvider: process.env.VIRUS_SCAN_PROVIDER || 'clamav', // clamav | virustotal
-    stripExif: true, // Remove EXIF data from images
+    scanProvider: process.env.VIRUS_SCAN_PROVIDER || 'clamav',
+    stripExif: true,
     sanitizeFilenames: true,
     sanitizePattern: /[^a-zA-Z0-9._-]/g,
     allowedExtensions: [
-      // Images
-      '.jpg',
-      '.jpeg',
-      '.png',
-      '.webp',
-      '.gif',
-      '.svg',
-      // Documents
-      '.pdf',
-      '.doc',
-      '.docx',
-      '.xls',
-      '.xlsx',
-      '.txt',
-      '.csv',
-      // Archives
-      '.zip',
-      '.rar',
-      '.7z'
+      '.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg',
+      '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.txt', '.csv',
+      '.zip', '.rar', '.7z'
     ],
     blockExecutable: true,
-    executableExtensions: [
-      '.exe',
-      '.bat',
-      '.cmd',
-      '.com',
-      '.pif',
-      '.scr',
-      '.vbs',
-      '.js',
-      '.jar',
-      '.zip'
-    ]
+    executableExtensions: ['.exe', '.bat', '.cmd', '.com', '.pif', '.scr', '.vbs', '.js', '.jar', '.zip']
   },
 
   // Rate limiting (per user/IP)
@@ -166,14 +124,14 @@ const config = {
     uploadsPerMinute: 10,
     uploadsPerHour: 100,
     uploadsPerDay: 500,
-    bytesPerDay: 500 * 1024 * 1024 // 500MB
+    bytesPerDay: 500 * 1024 * 1024
   },
 
   // File retention policies
   retention: {
-    tempFileExpiryDays: 7, // Auto-delete temp files
-    deletedFileRetentionDays: 30, // Soft-delete retention before permanent removal
-    logRetentionDays: 90 // Upload log retention
+    tempFileExpiryDays: 7,
+    deletedFileRetentionDays: 30,
+    logRetentionDays: 90
   },
 
   // Logging
@@ -181,7 +139,7 @@ const config = {
     enabled: true,
     logDir: 'logs',
     logFailures: true,
-    logSuccesses: false // Only log failures to reduce noise
+    logSuccesses: false
   }
 };
 
@@ -196,62 +154,30 @@ config.allowedMimeTypes.all = [
 // HELPER FUNCTIONS
 // ============================================================================
 
-/**
- * Check if MIME type is an image
- * @param {string} mimeType - MIME type to check
- * @returns {boolean}
- */
 function isImage(mimeType) {
   return config.allowedMimeTypes.images.includes(mimeType);
 }
 
-/**
- * Check if MIME type is a document
- * @param {string} mimeType - MIME type to check
- * @returns {boolean}
- */
 function isDocument(mimeType) {
   return config.allowedMimeTypes.documents.includes(mimeType);
 }
 
-/**
- * Check if MIME type is an archive
- * @param {string} mimeType - MIME type to check
- * @returns {boolean}
- */
 function isArchive(mimeType) {
   return config.allowedMimeTypes.archives.includes(mimeType);
 }
 
-/**
- * Check if MIME type is allowed
- * @param {string} mimeType - MIME type to check
- * @returns {boolean}
- */
 function isAllowedMimeType(mimeType) {
   return config.allowedMimeTypes.all.includes(mimeType);
 }
 
-/**
- * Get all allowed MIME types
- * @returns {Array} Array of allowed MIME types
- */
 function getAllowedMimeTypes() {
   return config.allowedMimeTypes.all;
 }
 
-/**
- * Get maximum file size in bytes
- * @returns {number}
- */
 function getMaxFileSize() {
   return config.limits.maxFileSize;
 }
 
-/**
- * Get maximum file size formatted
- * @returns {string} Human-readable size
- */
 function getMaxFileSizeFormatted() {
   const bytes = config.limits.maxFileSize;
   const k = 1024;
@@ -260,42 +186,22 @@ function getMaxFileSizeFormatted() {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
-/**
- * Get storage provider
- * @returns {string} Storage provider name
- */
 function getStorageProvider() {
   return config.storageProvider;
 }
 
-/**
- * Check if using local storage
- * @returns {boolean}
- */
 function isLocalStorage() {
   return config.storageProvider === 'local';
 }
 
-/**
- * Check if using Cloudinary
- * @returns {boolean}
- */
 function isCloudinary() {
   return config.storageProvider === 'cloudinary';
 }
 
-/**
- * Check if using AWS S3
- * @returns {boolean}
- */
 function isS3() {
   return config.storageProvider === 's3';
 }
 
-/**
- * Check if storage provider is configured
- * @returns {boolean}
- */
 function isStorageConfigured() {
   switch (config.storageProvider) {
     case 'cloudinary':
@@ -309,36 +215,17 @@ function isStorageConfigured() {
   }
 }
 
-/**
- * Get upload directory path (local storage only)
- * @returns {string}
- */
 function getUploadDir() {
   return config.local.uploadDir;
 }
 
-/**
- * Get full file path for local storage
- * @param {string} filename - Filename
- * @param {boolean} isPublic - Is file public
- * @returns {string} Full file path
- */
 function getUploadPath(filename, isPublic = false) {
   const dir = isPublic ? config.local.publicDir : config.local.privateDir;
   return `${dir}/${filename}`;
 }
 
-/**
- * Get public URL for file
- * @param {string} filename - Filename
- * @param {boolean} isPublic - Is file public
- * @returns {string} Public URL
- */
 function getPublicUrl(filename, isPublic = true) {
-  if (!isPublic) {
-    return null; // Private files should not have public URLs
-  }
-
+  if (!isPublic) return null;
   switch (config.storageProvider) {
     case 'cloudinary':
       return `https://res.cloudinary.com/${config.cloudinary.cloudName}/image/upload/${filename}`;
@@ -350,20 +237,10 @@ function getPublicUrl(filename, isPublic = true) {
   }
 }
 
-/**
- * Get file extension from filename
- * @param {string} filename - Filename
- * @returns {string} File extension with dot
- */
 function getFileExtension(filename) {
   return filename.substring(filename.lastIndexOf('.')).toLowerCase();
 }
 
-/**
- * Get MIME type from filename
- * @param {string} filename - Filename
- * @returns {string|null} MIME type or null
- */
 function getMimeTypeFromFilename(filename) {
   const ext = getFileExtension(filename);
   const mimeTypes = {
@@ -385,70 +262,37 @@ function getMimeTypeFromFilename(filename) {
   return mimeTypes[ext] || null;
 }
 
-/**
- * Sanitize filename (remove special characters)
- * @param {string} filename - Original filename
- * @returns {string} Sanitized filename
- */
 function sanitizeFilename(filename) {
-  if (!config.security.sanitizeFilenames) {
-    return filename;
-  }
-
-  // Remove path separators and null bytes
+  if (!config.security.sanitizeFilenames) return filename;
   let sanitized = filename.replace(/[\/\\:*?"<>|]/g, '_');
-
-  // Remove special characters except dots, hyphens, underscores
   sanitized = sanitized.replace(config.security.sanitizePattern, '_');
-
-  // Remove multiple consecutive underscores
   sanitized = sanitized.replace(/_+/g, '_');
-
-  // Limit length
   const maxLength = 255;
   if (sanitized.length > maxLength) {
     const ext = getFileExtension(sanitized);
     const name = sanitized.substring(0, maxLength - ext.length);
     sanitized = name + ext;
   }
-
   return sanitized;
 }
 
-/**
- * Check if file extension is executable/dangerous
- * @param {string} filename - Filename
- * @returns {boolean}
- */
 function isExecutableFile(filename) {
-  if (!config.security.blockExecutable) {
-    return false;
-  }
+  if (!config.security.blockExecutable) return false;
   const ext = getFileExtension(filename);
   return config.security.executableExtensions.includes(ext);
 }
 
-/**
- * Check if file extension is allowed
- * @param {string} filename - Filename
- * @returns {boolean}
- */
 function isAllowedExtension(filename) {
   const ext = getFileExtension(filename);
   return config.security.allowedExtensions.includes(ext);
 }
 
-/**
- * Validate file upload
- * @param {object} file - File object { originalname, mimetype, size }
- * @returns {object} { valid: boolean, error?: string }
- */
+// ✅ THIS IS THE FIX - validateFile function is defined here!
 function validateFile(file) {
   if (!file) {
     return { valid: false, error: 'No file provided' };
   }
 
-  // Check file size
   if (file.size > config.limits.maxFileSize) {
     return {
       valid: false,
@@ -456,7 +300,6 @@ function validateFile(file) {
     };
   }
 
-  // Check MIME type
   if (!isAllowedMimeType(file.mimetype)) {
     return {
       valid: false,
@@ -464,7 +307,6 @@ function validateFile(file) {
     };
   }
 
-  // Check extension
   if (!isAllowedExtension(file.originalname)) {
     return {
       valid: false,
@@ -472,7 +314,6 @@ function validateFile(file) {
     };
   }
 
-  // Check for executable files
   if (isExecutableFile(file.originalname)) {
     return {
       valid: false,
@@ -483,11 +324,6 @@ function validateFile(file) {
   return { valid: true };
 }
 
-/**
- * Generate random filename with extension
- * @param {string} originalname - Original filename
- * @returns {string} Generated filename (UUID + extension)
- */
 function generateFilename(originalname) {
   const crypto = require('crypto');
   const ext = getFileExtension(originalname);
@@ -496,10 +332,6 @@ function generateFilename(originalname) {
   return `${timestamp}-${random}${ext}`;
 }
 
-/**
- * Get storage usage summary
- * @returns {object} Configuration summary
- */
 function getStorageSummary() {
   return {
     provider: config.storageProvider,
@@ -513,7 +345,7 @@ function getStorageSummary() {
 }
 
 // ============================================================================
-// EXPORTS
+// EXPORTS - THIS MUST BE AT THE VERY BOTTOM
 // ============================================================================
 
 module.exports = {
@@ -541,7 +373,7 @@ module.exports = {
   sanitizeFilename,
   isExecutableFile,
   isAllowedExtension,
-  validateFile,
+  validateFile, // ✅ NOW IT'S DEFINED AND EXPORTED
   generateFilename,
   getStorageSummary
 };

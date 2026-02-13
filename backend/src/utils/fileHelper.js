@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const uploadConfig = require('../config/uploadConfig');
+const fileHelper = require('../utils/fileHelper');
 
 /**
  * File Utility Helper Functions
@@ -505,6 +506,15 @@ function getFileCategory(mimeType) {
   }
 }
 
+/**
+ * Check if file is an image
+ * @param {string} mimeType - MIME type
+ * @returns {boolean}
+ */
+function isImage(mimeType) {
+  return uploadConfig.isImage(mimeType);
+}
+
 // ============================================================================
 // ADDITIONAL UTILITY FUNCTIONS
 // ============================================================================
@@ -586,6 +596,7 @@ module.exports = {
   getImageDimensions,
   generateThumbnail,
   detectMimeType,
+  isImage,
   sanitizeFilename,
   isFileTypeAllowed,
   calculateChecksum,

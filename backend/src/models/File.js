@@ -487,17 +487,17 @@ FileSchema.methods.toJSON = function () {
 /**
  * Auto-populate uploadedBy on retrieval
  */
-FileSchema.pre(/^find/, function (next) {
-  if (this.options._recursed) {
-    return next();
-  }
-  this.populate({
-    path: 'uploadedBy',
-    select: 'name email role -password',
-    options: { _recursed: true }
-  });
-  next();
-});
+// FileSchema.pre(/^find/, function (next) {
+//   if (this.options._recursed) {
+//     return next();
+//   }
+//   this.populate({
+//     path: 'uploadedBy',
+//     select: 'name email role -password',
+//     options: { _recursed: true }
+//   });
+//   next();
+// });
 
 /**
  * Update timestamps on save

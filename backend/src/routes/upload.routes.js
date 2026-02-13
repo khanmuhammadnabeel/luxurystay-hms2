@@ -18,13 +18,39 @@ const upload = multer({
     fileSize: uploadConfig.limits.maxFileSize,
     files: uploadConfig.limits.maxFilesPerUpload
   },
-  fileFilter: (req, file, cb) => {
+    fileFilter: (req, file, cb) => {
     // Validate file type
-    const validation = uploadConfig.validateFile({
-      originalname: file.originalname,
-      mimetype: file.mimetype,
-      size: 0 // Size will be checked by limits
-    });
+    const validation = {
+      valid: true,
+      error: null
+    };
+    
+    // Manual validation since uploadConfig.validateFile might not be available
+    const allowedTypes = [
+      'image/jpeg', 'image/png', 'image/webp', 'image/gif',
+      'application/pdf', 'application/msword', 
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'text/plain', 'text/csv',
+      'application/zip'
+    ];
+    
+    const allowedExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.pdf', 
+      '.doc', '.docx', '.xls', '.xlsx', '.txt', '.csv', '.zip'];
+    
+    const ext = file.originalname.substring(file.originalname.lastIndexOf('.')).toLowerCase();
+    
+    if (!allowedTypes.includes(file.mimetype)) {
+      validation.valid = false;
+      validation.error = 'File type not allowed';
+    } else if (!allowedExtensions.includes(ext)) {
+      validation.valid = false;
+      validation.error = 'File extension not allowed';
+    } else if (file.size > (10 * 1024 * 1024)) {
+      validation.valid = false;
+      validation.error = 'File size exceeds 10MB limit';
+    }
 
     if (validation.valid) {
       cb(null, true);
