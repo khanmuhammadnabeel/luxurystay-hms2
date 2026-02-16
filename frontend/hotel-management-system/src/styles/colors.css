@@ -1,0 +1,33 @@
+:root {
+ /* DARK THEME (default) */
+ --color-primary: #211F1F;
+ --color-secondary: #3A3535;
+ --color-accent: #CFAF7E;
+ --color-text-primary: #F0E9E0;
+ --color-text-secondary: #B8B2AA;
+
+ /* Glass (dark) */
+ --glass-bg: rgba(26, 26, 26, 0.7);
+ --glass-border: rgba(207, 175, 126, 0.15);
+ --glass-blur: 12px;
+
+ /* Shadows (dark) */
+ --shadow-sm: 0 4px 8px -2px rgba(207, 175, 126, 0.1);
+ --shadow-md: 0 12px 24px -8px rgba(207, 175, 126, 0.15);
+ --shadow-lg: 0 20px 40px -12px rgba(207, 175, 126, 0.2);
+}
+.light-theme {
+          --color-primary: #F8F5F0;
+          --color-secondary: #E8E2D8;
+          --color-accent: #CFAF7E;
+          --color-text-primary: #2C2C2C;
+          --color-text-secondary: #6B635C;
+          
+          --glass-bg: rgba(248, 245, 240, 0.7);
+          --glass-border: rgba(207, 175, 126, 0.2);
+          --glass-blur: 12px;
+          
+          --shadow-sm: 0 4px 8px -2px rgba(44, 44, 44, 0.08);
+          --shadow-md: 0 12px 24px -8px rgba(44, 44, 44, 0.12);
+          --shadow-lg: 0 20px 40px -12px rgba(44, 44, 44, 0.16);
+} 

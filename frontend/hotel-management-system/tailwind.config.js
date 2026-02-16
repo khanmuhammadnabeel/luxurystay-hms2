@@ -14,8 +14,20 @@ export default {
         'text-secondary': 'var(--color-text-secondary)',
       },
       fontFamily: {
-        'body': ['Inter', 'sans-serif'],
-        'display': ['Playfair Display', 'serif'],
+        'playfair': ['Playfair Display', 'serif'],
+        'inter': ['Inter', 'sans-serif'],
+      },
+      fontSize: {
+        'h1': ['48px', { lineHeight: '1.2', fontWeight: '600' }],
+        'h2': ['36px', { lineHeight: '1.2', fontWeight: '600' }],
+        'h3': ['30px', { lineHeight: '1.3', fontWeight: '500' }],
+        'h4': ['24px', { lineHeight: '1.4', fontWeight: '500' }],
+        'h5': ['20px', { lineHeight: '1.5', fontWeight: '500' }],
+        'h6': ['18px', { lineHeight: '1.5', fontWeight: '500' }],
+        'body-lg': ['18px', { lineHeight: '1.6', fontWeight: '400' }],
+        'body': ['16px', { lineHeight: '1.6', fontWeight: '400' }],
+        'body-sm': ['14px', { lineHeight: '1.5', fontWeight: '400' }],
+        'caption': ['12px', { lineHeight: '1.4', fontWeight: '300' }],
       },
       backgroundColor: {
         glass: 'var(--glass-bg)',

@@ -31,12 +31,18 @@ const RoomManagement = lazy(() => import('../pages/admin/RoomManagement'));
 // 404 Page
 const NotFound = lazy(() => import('../pages/public/NotFound'));
 
+// Color-Theme Page
+const ThemeShowcase = lazy(() => import('../components/TestTheme'));
+
 const router = createBrowserRouter([
   // Public routes
   { path: '/', element: <Home /> },
   { path: '/rooms', element: <Rooms /> },
   { path: '/rooms/:id', element: <RoomDetail /> },
   { path: '/contact', element: <Contact /> },
+
+  // Color-Theme route
+  { path: '/color-theme', element: <ThemeShowcase /> },
 
   // Auth routes
   { path: '/login', element: <Login /> },

@@ -1,0 +1,170 @@
+/* ==========================================================================
+   TYPOGRAPHY SYSTEM
+   Luxury Stay Hotel Management System
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Base Typography
+   -------------------------------------------------------------------------- */
+@layer base {
+  /* Headings - Playfair Display */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  h1 {
+    font-size: 48px;
+    line-height: 1.2;
+    font-weight: 600;
+  }
+
+  h2 {
+    font-size: 36px;
+    line-height: 1.2;
+    font-weight: 600;
+  }
+
+  h3 {
+    font-size: 30px;
+    line-height: 1.3;
+    font-weight: 500;
+  }
+
+  h4 {
+    font-size: 24px;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  h5 {
+    font-size: 20px;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+
+  h6 {
+    font-size: 18px;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+
+  /* Body Text - Inter */
+  body, p, span, div, button, input, textarea, select, label {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    font-weight: 400;
+    color: var(--color-text-primary);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Typography Scales
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 36px;
+  }
+
+  h2 {
+    font-size: 28px;
+  }
+
+  h3 {
+    font-size: 24px;
+  }
+
+  h4 {
+    font-size: 20px;
+  }
+
+  h5 {
+    font-size: 18px;
+  }
+
+  h6 {
+    font-size: 16px;
+  }
+
+  body, p, span, div {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  h1 {
+    font-size: 42px;
+  }
+
+  h2 {
+    font-size: 32px;
+  }
+
+  h3 {
+    font-size: 26px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Utility Classes
+   -------------------------------------------------------------------------- */
+@layer components {
+  /* Text Color Utilities */
+  .text-secondary {
+    color: var(--color-text-secondary);
+  }
+
+  .text-accent {
+    color: var(--color-accent);
+  }
+
+  /* Caption Text */
+  .caption {
+    font-size: 12px;
+    line-height: 1.4;
+    font-weight: 300;
+    color: var(--color-text-secondary);
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Glass Morphism Text Optimization */
+  .glass-text {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Enhanced readability on glass backgrounds */
+  .glass h1,
+  .glass h2,
+  .glass h3,
+  .glass h4,
+  .glass h5,
+  .glass h6,
+  .glass p,
+  .glass span {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Font Weight Utilities
+   -------------------------------------------------------------------------- */
+.font-light {
+  font-weight: 300;
+}
+
+.font-normal {
+  font-weight: 400;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
