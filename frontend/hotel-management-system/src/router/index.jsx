@@ -32,7 +32,10 @@ const RoomManagement = lazy(() => import('../pages/admin/RoomManagement'));
 const NotFound = lazy(() => import('../pages/public/NotFound'));
 
 // Color-Theme Page
-const ThemeShowcase = lazy(() => import('../components/TestTheme'));
+const ThemeShowcase = lazy(() => import('../pages/showcase/TestTheme'));
+
+// ComponentShowCase
+const ComponentShowcase = lazy(() => import('../pages/showcase/ComponentShowcase'));
 
 const router = createBrowserRouter([
   // Public routes
@@ -43,6 +46,9 @@ const router = createBrowserRouter([
 
   // Color-Theme route
   { path: '/color-theme', element: <ThemeShowcase /> },
+
+  // ComponentShowcase route
+  { path: '/components', element: <ComponentShowcase /> },
 
   // Auth routes
   { path: '/login', element: <Login /> },
