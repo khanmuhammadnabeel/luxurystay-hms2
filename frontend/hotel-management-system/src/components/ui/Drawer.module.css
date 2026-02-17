@@ -1,0 +1,21 @@
+@keyframes slideLeft {
+          from { transform: translateX(-100%); }
+          to { transform: translateX(0); }
+        }
+        @keyframes slideRight {
+          from { transform: translateX(100%); }
+          to { transform: translateX(0); }
+        }
+        @keyframes slideTop {
+          from { transform: translateY(-100%); }
+          to { transform: translateY(0); }
+        }
+        @keyframes slideBottom {
+          from { transform: translateY(100%); }
+          to { transform: translateY(0); }
+        }
+        
+        .slideLeft { animation: slideLeft 0.3s ease-out; }
+        .slideRight { animation: slideRight 0.3s ease-out; }
+        .slideTop { animation: slideTop 0.3s ease-out; }
+        .slideBottom { animation: slideBottom 0.3s ease-out; }

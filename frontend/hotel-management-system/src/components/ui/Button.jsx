@@ -12,9 +12,11 @@ const variantStyles = {
     "bg-primary text-primary-foreground hover:bg-[var(--color-accent)] active:bg-[var(--color-accent)]",
   secondary:
     "bg-secondary text-secondary-foreground hover:bg-[var(--color-bg-elevated)] active:bg-[var(--color-bg-elevated)]",
-  outline:
-    "border border-border bg-transparent text-foreground hover:bg-secondary active:bg-secondary",
-  ghost:
+  
+    outline:
+    "border border-[rgba(207,175,126,0.4)] text-[var(--color-accent)] bg-transparent hover:bg-[rgba(207,175,126,0.15)] hover:border-[rgba(196, 207, 126, 0.8)] hover:text-[var(--color-accent)] hover:shadow-[0_0_15px_rgba(207,175,126,0.3)] transition-all duration-200", 
+  
+    ghost:
     "bg-transparent text-foreground hover:bg-secondary active:bg-secondary",
   destructive:
     "bg-[#B22222] text-white hover:bg-[#8B0000] active:bg-[#8B0000]",
