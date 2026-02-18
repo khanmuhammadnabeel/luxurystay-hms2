@@ -78,6 +78,8 @@
     padding: 0.875rem 1rem;
     font-size: 0.875rem;
     color: var(--text-primary);
+    user-select: none;
+    cursor: default;
 }
 
 /* Variants */

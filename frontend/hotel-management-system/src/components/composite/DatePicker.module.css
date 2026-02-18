@@ -1,0 +1,113 @@
+/* DatePicker.module.css */
+
+.container {
+    position: relative;
+    width: 100%;
+}
+
+.popover {
+    position: absolute;
+    top: 100%;
+    margin-top: 0.5rem;
+    background-color: var(--color-secondary);
+    border: 1px solid color-mix(in srgb, var(--color-accent) 20%, transparent);
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    /* shadow-lg */
+    z-index: 50;
+    overflow: hidden;
+    animation: slideDown 0.2s ease-out;
+    width: 320px;
+    /* Match calendar width */
+}
+
+/* Positions */
+.popover.bottom-left {
+    left: 0;
+    right: auto;
+}
+
+.popover.bottom-right {
+    right: 0;
+    left: auto;
+}
+
+.popover.top-left {
+    bottom: 100%;
+    top: auto;
+    left: 0;
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+}
+
+.popover.top-right {
+    bottom: 100%;
+    top: auto;
+    right: 0;
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.footer {
+    padding: 0.75rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-accent) 10%, transparent);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: color-mix(in srgb, var(--color-accent) 5%, transparent);
+}
+
+.quickSelects {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 0.5rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-accent) 10%, transparent);
+    /* Hide scrollbar */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.quickSelects::-webkit-scrollbar {
+    display: none;
+}
+
+.quickChip {
+    white-space: nowrap;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+    border: 1px solid transparent;
+}
+
+.quickChip:hover {
+    background-color: color-mix(in srgb, var(--color-accent) 20%, transparent);
+    color: var(--color-text-primary);
+    border-color: var(--color-accent);
+}
+
+.inputIcon {
+    color: var(--color-text-secondary);
+    transition: color 0.2s;
+}
+
+.container:focus-within .inputIcon {
+    color: var(--color-accent);
+}

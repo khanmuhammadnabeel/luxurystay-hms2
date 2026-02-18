@@ -3,21 +3,29 @@ import {
     DataTable,
     Pagination,
     SearchBar,
-    FilterChips
+    FilterChips,
+    Calendar,
+    DatePicker,
+    TimePicker,
+    RangePicker
 } from '../../components/composite';
 import { Button, Card, Divider } from '../../components/ui';
 import { useTheme } from '../../contexts/ThemeContext';
-import { Eye, Edit, Trash2, MoreVertical, Calendar, User, CreditCard, Download } from 'lucide-react';
+import { Eye, Edit, Trash2, MoreVertical, User, CreditCard, Download } from 'lucide-react';
 
-const MOCK_DATA = Array.from({ length: 50 }).map((_, i) => ({
-    id: `BK-${1000 + i}`,
-    guest: ['John Doe', 'Jane Smith', 'Robert Johnson', 'Emily Davis', 'Michael Wilson'][i % 5],
-    room: ['Deluxe Suite', 'Standard Room', 'Ocean View', 'Penthouse', 'Family Suite'][i % 5],
-    type: ['King', 'Twin', 'Queen'][i % 3],
-    status: ['Confirmed', 'Pending', 'Checked In', 'Cancelled'][i % 4],
-    amount: [299, 199, 450, 899, 350][i % 5],
-    date: new Date(2024, 0, 1 + i).toLocaleDateString(),
-}));
+const MOCK_DATA = Array.from({ length: 50 }).map((_, i) => {
+    const date = new Date();
+    date.setDate(date.getDate() + (i % 5)); // Generate Today, Tomorrow, +2, +3, +4 days
+    return {
+        id: `BK-${1000 + i}`,
+        guest: ['John Doe', 'Jane Smith', 'Robert Johnson', 'Emily Davis', 'Michael Wilson'][i % 5],
+        room: ['Deluxe Suite', 'Standard Room', 'Ocean View', 'Penthouse', 'Family Suite'][i % 5],
+        type: ['King', 'Twin', 'Queen'][i % 3],
+        status: ['Confirmed', 'Pending', 'Checked In', 'Cancelled'][i % 4],
+        amount: [299, 199, 450, 899, 350][i % 5],
+        date: date.toLocaleDateString(),
+    };
+});
 
 const CompositeShowcase = () => {
     const { theme, toggleTheme } = useTheme();
@@ -30,6 +38,12 @@ const CompositeShowcase = () => {
     const [selectedRows, setSelectedRows] = useState([]);
     const [sort, setSort] = useState({ key: 'id', direction: 'asc' });
     const [loading, setLoading] = useState(false);
+
+    // Date & Time Showcase State
+    const [date, setDate] = useState(new Date());
+    const [time, setTime] = useState('14:30');
+    const [range, setRange] = useState({ start: null, end: null });
+    const [calendarDate, setCalendarDate] = useState(new Date());
 
     // Filter & Sort Logic
     const filteredData = useMemo(() => {
@@ -65,8 +79,9 @@ const CompositeShowcase = () => {
                 }
             }
             if (filter.label === 'Date') {
-                // For now, simple string match or ignore as it's just 'Today'/'Tomorrow' mock
-                // In real app, date comparison.
+                const today = new Date();
+                const itemDate = new Date(filter.value === 'Today' ? today : new Date(today.setDate(today.getDate() + 1))).toLocaleDateString();
+                result = result.filter(item => item.date === itemDate);
             }
         });
 
@@ -158,6 +173,12 @@ const CompositeShowcase = () => {
             }
         },
         {
+            field: 'date',
+            header: 'Check-in',
+            sortable: true,
+            width: '120px'
+        },
+        {
             field: 'amount',
             header: 'Amount',
             sortable: true,
@@ -243,6 +264,57 @@ const CompositeShowcase = () => {
                     />
 
                 </Card>
+
+                {/* Date & Time Showcase */}
+                <div className="space-y-6">
+                    <div>
+                        <h2 className="text-h3 text-text-primary select-none">Date & Time Components</h2>
+                        <p className="text-body text-text-secondary select-none">Advanced pickers for booking flows</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        {/* Left: Input Pickers */}
+                        <Card className="p-6 space-y-6 overflow-visible">
+                            <h3 className="text-lg font-medium text-text-primary">Input Pickers</h3>
+                            <div className="space-y-4">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-text-secondary block">Date Picker (Input)</label>
+                                    <DatePicker
+                                        value={date}
+                                        onChange={setDate}
+                                        placeholder="Pick a date"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-text-secondary block">Time Picker (Dropdown)</label>
+                                    <TimePicker
+                                        value={time}
+                                        onChange={setTime}
+                                        label="Check-in Time"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-text-secondary block">Range Picker (Booking)</label>
+                                    <RangePicker
+                                        value={range}
+                                        onChange={setRange}
+                                    />
+                                </div>
+                            </div>
+                        </Card>
+
+                        {/* Right: Inline Calendar */}
+                        <Card className="p-6 space-y-6 flex flex-col items-center">
+                            <h3 className="text-lg font-medium text-text-primary w-full text-left">Inline Calendar</h3>
+                            <Calendar
+                                value={calendarDate}
+                                onChange={setCalendarDate}
+                                variant="single"
+                                className="border rounded-lg"
+                            />
+                        </Card>
+                    </div>
+                </div>
 
             </div>
         </div>
