@@ -1,0 +1,57 @@
+/* Select.module.css */
+
+.selectDropdown {
+    transform-origin: top;
+    animation: slideDown 0.2s ease-out forwards;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: scaleY(0.95) translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scaleY(1) translateY(0);
+    }
+}
+
+.spinner {
+    border: 2px solid rgba(207, 175, 126, 0.3);
+    /* muted gold */
+    border-radius: 50%;
+    border-top: 2px solid var(--color-accent);
+    width: 16px;
+    height: 16px;
+    animation: spin 1s linear infinite;
+    will-change: transform;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Scrollbar styling for the options list */
+.optionsList::-webkit-scrollbar {
+    width: 6px;
+}
+
+.optionsList::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.optionsList::-webkit-scrollbar-thumb {
+    background-color: var(--color-secondary);
+    border-radius: 3px;
+}
+
+.optionsList::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-accent);
+}

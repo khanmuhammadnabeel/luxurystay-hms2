@@ -224,14 +224,14 @@ function ModalHeader({ title, onClose: onCloseProp, className, children, ...rest
   return (
     <div
       className={clsx(
-        "flex items-center justify-between gap-3 px-6 py-4",
+        "flex items-center justify-between gap-3 px-6 py-4 select-none",
         "border-b border-[rgba(207,175,126,0.4)] bg-gradient-to-r from-transparent via-[rgba(207,175,126,0.15)] to-transparent",
         className
       )}
       {...rest}
     >
       {title && (
-        <h2 className="font-playfair text-h4 font-medium text-[var(--color-text-primary)]">
+        <h2 className="font-playfair text-h4 font-medium text-[var(--color-text-primary)] select-none">
           {title}
         </h2>
       )}

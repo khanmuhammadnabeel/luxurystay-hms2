@@ -60,7 +60,7 @@ const CardRoot = forwardRef(
     // Interactive states
     const interactionClasses =
       isInteractive && !disabled
-        ? "cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-primary)]"
+        ? "cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-primary)]"
         : "";
 
     const disabledClasses = disabled
@@ -70,16 +70,16 @@ const CardRoot = forwardRef(
     // Accessibility for interactive cards
     const roleProps = isInteractive
       ? {
-          role: "button",
-          tabIndex: disabled ? -1 : 0,
-          onKeyDown: (e) => {
-            if (!onClick || disabled) return;
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              onClick(e);
-            }
-          },
-        }
+        role: "button",
+        tabIndex: disabled ? -1 : 0,
+        onKeyDown: (e) => {
+          if (!onClick || disabled) return;
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onClick(e);
+          }
+        },
+      }
       : {};
 
     return (

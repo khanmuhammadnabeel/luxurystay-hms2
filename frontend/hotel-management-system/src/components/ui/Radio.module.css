@@ -1,0 +1,28 @@
+/* Radio.module.css */
+
+.radioInner {
+    transform: scale(0);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.radioInput:checked+.radioControl .radioInner {
+    transform: scale(1);
+}
+
+.radioInput:checked+.radioControl {
+    animation: pulse 0.3s cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(207, 175, 126, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 6px rgba(207, 175, 126, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(207, 175, 126, 0);
+    }
+}

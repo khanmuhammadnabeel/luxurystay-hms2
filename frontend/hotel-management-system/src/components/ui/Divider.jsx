@@ -26,14 +26,14 @@ const Divider = ({
 
   // Horizontal Divider
   if (variant === 'horizontal') {
-    return <hr className={clsx(baseClass, 'w-full')} {...props} />;
+    return <hr className={clsx(baseClass, 'w-full select-none')} {...props} />;
   }
 
   // Vertical Divider
   if (variant === 'vertical') {
     return (
       <div
-        className={clsx(baseClass, 'h-full inline-block align-middle')}
+        className={clsx(baseClass, 'h-full inline-block align-middle select-none')}
         {...props}
       />
     );
@@ -45,7 +45,7 @@ const Divider = ({
       <hr
         className={clsx(
           baseClass,
-          'w-full border-dashed',
+          'w-full border-dashed select-none',
           thickness === 'thin' ? 'border' : thickness === 'medium' ? 'border-2' : 'border-4'
         )}
         {...props}
@@ -65,7 +65,7 @@ const Divider = ({
       <div className={clsx('flex items-center w-full gap-4', alignmentClasses[orientation])}>
         <hr className={clsx(baseClass, 'flex-1')} />
         <span className={clsx(
-          'text-sm font-medium whitespace-nowrap',
+          'text-sm font-medium whitespace-nowrap select-none',
           color === 'gold' ? 'text-accent' : 'text-text-secondary'
         )}>
           {children}
