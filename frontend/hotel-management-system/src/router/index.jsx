@@ -34,8 +34,9 @@ const NotFound = lazy(() => import('../pages/public/NotFound'));
 // Color-Theme Page
 const ThemeShowcase = lazy(() => import('../pages/showcase/TestTheme'));
 
-// ComponentShowCase
+// ComponentShowcase
 const ComponentShowcase = lazy(() => import('../pages/showcase/ComponentShowcase'));
+const CompositeShowcase = lazy(() => import('../pages/showcase/CompositeShowcase'));
 
 const router = createBrowserRouter([
   // Public routes
@@ -49,6 +50,7 @@ const router = createBrowserRouter([
 
   // ComponentShowcase route
   { path: '/components', element: <ComponentShowcase /> },
+  { path: '/composite', element: <CompositeShowcase /> },
 
   // Auth routes
   { path: '/login', element: <Login /> },

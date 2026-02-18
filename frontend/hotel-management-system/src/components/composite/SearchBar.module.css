@@ -1,0 +1,100 @@
+/* SearchBar.module.css */
+.container {
+    position: relative;
+    width: 100%;
+}
+
+.searchWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.global .searchWrapper {
+    border-bottom: 2px solid transparent;
+}
+
+.global .searchWrapper:focus-within {
+    border-bottom-color: var(--color-accent);
+}
+
+.suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 0.5rem;
+    background: var(--color-primary);
+    /* Assuming glass effect is handled by utility classes */
+    border: 1px solid rgba(var(--color-secondary-rgb), 0.2);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 50;
+    overflow: hidden;
+    animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.recentItem,
+.suggestionItem {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    width: 100%;
+    text-align: left;
+    transition: background-color 0.15s;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(var(--color-secondary-rgb), 0.1);
+}
+
+.recentItem:last-child,
+.suggestionItem:last-child {
+    border-bottom: none;
+}
+
+.recentItem:hover,
+.suggestionItem:hover {
+    background-color: rgba(var(--color-accent-rgb), 0.05);
+}
+
+.itemIcon {
+    color: var(--text-secondary);
+}
+
+.itemText {
+    flex: 1;
+    color: var(--text-primary);
+}
+
+.clearButton {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    padding: 2px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.clearButton:hover {
+    color: var(--text-primary);
+    background-color: rgba(var(--color-secondary-rgb), 0.2);
+}

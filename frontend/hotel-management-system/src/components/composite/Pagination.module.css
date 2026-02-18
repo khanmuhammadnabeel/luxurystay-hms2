@@ -1,0 +1,80 @@
+/* Pagination.module.css */
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    width: 100%;
+    border-top: 1px solid rgba(var(--color-secondary-rgb), 0.2);
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pageButton {
+    min-width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    color: var(--text-secondary);
+}
+
+.pageButton:hover:not(:disabled) {
+    background-color: rgba(var(--color-secondary-rgb), 0.1);
+    color: var(--text-primary);
+}
+
+.active {
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.active:hover {
+    background-color: var(--color-accent);
+    /* Keep same on hover */
+    opacity: 0.9;
+}
+
+.dots {
+    color: var(--text-secondary);
+    padding: 0 0.5rem;
+}
+
+.sizeSelector {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.jumpTo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: 1rem;
+}
+
+.jumpInput {
+    width: 3rem;
+    text-align: center;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    border: 1px solid rgba(var(--color-secondary-rgb), 0.2);
+    background-color: transparent;
+    color: var(--text-primary);
+}
+
+.jumpInput:focus {
+    border-color: var(--color-accent);
+    outline: none;
+}
