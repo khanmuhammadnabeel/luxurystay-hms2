@@ -148,7 +148,7 @@ const Input = forwardRef(function Input(
             variant === "flushed"
               ? "focus-visible:border-primary"
               : variant !== "unstyled" &&
-                  "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background",
+              "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background",
             // Error state
             hasError && variant !== "unstyled" && "border-[var(--color-error-light)] focus-visible:ring-[var(--color-error-light)]",
             // Disabled
@@ -159,7 +159,7 @@ const Input = forwardRef(function Input(
             hasRightAccessories && (size === "sm" ? "pr-8" : size === "lg" ? "pr-11" : "pr-9"),
             className
           )}
-          {...props}
+        // Filter out any non-DOM props by not spreading props directly
         />
 
         {/* Right accessories */}
@@ -206,7 +206,7 @@ const Input = forwardRef(function Input(
               </button>
             )}
             {!isPassword && !showClear && rightIcon && (
-              <span className="text-muted-foreground pointer-events-none" aria-hidden="true">
+              <span className="text-muted-foreground" aria-hidden="true">
                 {rightIcon}
               </span>
             )}

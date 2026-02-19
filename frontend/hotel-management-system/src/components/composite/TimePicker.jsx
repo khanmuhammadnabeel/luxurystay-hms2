@@ -77,7 +77,7 @@ const TimePicker = ({
                     error={error}
                     helperText={helperText}
                     leftIcon={<Clock size={16} />}
-                    className="cursor-pointer"
+                    className="cursor-pointer caret-transparent select-none"
                 />
             </div>
 

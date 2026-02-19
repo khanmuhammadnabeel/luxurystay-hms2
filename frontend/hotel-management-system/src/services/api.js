@@ -22,7 +22,7 @@ export function setNotificationHandler(handler) {
 function notifyError(message) {
   try {
     notificationHandler?.showError?.(message);
-  } catch (_) {}
+  } catch (_) { }
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ api.interceptors.request.use(
       if (isDev) {
         console.log('[api]', config.method?.toUpperCase(), config.url);
       }
-    } catch (_) {}
+    } catch (_) { }
     return config;
   },
   (error) => Promise.reject(error)
@@ -79,14 +79,14 @@ api.interceptors.response.use(
     if (status === 401) {
       try {
         localStorage.removeItem('token');
-      } catch (_) {}
+      } catch (_) { }
       notifyError('Session expired. Please log in again.');
       window.location.href = '/login';
       return Promise.reject(error);
     }
     // Instead of window.location, we should use navigate
-// But since we can't use hooks here, this is acceptable for now.
-// Add a comment noting this should be improved.
+    // But since we can't use hooks here, this is acceptable for now.
+    // Add a comment noting this should be improved.
 
 
     if (status === 403) {
@@ -139,6 +139,32 @@ export const endpoints = {
     forgotPassword: '/api/auth/forgot-password',
     resetPassword: '/api/auth/reset-password',
   },
+  files: {
+    upload: '/api/files/upload',
+    delete: '/api/files', // /api/files/:id
+  }
+};
+
+// File Upload Service
+export const uploadFile = async (file, onProgress) => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  return api.post(endpoints.files.upload, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    onUploadProgress: (progressEvent) => {
+      if (onProgress) {
+        const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+        onProgress(percentCompleted);
+      }
+    },
+  });
+};
+
+export const deleteFile = async (fileId) => {
+  return api.delete(`${endpoints.files.delete}/${fileId}`);
 };
 
 export default api;

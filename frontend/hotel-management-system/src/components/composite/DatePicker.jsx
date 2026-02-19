@@ -79,7 +79,7 @@ const DatePicker = ({
                         onClick={handleClear}
                     />
                 ) : null}
-                className={cn("cursor-pointer", className)}
+                className={cn("cursor-pointer caret-transparent select-none", className)}
             />
         </div>
     );

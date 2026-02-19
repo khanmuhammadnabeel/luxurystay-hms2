@@ -6,3 +6,7 @@ export { default as Calendar } from './Calendar';
 export { default as DatePicker } from './DatePicker';
 export { default as TimePicker } from './TimePicker';
 export { default as RangePicker } from './RangePicker';
+export { default as FileUploader } from './FileUploader';
+export { default as ImagePreview } from './ImagePreview';
+export { default as Gallery } from './Gallery';
+export { default as Lightbox } from './Lightbox';

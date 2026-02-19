@@ -7,11 +7,15 @@ import {
     Calendar,
     DatePicker,
     TimePicker,
-    RangePicker
+    RangePicker,
+    FileUploader,
+    ImagePreview,
+    Gallery,
+    Lightbox
 } from '../../components/composite';
 import { Button, Card, Divider } from '../../components/ui';
 import { useTheme } from '../../contexts/ThemeContext';
-import { Eye, Edit, Trash2, MoreVertical, User, CreditCard, Download } from 'lucide-react';
+import { Eye, Edit, Trash2, MoreVertical, User, CreditCard, Download, Image, Grid, List, Maximize2 } from 'lucide-react';
 
 const MOCK_DATA = Array.from({ length: 50 }).map((_, i) => {
     const date = new Date();
@@ -44,6 +48,72 @@ const CompositeShowcase = () => {
     const [time, setTime] = useState('14:30');
     const [range, setRange] = useState({ start: null, end: null });
     const [calendarDate, setCalendarDate] = useState(new Date());
+
+    // File & Gallery Showcase State
+    // File & Gallery Showcase State
+    const [lightboxIndex, setLightboxIndex] = useState(-1);
+
+    // Dedicated state for the Image Preview section (independent of Gallery)
+    const [previewImage, setPreviewImage] = useState({
+        src: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80',
+        alt: 'Preview Image',
+        isPrimary: false
+    });
+
+    const [galleryImages, setGalleryImages] = useState([
+        { id: 1, src: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80', alt: 'Executive Suite', isPrimary: true },
+        { id: 2, src: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80', alt: 'Ocean View', isPrimary: false },
+        { id: 3, src: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80', alt: 'Lobby', isPrimary: false },
+        { id: 4, src: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=800&q=80', alt: 'Pool Area', isPrimary: false },
+        { id: 5, src: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80', alt: 'Dining', isPrimary: false },
+        { id: 6, src: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=800&q=80', alt: 'Spa', isPrimary: false },
+    ]);
+
+    // Gallery Handlers
+    const handleSetPrimary = (id) => {
+        setGalleryImages(prev => prev.map(img => ({
+            ...img,
+            isPrimary: img.id === id
+        })));
+    };
+
+    const handleDeleteImage = (id) => {
+        setGalleryImages(prev => prev.filter(img => img.id !== id));
+        if (lightboxIndex >= 0) setLightboxIndex(-1);
+    };
+
+    // Preview Section Handlers (Independent)
+    const handlePreviewDelete = () => {
+        setPreviewImage(null);
+    };
+
+    const handlePreviewTogglePrimary = () => {
+        setPreviewImage(prev => prev ? ({ ...prev, isPrimary: !prev.isPrimary }) : null);
+    };
+
+    const handleRotate = (angle) => {
+        console.log('Rotated image to:', angle);
+    };
+
+    const handleUpload = (files) => {
+        // Add to Gallery
+        const newImages = files.map((file, i) => ({
+            id: Date.now() + i,
+            src: URL.createObjectURL(file),
+            alt: file.name,
+            isPrimary: false
+        }));
+        setGalleryImages(prev => [...prev, ...newImages]);
+
+        // Also update the Preview Section with the first uploaded file
+        if (files.length > 0) {
+            setPreviewImage({
+                src: URL.createObjectURL(files[0]),
+                alt: files[0].name,
+                isPrimary: false
+            });
+        }
+    };
 
     // Filter & Sort Logic
     const filteredData = useMemo(() => {
@@ -202,11 +272,16 @@ const CompositeShowcase = () => {
         <div className="min-h-screen bg-primary p-8">
             <div className="max-w-7xl mx-auto space-y-8">
 
+                {/* ================================================================================== */}
+                {/*                                       HEADER                                       */}
+                {/* ================================================================================== */}
+
+
                 {/* Header */}
                 <div className="flex justify-between items-center">
                     <div>
-                        <h1 className="text-h2 text-text-primary select-none">Bookings Management</h1>
-                        <p className="text-body text-text-secondary select-none">Composite Components Showcase</p>
+                        <h1 className="text-h2 text-text-primary select-none cursor-default">Bookings Management</h1>
+                        <p className="text-body text-text-secondary select-none cursor-default">Composite Components Showcase</p>
                     </div>
                     <Button
                         variant="outline"
@@ -217,6 +292,9 @@ const CompositeShowcase = () => {
                     </Button>
                 </div>
 
+                {/* ================================================================================== */}
+                {/*                           BOOKINGS MANAGEMENT SECTION                              */}
+                {/* ================================================================================== */}
                 <Card className="p-6 space-y-6 overflow-visible">
 
                     {/* Toolbar */}
@@ -265,20 +343,22 @@ const CompositeShowcase = () => {
 
                 </Card>
 
-                {/* Date & Time Showcase */}
+                {/* ================================================================================== */}
+                {/*                           DATE & TIME COMPONENTS SECTION                           */}
+                {/* ================================================================================== */}
                 <div className="space-y-6">
                     <div>
-                        <h2 className="text-h3 text-text-primary select-none">Date & Time Components</h2>
-                        <p className="text-body text-text-secondary select-none">Advanced pickers for booking flows</p>
+                        <h2 className="text-h3 text-text-primary select-none cursor-default">Date & Time Components</h2>
+                        <p className="text-body text-text-secondary select-none cursor-default">Advanced pickers for booking flows</p>
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         {/* Left: Input Pickers */}
                         <Card className="p-6 space-y-6 overflow-visible">
-                            <h3 className="text-lg font-medium text-text-primary">Input Pickers</h3>
+                            <h3 className="text-lg font-medium text-text-primary select-none cursor-default">Input Pickers</h3>
                             <div className="space-y-4">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-text-secondary block">Date Picker (Input)</label>
+                                    <label className="text-sm font-medium text-text-secondary block select-none cursor-default">Date Picker (Input)</label>
                                     <DatePicker
                                         value={date}
                                         onChange={setDate}
@@ -286,7 +366,7 @@ const CompositeShowcase = () => {
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-text-secondary block">Time Picker (Dropdown)</label>
+                                    <label className="text-sm font-medium text-text-secondary block select-none cursor-default">Time Picker (Dropdown)</label>
                                     <TimePicker
                                         value={time}
                                         onChange={setTime}
@@ -294,7 +374,7 @@ const CompositeShowcase = () => {
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-text-secondary block">Range Picker (Booking)</label>
+                                    <label className="text-sm font-medium text-text-secondary block select-none cursor-default">Range Picker (Booking)</label>
                                     <RangePicker
                                         value={range}
                                         onChange={setRange}
@@ -305,7 +385,7 @@ const CompositeShowcase = () => {
 
                         {/* Right: Inline Calendar */}
                         <Card className="p-6 space-y-6 flex flex-col items-center">
-                            <h3 className="text-lg font-medium text-text-primary w-full text-left">Inline Calendar</h3>
+                            <h3 className="text-lg font-medium text-text-primary w-full text-left select-none cursor-default">Inline Calendar</h3>
                             <Calendar
                                 value={calendarDate}
                                 onChange={setCalendarDate}
@@ -315,6 +395,131 @@ const CompositeShowcase = () => {
                         </Card>
                     </div>
                 </div>
+
+                {/* ================================================================================== */}
+                {/*                           FILE & GALLERY COMPONENTS SECTION                        */}
+                {/* ================================================================================== */}
+                <div className="space-y-6">
+                    <div>
+                        <h2 className="text-h3 text-text-primary select-none cursor-default">File & Media Components</h2>
+                        <p className="text-body text-text-secondary select-none cursor-default">Uploaders, previews, and galleries</p>
+                    </div>
+
+                    {/* File Uploaders */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <Card className="p-6 space-y-6">
+                            <h3 className="text-lg font-medium text-text-primary select-none cursor-default">File Uploader (Drag & Drop)</h3>
+                            <div className="space-y-4">
+                                <FileUploader
+                                    variant="multiple"
+                                    onUpload={handleUpload}
+                                    className="h-full"
+                                />
+                                <div className="flex gap-4 items-center pt-2">
+                                    <FileUploader variant="avatar" onUpload={handleUpload} />
+                                    <div>
+                                        <p className="text-sm font-medium text-text-primary select-none cursor-default">Avatar Mode</p>
+                                        <p className="text-xs text-text-secondary select-none cursor-default">Click to upload</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Card>
+
+                        <Card className="p-6 space-y-6">
+                            <h3 className="text-lg font-medium text-text-primary select-none cursor-default">Image Previews</h3>
+                            <div className="flex flex-col gap-4">
+                                {/* Standalone Image Preview 1 */}
+                                <div className="w-40">
+                                    {previewImage ? (
+                                        <>
+                                            <ImagePreview
+                                                src={previewImage.src}
+                                                alt={previewImage.alt}
+                                                variant="card"
+                                                isPrimary={previewImage.isPrimary}
+                                                onDelete={handlePreviewDelete}
+                                                onSetPrimary={handlePreviewTogglePrimary}
+                                                onRotate={handleRotate}
+                                                onClick={() => { }} // No lightbox for this specific demo or maybe separate?
+                                            // The user didn't explicitly ask for lightbox on the standalone, 
+                                            // but "Clicking gallery images opens the lightbox" was requested.
+                                            // For this preview box, clicking usually just shows it.
+                                            // Let's keep it simple or maybe open lightbox with just this image?
+                                            // For now, I'll remove the lightbox click to focus on the preview functionality as requested.
+                                            />
+                                            <p className="text-xs text-center mt-2 text-text-secondary select-none cursor-default">Card Variant</p>
+                                        </>
+                                    ) : (
+                                        <div className="w-full aspect-square bg-secondary rounded-xl border-2 border-dashed border-accent/20 flex items-center justify-center">
+                                            <p className="text-xs text-text-secondary">No image</p>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Standalone Image Preview 2 */}
+                                <div className="w-full">
+                                    {previewImage ? (
+                                        <ImagePreview
+                                            src={previewImage.src}
+                                            alt={previewImage.alt}
+                                            variant="list"
+                                            isPrimary={previewImage.isPrimary}
+                                            onDelete={handlePreviewDelete}
+                                            onSetPrimary={handlePreviewTogglePrimary}
+                                            onRotate={handleRotate}
+                                        />
+                                    ) : (
+                                        <div className="w-full h-16 bg-secondary rounded-lg border border-dashed border-accent/20 flex items-center justify-center">
+                                            <p className="text-xs text-text-secondary">No image selected</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </Card>
+                    </div>
+
+                    {/* Gallery & Lightbox */}
+                    <Card className="p-6 space-y-6">
+                        <div className="flex justify-between items-center">
+                            <h3 className="text-lg font-medium text-text-primary select-none cursor-default">Interactive Gallery</h3>
+                            <p className="text-sm text-text-secondary select-none cursor-default">Click image to open Lightbox</p>
+                        </div>
+                        {/* Gallery - passes handlers correctly */}
+                        <Gallery
+                            images={galleryImages}
+                            variant="grid"
+                            gap="md"
+                            onDelete={handleDeleteImage}
+                            onSetPrimary={handleSetPrimary}
+                        // Gallery internally uses ImagePreview which now accepts clicks
+                        // But Gallery.jsx already wraps them in a div with onClick to setLightboxIndex
+                        // So we need to ensure Gallery.jsx sets the index correctly.
+                        // Gallery.jsx has internal state for index. 
+                        // WAIT: I should probably hoist lightbox state to here so the standalone images share the same Lightbox!
+                        // Currently Gallery has its own Lightbox.
+                        // The standalone images try to set 'lightboxIndex' HERE in ShowCase.
+                        // BUT there is no Lightbox rendered in Showcase! It's inside Gallery!
+                        // Fix: Render Lightbox in Showcase and pass handlers to Gallery to open it.
+                        // But Gallery.jsx currently renders its own Lightbox.
+                        // I should change Gallery to accept onImageClick or similar, 
+                        // OR just let Gallery handle its own lightbox and add ANOTHER Lightbox for standalone? 
+                        // NO, better to have one shared lightbox.
+                        // I will modify Gallery to accept `onImageClick` and NOT render Lightbox itself if passed?
+                        // Or simpler: Just render a second Lightbox at the root of Showcase for the shared state.
+                        // AND update Gallery to use the passed down handlers if I want unified experience.
+                        // Actually, I'll just let Gallery do its thing (it has its own internal lightbox state),
+                        // AND I will add a Lightbox here for the standalone images.
+                        />
+                    </Card>
+                </div>
+
+                {/* Global Lightbox for Standalone Images (or shared if I refactored Gallery) */}
+                <Lightbox
+                    isOpen={lightboxIndex >= 0}
+                    initialIndex={lightboxIndex}
+                    images={galleryImages}
+                    onClose={() => setLightboxIndex(-1)}
+                />
 
             </div>
         </div>

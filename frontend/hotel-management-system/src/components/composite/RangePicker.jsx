@@ -51,19 +51,17 @@ const RangePicker = ({
                 onClick={() => !disabled && setIsOpen(!isOpen)}
             >
                 <CalendarIcon size={16} className="text-text-secondary" />
-                <input
-                    readOnly
-                    placeholder="Check-in"
-                    value={displayStart}
-                    className={styles.dateDisplay}
-                />
+                <span
+                    className={cn(styles.dateDisplay, !displayStart && styles.placeholder)}
+                >
+                    {displayStart || "Check-in"}
+                </span>
                 <ArrowRight size={14} className={styles.separator} />
-                <input
-                    readOnly
-                    placeholder="Check-out"
-                    value={displayEnd}
-                    className={styles.dateDisplay}
-                />
+                <span
+                    className={cn(styles.dateDisplay, !displayEnd && styles.placeholder)}
+                >
+                    {displayEnd || "Check-out"}
+                </span>
                 {(value?.start || value?.end) && (
                     <X
                         size={16}
