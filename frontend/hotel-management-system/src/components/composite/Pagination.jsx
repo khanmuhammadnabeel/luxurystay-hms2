@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { Button, Select } from '../ui';
+import { useLocalization } from '../../contexts';
 import styles from './Pagination.module.css';
 
 const Pagination = ({
@@ -16,6 +17,7 @@ const Pagination = ({
     showSizeSelector = true,
     showJumpTo = false,
 }) => {
+    const { t } = useLocalization();
 
     // Generate page numbers with ellipsis
     const getPageNumbers = () => {
@@ -57,7 +59,7 @@ const Pagination = ({
             <div className="flex items-center gap-4">
                 {showSizeSelector && onPageSizeChange && (
                     <div className={styles.sizeSelector}>
-                        <span>Rows per page:</span>
+                        <span>{t('pagination.rowsPerPage')}</span>
                         <Select
                             value={pageSize}
                             onChange={onPageSizeChange}
@@ -74,7 +76,7 @@ const Pagination = ({
                 )}
                 {totalItems !== undefined && (
                     <span className="text-sm text-text-secondary select-none">
-                        {totalItems} total items
+                        {totalItems} {t('pagination.totalItems')}
                     </span>
                 )}
             </div>
@@ -85,7 +87,7 @@ const Pagination = ({
                     className={styles.pageButton}
                     onClick={() => handlePageChange(1)}
                     disabled={currentPage === 1}
-                    aria-label="First page"
+                    aria-label={t('pagination.first')}
                 >
                     <ChevronsLeft size={16} />
                 </button>
@@ -93,32 +95,32 @@ const Pagination = ({
                     className={styles.pageButton}
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
-                    aria-label="Previous page"
+                    aria-label={t('pagination.prev')}
                 >
                     <ChevronLeft size={16} />
                 </button>
 
                 {getPageNumbers().map((page, idx) => (
-    page === '...' ? (
-        <span key={`dots-${idx}`} className={styles.dots}>...</span>
-    ) : (
-        <button
-            key={page}
-            className={cn(
-                styles.pageButton, 
-                currentPage === page && "bg-accent text-primary border-accent hover:bg-accent/90"
-            )}
-            onClick={() => handlePageChange(page)}
-        >
-            {page}
-        </button>
-    )
-))}
+                    page === '...' ? (
+                        <span key={`dots-${idx}`} className={styles.dots}>...</span>
+                    ) : (
+                        <button
+                            key={page}
+                            className={cn(
+                                styles.pageButton,
+                                currentPage === page && "bg-accent text-primary border-accent hover:bg-accent/90"
+                            )}
+                            onClick={() => handlePageChange(page)}
+                        >
+                            {page}
+                        </button>
+                    )
+                ))}
                 <button
                     className={styles.pageButton}
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
-                    aria-label="Next page"
+                    aria-label={t('pagination.next')}
                 >
                     <ChevronRight size={16} />
                 </button>
@@ -126,7 +128,7 @@ const Pagination = ({
                     className={styles.pageButton}
                     onClick={() => handlePageChange(totalPages)}
                     disabled={currentPage === totalPages}
-                    aria-label="Last page"
+                    aria-label={t('pagination.last')}
                 >
                     <ChevronsRight size={16} />
                 </button>

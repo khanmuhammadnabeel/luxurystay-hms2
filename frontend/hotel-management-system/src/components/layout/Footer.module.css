@@ -1,0 +1,121 @@
+/* Footer.module.css */
+
+.footer {
+    background-color: var(--color-primary);
+    border-top: 1px solid var(--glass-border);
+    padding: 5rem 1.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--color-accent), transparent);
+    opacity: 0.3;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 3rem;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.link {
+    color: var(--color-text-secondary);
+    transition: all 0.3s ease;
+    display: block;
+    margin-bottom: 0.75rem;
+    width: fit-content;
+}
+
+.link:hover {
+    color: var(--color-accent);
+    transform: translateX(5px);
+}
+
+.socialIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-secondary);
+    border: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-secondary);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.socialIcon:hover {
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+    transform: translateY(-5px) rotate(8deg);
+    border-color: var(--color-accent);
+}
+
+/* Newsletter Section */
+.newsletter {
+    background-color: var(--color-secondary);
+    padding: 1.5rem;
+    border-radius: 1.25rem;
+    border: 1px solid var(--glass-border);
+}
+
+/* Back to Top Button */
+.backToTop {
+    position: fixed;
+    bottom: 5rem;
+    right: 2.5rem;
+    width: 3rem;
+    height: 3rem;
+    background-color: rgba(33, 31, 31, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 500;
+    transition: all 0.3s ease;
+}
+
+.backToTopVisible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.backToTopHidden {
+    opacity: 0;
+    transform: scale(0);
+    pointer-events: none;
+}
+
+.backToTop:hover {
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+    transform: scale(1.1) translateY(-3px);
+    border-color: var(--color-accent);
+    box-shadow: 0 10px 20px rgba(207, 175, 126, 0.3);
+}

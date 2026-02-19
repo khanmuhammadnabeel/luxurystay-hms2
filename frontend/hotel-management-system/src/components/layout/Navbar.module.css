@@ -1,0 +1,113 @@
+/* Navbar.module.css */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-index-navbar, 1000);
+    width: 100%;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(0);
+}
+
+.navbarHidden {
+    transform: translateY(-100%);
+}
+
+.navbarScrolled {
+    background-color: var(--color-primary-transparent, rgba(18, 18, 18, 0.8));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    box-shadow: var(--shadow-md);
+}
+
+.navbarTransparent {
+    background-color: transparent;
+    border-bottom: 1px solid transparent;
+}
+
+/* Gold Underline for Active Links */
+.navLink {
+    position: relative;
+    color: var(--color-text-secondary);
+    transition: color 0.3s ease;
+}
+
+.navLink:hover {
+    color: var(--color-accent);
+}
+
+.navLinkActive {
+    color: var(--color-accent) !important;
+}
+
+.navLinkActive::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-accent);
+    border-radius: 2px;
+    animation: slideIn 0.3s ease-out forwards;
+}
+
+@keyframes slideIn {
+    from {
+        transform: scaleX(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scaleX(1);
+        opacity: 1;
+    }
+}
+
+/* Mobile Drawer Styles */
+.mobileDrawer {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1.5rem;
+    height: 100%;
+    background-color: var(--color-primary);
+    border-left: 2px solid var(--color-accent);
+}
+
+.drawerItem {
+    padding: 1rem 0;
+    font-size: 1.25rem;
+    font-family: var(--font-display);
+    border-bottom: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.drawerItem:last-child {
+    border-bottom: none;
+}
+
+/* Notification Badge Animation */
+.notificationBadge {
+    animation: pulseGold 2s infinite;
+}
+
+@keyframes pulseGold {
+    0% {
+        box-shadow: 0 0 0 0 rgba(207, 175, 126, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 6px rgba(207, 175, 126, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(207, 175, 126, 0);
+    }
+}

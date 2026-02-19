@@ -38,40 +38,49 @@ const ThemeShowcase = lazy(() => import('../pages/showcase/TestTheme'));
 const ComponentShowcase = lazy(() => import('../pages/showcase/ComponentShowcase'));
 const CompositeShowcase = lazy(() => import('../pages/showcase/CompositeShowcase'));
 
+import MainLayout from '../layouts/MainLayout';
+
 const router = createBrowserRouter([
-  // Public routes
-  { path: '/', element: <Home /> },
-  { path: '/rooms', element: <Rooms /> },
-  { path: '/rooms/:id', element: <RoomDetail /> },
-  { path: '/contact', element: <Contact /> },
+  {
+    path: '/',
+    element: <MainLayout />,
+    children: [
+      // Public routes
+      { index: true, element: <Home /> },
+      { path: 'rooms', element: <Rooms /> },
+      { path: 'rooms/:id', element: <RoomDetail /> },
+      { path: 'contact', element: <Contact /> },
 
-  // Color-Theme route
-  { path: '/color-theme', element: <ThemeShowcase /> },
+      // Color-Theme route
+      { path: 'color-theme', element: <ThemeShowcase /> },
 
-  // ComponentShowcase route
-  { path: '/components', element: <ComponentShowcase /> },
-  { path: '/composite', element: <CompositeShowcase /> },
+      // ComponentShowcase route
+      { path: 'components', element: <ComponentShowcase /> },
+      { path: 'composite', element: <CompositeShowcase /> },
 
-  // Auth routes
-  { path: '/login', element: <Login /> },
-  { path: '/register', element: <Register /> },
+      // Auth routes (Usually don't have footer/navbar, but following user request to wrap routes)
+      // If we want minimal layout for auth, we could create an AuthLayout
+      { path: 'login', element: <Login /> },
+      { path: 'register', element: <Register /> },
 
-  // Guest routes (will add protection later)
-  { path: '/dashboard', element: <Dashboard /> },
-  { path: '/bookings', element: <Bookings /> },
-  { path: '/profile', element: <Profile /> },
+      // Guest routes
+      { path: 'dashboard', element: <Dashboard /> },
+      { path: 'bookings', element: <Bookings /> },
+      { path: 'profile', element: <Profile /> },
 
-  // Staff routes
-  { path: '/receptionist', element: <Receptionist /> },
-  { path: '/housekeeping', element: <Housekeeping /> },
+      // Staff routes
+      { path: 'receptionist', element: <Receptionist /> },
+      { path: 'housekeeping', element: <Housekeeping /> },
 
-  // Admin routes
-  { path: '/admin', element: <AdminDashboard /> },
-  { path: '/admin/users', element: <UserManagement /> },
-  { path: '/admin/rooms', element: <RoomManagement /> },
+      // Admin routes
+      { path: 'admin', element: <AdminDashboard /> },
+      { path: 'admin/users', element: <UserManagement /> },
+      { path: 'admin/rooms', element: <RoomManagement /> },
 
-  // 404 route - must be last
-  { path: '*', element: <NotFound /> }
+      // 404 route
+      { path: '*', element: <NotFound /> }
+    ]
+  }
 ]);
 
 export default router;

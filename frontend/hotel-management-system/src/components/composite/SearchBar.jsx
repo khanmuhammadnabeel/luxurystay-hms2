@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Search, X, Clock, Loader2, Mic } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { Input } from '../ui';
+import { useLocalization } from '../../contexts';
 import styles from './SearchBar.module.css';
 
 const SearchBar = ({
@@ -15,6 +16,7 @@ const SearchBar = ({
     className,
     delay = 300,
 }) => {
+    const { t } = useLocalization();
     const [query, setQuery] = useState('');
     const [isFocused, setIsFocused] = useState(false);
     const [recentSearches, setRecentSearches] = useState([]);
@@ -102,7 +104,7 @@ const SearchBar = ({
                     <button
                         onClick={clearSearch}
                         className={styles.clearButton}
-                        aria-label="Clear search"
+                        aria-label={t('common.clear')}
                     >
                         <X size={16} />
                     </button>
@@ -116,35 +118,35 @@ const SearchBar = ({
 
                         {/* Suggestions from API/Props */}
                         {query && suggestions.map((item, idx) => (
-    <div
-        key={idx}
-        className={cn(styles.suggestionItem, "select-none")}
-        onClick={() => {
-            setQuery(item);
-            handleSearch(item);
-        }}
-    >
-        <Search size={14} className={styles.itemIcon} />
-        <span className={styles.itemText}>
-            {item}
-        </span>
-    </div>
-))}
+                            <div
+                                key={idx}
+                                className={cn(styles.suggestionItem, "select-none")}
+                                onClick={() => {
+                                    setQuery(item);
+                                    handleSearch(item);
+                                }}
+                            >
+                                <Search size={14} className={styles.itemIcon} />
+                                <span className={styles.itemText}>
+                                    {item}
+                                </span>
+                            </div>
+                        ))}
 
                         {/* Recent Searches (only show when no query typed) */}
                         {!query && enableRecent && recentSearches.map((item, idx) => (
-    <div
-        key={`recent-${idx}`}
-        className={cn(styles.recentItem, "select-none")}
-        onClick={() => {
-            setQuery(item);
-            handleSearch(item);
-        }}
-    >
-        <Clock size={14} className={styles.itemIcon} />
-        <span className={styles.itemText}>{item}</span>
-    </div>
-))}
+                            <div
+                                key={`recent-${idx}`}
+                                className={cn(styles.recentItem, "select-none")}
+                                onClick={() => {
+                                    setQuery(item);
+                                    handleSearch(item);
+                                }}
+                            >
+                                <Clock size={14} className={styles.itemIcon} />
+                                <span className={styles.itemText}>{item}</span>
+                            </div>
+                        ))}
                     </div>
                 )
             )}

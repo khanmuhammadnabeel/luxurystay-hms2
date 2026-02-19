@@ -1,6 +1,17 @@
 @import "tailwindcss" theme(static);
 @import './styles/typography.css';
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&family=Playfair+Display:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&family=Playfair+Display:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@400..700&display=swap');
+
+.font-urdu {
+  font-family: 'Noto Nastaliq Urdu', serif !important;
+  line-height: 2 !important;
+}
+
+[dir="rtl"] .ml-auto {
+  margin-left: initial;
+  margin-right: auto;
+}
+
 
 @theme {
   /* DARK THEME (default) */
@@ -39,12 +50,12 @@
   --color-accent: #CFAF7E;
   --color-text-primary: #2C2C2C;
   --color-text-secondary: #6B635C;
-  
+
   /* Glass (light) */
   --glass-bg: rgba(248, 245, 240, 0.7);
   --glass-border: rgba(207, 175, 126, 0.2);
   --glass-blur: 12px;
-  
+
   /* Shadows (light - charcoal based) */
   --shadow-sm: 0 4px 8px -2px rgba(44, 44, 44, 0.08);
   --shadow-md: 0 12px 24px -8px rgba(44, 44, 44, 0.12);
@@ -68,14 +79,14 @@
     backdrop-filter: blur(var(--glass-blur));
     border: 1px solid var(--glass-border);
   }
-  
+
   .card {
     background-color: var(--color-secondary);
     border-radius: 0.5rem;
     padding: 1.5rem;
     transition: all 0.3s ease;
   }
-  
+
   .btn-primary {
     background-color: var(--color-accent);
     color: var(--color-primary);
@@ -85,12 +96,12 @@
     transition: all 0.3s ease;
     box-shadow: var(--shadow-sm);
   }
-  
+
   .btn-primary:hover {
     background-color: color-mix(in srgb, var(--color-accent) 90%, transparent);
     box-shadow: var(--shadow-md);
   }
-  
+
   .btn-secondary {
     border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
     color: var(--color-accent);
@@ -98,7 +109,7 @@
     border-radius: 0.5rem;
     transition: all 0.3s ease;
   }
-  
+
   .btn-secondary:hover {
     background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
   }
@@ -108,24 +119,65 @@
 * {
   transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
+
 @keyframes shimmer {
-  0% { background-position: 100% 0; }
-  100% { background-position: -100% 0; }
-}
-@keyframes modalFadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-@keyframes modalSlideDown {
-  from { opacity: 0; transform: translateY(-100%); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes modalSlideUp {
-  from { opacity: 0; transform: translateY(100%); }
-  to { opacity: 1; transform: translateY(0); }
+  0% {
+    background-position: 100% 0;
+  }
+
+  100% {
+    background-position: -100% 0;
+  }
 }
 
-.modal-animate-scale { animation: modalFadeIn 0.25s ease-out; }
-.modal-animate-slide-down { animation: modalSlideDown 0.25s ease-out; }
-.modal-animate-slide-up { animation: modalSlideUp 0.25s ease-out; }
-.modal-animate-fade { animation: modalFadeIn 0.25s ease-out; }
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes modalSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-animate-scale {
+  animation: modalFadeIn 0.25s ease-out;
+}
+
+.modal-animate-slide-down {
+  animation: modalSlideDown 0.25s ease-out;
+}
+
+.modal-animate-slide-up {
+  animation: modalSlideUp 0.25s ease-out;
+}
+
+.modal-animate-fade {
+  animation: modalFadeIn 0.25s ease-out;
+}

@@ -14,18 +14,18 @@ import {
     Lightbox
 } from '../../components/composite';
 import { Button, Card, Divider } from '../../components/ui';
-import { useTheme } from '../../contexts/ThemeContext';
-import { Eye, Edit, Trash2, MoreVertical, User, CreditCard, Download, Image, Grid, List, Maximize2 } from 'lucide-react';
+import { useTheme, useLocalization } from '../../contexts';
+import { Eye, Edit, Trash2, MoreVertical, User, CreditCard, Download, Image, Grid, List, Maximize2, Plus } from 'lucide-react';
 
 const MOCK_DATA = Array.from({ length: 50 }).map((_, i) => {
     const date = new Date();
-    date.setDate(date.getDate() + (i % 5)); // Generate Today, Tomorrow, +2, +3, +4 days
+    date.setDate(date.getDate() + (i % 5));
     return {
         id: `BK-${1000 + i}`,
         guest: ['John Doe', 'Jane Smith', 'Robert Johnson', 'Emily Davis', 'Michael Wilson'][i % 5],
-        room: ['Deluxe Suite', 'Standard Room', 'Ocean View', 'Penthouse', 'Family Suite'][i % 5],
-        type: ['King', 'Twin', 'Queen'][i % 3],
-        status: ['Confirmed', 'Pending', 'Checked In', 'Cancelled'][i % 4],
+        roomKey: ['deluxe', 'standard', 'ocean', 'penthouse', 'family'][i % 5],
+        typeKey: ['king', 'twin', 'queen'][i % 3],
+        statusKey: ['confirmed', 'pending', 'checkedIn', 'cancelled'][i % 4],
         amount: [299, 199, 450, 899, 350][i % 5],
         date: date.toLocaleDateString(),
     };
@@ -33,6 +33,7 @@ const MOCK_DATA = Array.from({ length: 50 }).map((_, i) => {
 
 const CompositeShowcase = () => {
     const { theme, toggleTheme } = useTheme();
+    const { t, isRTL, activeCurrency } = useLocalization();
 
     // State
     const [searchTerm, setSearchTerm] = useState('');
@@ -190,7 +191,7 @@ const CompositeShowcase = () => {
             'Status': ['Confirmed', 'Pending'],
             'Type': ['King', 'Twin'],
             'Price Range': ['$0-$200', '$200+'],
-            'Date': ['Today', 'Tomorrow']
+            'Date': [t('booking.today'), t('booking.tomorrow')]
         };
         const randomValue = values[field][Math.floor(Math.random() * values[field].length)];
 
@@ -208,10 +209,10 @@ const CompositeShowcase = () => {
     };
 
     const columns = [
-        { field: 'id', header: 'Booking ID', sortable: true, width: '120px' },
+        { field: 'id', header: t('booking.id'), sortable: true, width: '120px' },
         {
             field: 'guest',
-            header: 'Guest',
+            header: t('booking.guest'),
             sortable: true,
             render: (row) => (
                 <div className="flex items-center gap-2">
@@ -222,38 +223,43 @@ const CompositeShowcase = () => {
                 </div>
             )
         },
-        { field: 'room', header: 'Room Type', sortable: true },
         {
-            field: 'status',
-            header: 'Status',
+            field: 'roomKey',
+            header: t('booking.roomType'),
+            sortable: true,
+            render: (row) => t(`rooms.${row.roomKey}`)
+        },
+        {
+            field: 'statusKey',
+            header: t('booking.status'),
             sortable: true,
             align: 'center',
             render: (row) => {
                 const colors = {
-                    'Confirmed': 'bg-green-500/10 text-green-500',
-                    'Pending': 'bg-yellow-500/10 text-yellow-500',
-                    'Checked In': 'bg-blue-500/10 text-blue-500',
-                    'Cancelled': 'bg-red-500/10 text-red-500',
+                    'confirmed': 'bg-green-500/10 text-green-500',
+                    'pending': 'bg-yellow-500/10 text-yellow-500',
+                    'checkedIn': 'bg-blue-500/10 text-blue-500',
+                    'cancelled': 'bg-red-500/10 text-red-500',
                 };
                 return (
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium select-none ${colors[row.status]}`}>
-                        {row.status}
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium select-none ${colors[row.statusKey]}`}>
+                        {t(`status.${row.statusKey}`)}
                     </span>
                 );
             }
         },
         {
             field: 'date',
-            header: 'Check-in',
+            header: t('booking.checkIn'),
             sortable: true,
             width: '120px'
         },
         {
             field: 'amount',
-            header: 'Amount',
+            header: t('booking.amount'),
             sortable: true,
-            align: 'right',
-            render: (row) => <span className="font-medium">${row.amount}</span>
+            align: 'end',
+            render: (row) => <span className="font-medium">{activeCurrency.symbol}{row.amount}</span>
         },
         {
             field: 'actions',
@@ -279,16 +285,16 @@ const CompositeShowcase = () => {
 
                 {/* Header */}
                 <div className="flex justify-between items-center">
-                    <div>
-                        <h1 className="text-h2 text-text-primary select-none cursor-default">Bookings Management</h1>
-                        <p className="text-body text-text-secondary select-none cursor-default">Composite Components Showcase</p>
+                    <div className={isRTL ? "text-right" : "text-left"}>
+                        <h1 className="text-h2 text-text-primary select-none cursor-default">{t('showcase.title')}</h1>
+                        <p className="text-body text-text-secondary select-none cursor-default">{t('showcase.subtitle')}</p>
                     </div>
                     <Button
                         variant="outline"
                         onClick={toggleTheme}
                         leftIcon={theme === 'dark' ? '🌙' : '☀️'}
                     >
-                        {theme === 'dark' ? 'Dark' : 'Light'} Mode
+                        {theme === 'dark' ? t('nav.theme') + ' (Dark)' : t('nav.theme') + ' (Light)'}
                     </Button>
                 </div>
 
@@ -301,14 +307,14 @@ const CompositeShowcase = () => {
                     <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
                         <SearchBar
                             onSearch={handleSearch}
-                            placeholder="Search bookings..."
+                            placeholder={t('booking.searchPlaceholder')}
                             variant="default"
                             className="max-w-md"
                             enableRecent={true}
                         />
                         <div className="flex gap-2">
-                            <Button variant="outline" leftIcon={<Download size={16} />}>Export</Button>
-                            <Button variant="primary" leftIcon={<PlusIcon size={16} />} >New Booking</Button>
+                            <Button variant="outline" leftIcon={<Download size={16} />}>{t('common.export')}</Button>
+                            <Button variant="primary" leftIcon={<Plus size={16} />} >{t('common.newBooking')}</Button>
                         </div>
                     </div>
 
@@ -338,7 +344,7 @@ const CompositeShowcase = () => {
                         onSelectionChange={setSelectedRows}
                         selectedRowIds={selectedRows}
                         variant="striped"
-                        emptyMessage="No bookings found."
+                        emptyMessage={t('common.noResults')}
                     />
 
                 </Card>
@@ -347,34 +353,34 @@ const CompositeShowcase = () => {
                 {/*                           DATE & TIME COMPONENTS SECTION                           */}
                 {/* ================================================================================== */}
                 <div className="space-y-6">
-                    <div>
-                        <h2 className="text-h3 text-text-primary select-none cursor-default">Date & Time Components</h2>
-                        <p className="text-body text-text-secondary select-none cursor-default">Advanced pickers for booking flows</p>
+                    <div className={isRTL ? "text-right" : "text-left"}>
+                        <h2 className="text-h3 text-text-primary select-none cursor-default">{t('showcase.dateTimeTitle')}</h2>
+                        <p className="text-body text-text-secondary select-none cursor-default">{t('showcase.dateTimeSubtitle')}</p>
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         {/* Left: Input Pickers */}
                         <Card className="p-6 space-y-6 overflow-visible">
-                            <h3 className="text-lg font-medium text-text-primary select-none cursor-default">Input Pickers</h3>
+                            <h3 className="text-lg font-medium text-text-primary select-none cursor-default">{t('showcase.inputPickers')}</h3>
                             <div className="space-y-4">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-text-secondary block select-none cursor-default">Date Picker (Input)</label>
+                                    <label className={`text-sm font-medium text-text-secondary block select-none cursor-default ${isRTL ? "text-right" : "text-left"}`}>{t('booking.datePicker')}</label>
                                     <DatePicker
                                         value={date}
                                         onChange={setDate}
-                                        placeholder="Pick a date"
+                                        placeholder={t('booking.pickDate')}
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-text-secondary block select-none cursor-default">Time Picker (Dropdown)</label>
+                                    <label className={`text-sm font-medium text-text-secondary block select-none cursor-default ${isRTL ? "text-right" : "text-left"}`}>{t('booking.timePicker')}</label>
                                     <TimePicker
                                         value={time}
                                         onChange={setTime}
-                                        label="Check-in Time"
+                                        label={t('booking.checkInTime')}
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-text-secondary block select-none cursor-default">Range Picker (Booking)</label>
+                                    <label className={`text-sm font-medium text-text-secondary block select-none cursor-default ${isRTL ? "text-right" : "text-left"}`}>{t('booking.rangePicker')}</label>
                                     <RangePicker
                                         value={range}
                                         onChange={setRange}
@@ -385,7 +391,7 @@ const CompositeShowcase = () => {
 
                         {/* Right: Inline Calendar */}
                         <Card className="p-6 space-y-6 flex flex-col items-center">
-                            <h3 className="text-lg font-medium text-text-primary w-full text-left select-none cursor-default">Inline Calendar</h3>
+                            <h3 className={`text-lg font-medium text-text-primary w-full select-none cursor-default ${isRTL ? "text-right" : "text-left"}`}>{t('showcase.inlineCalendar')}</h3>
                             <Calendar
                                 value={calendarDate}
                                 onChange={setCalendarDate}
@@ -400,15 +406,15 @@ const CompositeShowcase = () => {
                 {/*                           FILE & GALLERY COMPONENTS SECTION                        */}
                 {/* ================================================================================== */}
                 <div className="space-y-6">
-                    <div>
-                        <h2 className="text-h3 text-text-primary select-none cursor-default">File & Media Components</h2>
-                        <p className="text-body text-text-secondary select-none cursor-default">Uploaders, previews, and galleries</p>
+                    <div className={isRTL ? "text-right" : "text-left"}>
+                        <h2 className="text-h3 text-text-primary select-none cursor-default">{t('showcase.fileMediaTitle')}</h2>
+                        <p className="text-body text-text-secondary select-none cursor-default">{t('showcase.fileMediaSubtitle')}</p>
                     </div>
 
                     {/* File Uploaders */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <Card className="p-6 space-y-6">
-                            <h3 className="text-lg font-medium text-text-primary select-none cursor-default">File Uploader (Drag & Drop)</h3>
+                            <h3 className="text-lg font-medium text-text-primary select-none cursor-default">{t('showcase.uploaderDrag')}</h3>
                             <div className="space-y-4">
                                 <FileUploader
                                     variant="multiple"
@@ -417,16 +423,16 @@ const CompositeShowcase = () => {
                                 />
                                 <div className="flex gap-4 items-center pt-2">
                                     <FileUploader variant="avatar" onUpload={handleUpload} />
-                                    <div>
-                                        <p className="text-sm font-medium text-text-primary select-none cursor-default">Avatar Mode</p>
-                                        <p className="text-xs text-text-secondary select-none cursor-default">Click to upload</p>
+                                    <div className={isRTL ? "text-right" : "text-left"}>
+                                        <p className="text-sm font-medium text-text-primary select-none cursor-default">{t('showcase.avatarMode')}</p>
+                                        <p className="text-xs text-text-secondary select-none cursor-default">{t('showcase.clickToUpload')}</p>
                                     </div>
                                 </div>
                             </div>
                         </Card>
 
                         <Card className="p-6 space-y-6">
-                            <h3 className="text-lg font-medium text-text-primary select-none cursor-default">Image Previews</h3>
+                            <h3 className="text-lg font-medium text-text-primary select-none cursor-default">{t('showcase.imagePreviews')}</h3>
                             <div className="flex flex-col gap-4">
                                 {/* Standalone Image Preview 1 */}
                                 <div className="w-40">
@@ -447,11 +453,11 @@ const CompositeShowcase = () => {
                                             // Let's keep it simple or maybe open lightbox with just this image?
                                             // For now, I'll remove the lightbox click to focus on the preview functionality as requested.
                                             />
-                                            <p className="text-xs text-center mt-2 text-text-secondary select-none cursor-default">Card Variant</p>
+                                            <p className="text-xs text-center mt-2 text-text-secondary select-none cursor-default">{t('booking.cardVariant')}</p>
                                         </>
                                     ) : (
                                         <div className="w-full aspect-square bg-secondary rounded-xl border-2 border-dashed border-accent/20 flex items-center justify-center">
-                                            <p className="text-xs text-text-secondary">No image</p>
+                                            <p className="text-xs text-text-secondary">{t('booking.noImage')}</p>
                                         </div>
                                     )}
                                 </div>
@@ -470,7 +476,7 @@ const CompositeShowcase = () => {
                                         />
                                     ) : (
                                         <div className="w-full h-16 bg-secondary rounded-lg border border-dashed border-accent/20 flex items-center justify-center">
-                                            <p className="text-xs text-text-secondary">No image selected</p>
+                                            <p className="text-xs text-text-secondary">{t('booking.noImageSelected')}</p>
                                         </div>
                                     )}
                                 </div>
@@ -481,8 +487,8 @@ const CompositeShowcase = () => {
                     {/* Gallery & Lightbox */}
                     <Card className="p-6 space-y-6">
                         <div className="flex justify-between items-center">
-                            <h3 className="text-lg font-medium text-text-primary select-none cursor-default">Interactive Gallery</h3>
-                            <p className="text-sm text-text-secondary select-none cursor-default">Click image to open Lightbox</p>
+                            <h3 className="text-lg font-medium text-text-primary select-none cursor-default">{t('showcase.galleryInteractive')}</h3>
+                            <p className="text-sm text-text-secondary select-none cursor-default">{t('showcase.lightboxHint')}</p>
                         </div>
                         {/* Gallery - passes handlers correctly */}
                         <Gallery
@@ -526,7 +532,6 @@ const CompositeShowcase = () => {
     );
 };
 
-// Helper for icon
-const PlusIcon = ({ size }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>;
+// Helper for icon (Removed redundant PlusIcon as it is imported from lucide-react)
 
 export default CompositeShowcase;
