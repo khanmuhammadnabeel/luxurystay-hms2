@@ -181,3 +181,23 @@
 .modal-animate-fade {
   animation: modalFadeIn 0.25s ease-out;
 }
+/* ============================================
+   HERO SECTION FONT FIXES - DO NOT REMOVE
+   ============================================ */
+@media (max-width: 768px) {
+  .heroContainer * {
+    font-size: revert !important;
+  }
+  
+  .heroContainer h1 div:first-child {
+    font-size: 28px !important;
+  }
+  
+  .heroContainer h1 div:last-child {
+    font-size: 48px !important;
+  }
+  
+  .heroContainer p {
+    font-size: 18px !important;
+  }
+}

@@ -30,6 +30,7 @@ const Navbar = ({ variant = 'public' }) => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Scroll Logic
   useEffect(() => {
@@ -279,24 +280,27 @@ const Navbar = ({ variant = 'public' }) => {
 
       {/* Search Modal */}
       {searchOpen && (
-        <div className="fixed inset-0 z-[2000] flex items-start justify-center pt-[15vh] px-4">
+        <div className="fixed inset-0 z-[2000] flex items-start justify-center pt-[15vh] px-4 select-none">
           <div
             className="fixed inset-0 bg-black/90 backdrop-blur-md"
             onClick={() => setSearchOpen(false)}
           />
-          <div className="relative w-full max-w-3xl bg-secondary/80 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-glass-border">
+          <div
+            className="relative w-full max-w-3xl bg-secondary/80 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-glass-border cursor-default"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center text-primary">
                   <Search size={20} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold tracking-tight text-white">Search LuxuryStay</h3>
-                  <p className="text-xs text-text-secondary">Find your perfect stay</p>
+                  <h3 className="text-xl font-bold tracking-tight text-white select-none">Search LuxuryStay</h3>
+                  <p className="text-xs text-text-secondary select-none">Find your perfect stay</p>
                 </div>
               </div>
               <button
-                className="w-10 h-10 rounded-full bg-primary/40 border border-glass-border flex items-center justify-center text-text-secondary hover:text-accent hover:border-accent transition-all"
+                className="w-10 h-10 rounded-full bg-primary/40 border border-glass-border flex items-center justify-center text-text-secondary hover:text-accent hover:border-accent transition-all cursor-pointer"
                 onClick={() => setSearchOpen(false)}
               >
                 <X size={20} />
@@ -304,8 +308,11 @@ const Navbar = ({ variant = 'public' }) => {
             </div>
 
             <SearchBar
+              value={searchQuery}
+              onChange={setSearchQuery}
               onSearch={(term) => {
-                console.log('Searching for:', term);
+                if (!term?.trim()) return;
+                navigate(`/rooms?search=${encodeURIComponent(term)}`);
                 setSearchOpen(false);
               }}
               placeholder="Search rooms, suites, amenities..."
@@ -313,12 +320,17 @@ const Navbar = ({ variant = 'public' }) => {
               autoFocus
             />
 
-            <div className="mt-6 flex flex-wrap gap-2">
-              <span className="text-xs text-text-secondary mr-2">Quick Search:</span>
+            <div className="mt-6 flex flex-wrap gap-2 items-center">
+              <span className="text-xs text-text-secondary mr-2 select-none">Quick Search:</span>
               {['Deluxe Suite', 'Ocean View', 'Spa & Wellness', 'Presidential'].map(tag => (
                 <button
                   key={tag}
-                  className="text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-primary/20 border border-glass-border text-text-secondary hover:text-accent hover:border-accent transition-all"
+                  onClick={() => {
+                    setSearchQuery(tag);
+                    navigate(`/rooms?search=${encodeURIComponent(tag)}`);
+                    setSearchOpen(false);
+                  }}
+                  className="text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-primary/20 border border-glass-border text-text-secondary hover:text-accent hover:border-accent transition-all cursor-pointer select-none"
                 >
                   {tag}
                 </button>

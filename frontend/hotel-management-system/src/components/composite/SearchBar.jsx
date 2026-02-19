@@ -15,13 +15,22 @@ const SearchBar = ({
     enableRecent = true,
     className,
     delay = 300,
+    value: controlledValue,
+    onChange: controlledOnChange,
 }) => {
     const { t } = useLocalization();
-    const [query, setQuery] = useState('');
+    const [query, setQuery] = useState(controlledValue || '');
     const [isFocused, setIsFocused] = useState(false);
     const [recentSearches, setRecentSearches] = useState([]);
     const debounceTimer = useRef(null);
     const wrapperRef = useRef(null);
+
+    // Sync internal query with controlledValue
+    useEffect(() => {
+        if (controlledValue !== undefined) {
+            setQuery(controlledValue);
+        }
+    }, [controlledValue]);
 
     // Load recent searches from localStorage
     useEffect(() => {
@@ -63,6 +72,7 @@ const SearchBar = ({
     const handleInput = (e) => {
         const val = e.target.value;
         setQuery(val);
+        controlledOnChange && controlledOnChange(val);
 
         if (debounceTimer.current) clearTimeout(debounceTimer.current);
         debounceTimer.current = setTimeout(() => {
@@ -163,6 +173,8 @@ SearchBar.propTypes = {
     enableRecent: PropTypes.bool,
     className: PropTypes.string,
     delay: PropTypes.number,
+    value: PropTypes.string,
+    onChange: PropTypes.func,
 };
 
 export default SearchBar;

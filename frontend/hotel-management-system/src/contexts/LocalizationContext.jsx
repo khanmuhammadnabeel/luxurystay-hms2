@@ -170,6 +170,7 @@ export const translations = {
             roomType: "Room Type",
             status: "Status",
             checkIn: "Check-in",
+            checkOut: "Check-out",
             amount: "Amount",
             searchPlaceholder: "Search bookings...",
             priceRange: "Price Range",
@@ -198,6 +199,16 @@ export const translations = {
             king: "King",
             twin: "Twin",
             queen: "Queen"
+        },
+        hero: {
+            welcome: "Welcome to",
+            stay: "LuxuryStay",
+            subtitle: "Where every stay becomes a memory",
+            checkAvailability: "Check Availability",
+            guests: "Guests",
+            adults: "Adults",
+            children: "Children",
+            scroll: "Scroll"
         },
         status: {
             confirmed: "Confirmed",
@@ -361,6 +372,7 @@ export const translations = {
             roomType: "کمرے کی قسم",
             status: "حیثیت",
             checkIn: "چیک ان",
+            checkOut: "چیک آؤٹ",
             amount: "رقم",
             searchPlaceholder: "بکنگ تلاش کریں...",
             priceRange: "قیمت کی حد",
@@ -389,6 +401,16 @@ export const translations = {
             king: "کنگ",
             twin: "ٹوین",
             queen: "کوئین"
+        },
+        hero: {
+            welcome: "خوش آمدید",
+            stay: "لگژری اسٹے",
+            subtitle: "جہاں ہر قیام ایک یاد بن جاتا ہے",
+            checkAvailability: "دستیابی چیک کریں",
+            guests: "مہمان",
+            adults: "بالغ",
+            children: "بچے",
+            scroll: "اسکرول"
         },
         status: {
             confirmed: "تصدیق شدہ",

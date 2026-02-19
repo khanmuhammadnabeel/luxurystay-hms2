@@ -95,6 +95,7 @@
 }
 
 .clearButton:hover {
-    color: var(--text-primary);
+    color: var(--color-accent);
     background-color: rgba(var(--color-secondary-rgb), 0.2);
+    cursor: pointer;
 }

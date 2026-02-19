@@ -5,6 +5,7 @@ import { cn } from '../../lib/utils';
 import { Button } from '../ui';
 import Calendar from './Calendar';
 import styles from './RangePicker.module.css';
+import { useLocalization } from '../../contexts';
 
 const RangePicker = ({
     value = { start: null, end: null },
@@ -15,6 +16,7 @@ const RangePicker = ({
     className,
     error,
 }) => {
+    const { t } = useLocalization();
     const [isOpen, setIsOpen] = useState(false);
     const containerRef = useRef(null);
 
@@ -54,13 +56,13 @@ const RangePicker = ({
                 <span
                     className={cn(styles.dateDisplay, !displayStart && styles.placeholder)}
                 >
-                    {displayStart || "Check-in"}
+                    {displayStart || t('booking.checkIn')}
                 </span>
                 <ArrowRight size={14} className={styles.separator} />
                 <span
                     className={cn(styles.dateDisplay, !displayEnd && styles.placeholder)}
                 >
-                    {displayEnd || "Check-out"}
+                    {displayEnd || t('booking.checkOut')}
                 </span>
                 {(value?.start || value?.end) && (
                     <X
@@ -78,10 +80,10 @@ const RangePicker = ({
             {isOpen && !disabled && (
                 <div className={styles.popover}>
                     <div className={styles.sidebar}>
-                        <button className={styles.presetBtn} onClick={() => handlePreset(0)}>Today</button>
-                        <button className={styles.presetBtn} onClick={() => handlePreset(1)}>Tomorrow</button>
-                        <button className={styles.presetBtn} onClick={() => handlePreset(2)}>This Weekend</button>
-                        <button className={styles.presetBtn} onClick={() => handlePreset(7)}>Next 7 Days</button>
+                        <button className={styles.presetBtn} onClick={() => handlePreset(0)}>{t('booking.today')}</button>
+                        <button className={styles.presetBtn} onClick={() => handlePreset(1)}>{t('booking.tomorrow')}</button>
+                        <button className={styles.presetBtn} onClick={() => handlePreset(2)}>{t('showcase.specialOffer')}</button>
+                        <button className={styles.presetBtn} onClick={() => handlePreset(7)}>{t('booking.pickDate')}</button>
                     </div>
 
                     <div className={styles.calendars}>
@@ -95,15 +97,6 @@ const RangePicker = ({
                         />
                     </div>
 
-                    <div className={styles.footer}>
-                        <Button
-                            variant="primary"
-                            size="sm"
-                            onClick={() => setIsOpen(false)}
-                        >
-                            Apply
-                        </Button>
-                    </div>
                 </div>
             )}
         </div>

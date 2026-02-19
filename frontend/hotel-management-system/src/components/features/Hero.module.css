@@ -1,0 +1,111 @@
+.heroContainer {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: #0d0d0d;
+    z-index: 50;
+    /* Ensure it stays above subsequent sections */
+}
+
+.heroImage {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.contentOverlay {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 2rem;
+    text-align: center;
+    color: white;
+}
+
+.searchCard {
+    margin-top: 3rem;
+    padding: 2rem;
+    width: 100%;
+    max-width: 1000px;
+    background-color: rgba(25, 25, 25, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1.25rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    pointer-events: auto;
+}
+
+.particlesContainer {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.particlesContainer canvas {
+    pointer-events: none !important;
+}
+
+/* Tablet refinements */
+@media (min-width: 769px) and (max-width: 1199px) {
+    .searchCard {
+        max-width: 800px;
+        padding: 1.5rem;
+    }
+}
+
+/* Mobile refinements */
+@media (max-width: 768px) {
+    .searchCard {
+        padding: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .contentOverlay {
+        padding: 1.5rem;
+    }
+}
+
+/* RTL Support */
+:global([dir="rtl"]) .searchCard {
+    text-align: right;
+}
+/* FORCE CORRECT FONT SIZES - DO NOT REMOVE */
+.heroContainer h1 div:first-child {
+    font-size: 28px !important;
+}
+
+.heroContainer h1 div:last-child {
+    font-size: 48px !important;
+}
+
+.heroContainer p {
+    font-size: 18px !important;
+}
+
+@media (max-width: 768px) {
+    .heroContainer h1 div:first-child {
+        font-size: 28px !important;
+    }
+    .heroContainer h1 div:last-child {
+        font-size: 48px !important;
+    }
+    .heroContainer p {
+        font-size: 18px !important;
+    }
+}
