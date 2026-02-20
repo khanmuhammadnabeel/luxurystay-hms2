@@ -1,0 +1,105 @@
+/* AmenitiesGrid.module.css */
+
+/* ── Section ────────────────────────────────────────────────── */
+.section {
+    position: relative;
+    padding: 6rem 1.5rem;
+    background: var(--color-bg-primary);
+    overflow: hidden;
+}
+
+/* Subtle radial glow behind the grid */
+.section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%,
+            rgba(207, 175, 126, 0.04) 0%,
+            transparent 70%);
+    pointer-events: none;
+}
+
+/* ── Inner container ────────────────────────────────────────── */
+.inner {
+    position: relative;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* ── Amenity Grid ───────────────────────────────────────────── */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ── Amenity Card ───────────────────────────────────────────── */
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1.25rem;
+    cursor: default;
+    /* smooth lift on hover handled by Card variant="glass" */
+}
+
+/* ── Icon wrapper ───────────────────────────────────────────── */
+.iconWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(207, 175, 126, 0.07);
+    border: 1px solid rgba(207, 175, 126, 0.15);
+    margin-bottom: 1.25rem;
+    transition: background 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
+}
+
+.card:hover .iconWrap {
+    background: rgba(207, 175, 126, 0.14);
+    border-color: rgba(207, 175, 126, 0.4);
+    transform: scale(1.1);
+}
+
+/* ── Icon itself ────────────────────────────────────────────── */
+.icon {
+    color: rgba(255, 255, 255, 0.55);
+    transition: color 0.35s ease;
+}
+
+.card:hover .icon {
+    color: #CFAF7E;
+}
+
+/* ── Title ──────────────────────────────────────────────────── */
+.title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+
+/* ── Description ────────────────────────────────────────────── */
+.description {
+    font-size: 0.8125rem;
+    /* ~13px ≈ text-sm */
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ── RTL support ────────────────────────────────────────────── */
+[dir='rtl'] .card {
+    direction: rtl;
+}

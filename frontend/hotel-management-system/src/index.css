@@ -1,4 +1,4 @@
-@import "tailwindcss" theme(static);
+@import "tailwindcss";
 @import './styles/typography.css';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&family=Playfair+Display:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@400..700&display=swap');
 
@@ -12,7 +12,6 @@
   margin-right: auto;
 }
 
-
 @theme {
   /* DARK THEME (default) */
   --color-primary: #211F1F;
@@ -20,13 +19,6 @@
   --color-accent: #CFAF7E;
   --color-text-primary: #F0E9E0;
   --color-text-secondary: #B8B2AA;
-
-  /* DARK THEME (default) */
-  /* --color-primary: #1A1A1A;
-  --color-secondary: #2C2C2C;
-  --color-accent: #CFAF7E;
-  --color-text-primary: #F0E9E0;
-  --color-text-secondary: #B8B2AA; */
 
   /* Glass (dark) */
   --glass-bg: rgba(26, 26, 26, 0.7);
@@ -124,7 +116,6 @@
   0% {
     background-position: 100% 0;
   }
-
   100% {
     background-position: -100% 0;
   }
@@ -135,7 +126,6 @@
     opacity: 0;
     transform: scale(0.95);
   }
-
   to {
     opacity: 1;
     transform: scale(1);
@@ -147,7 +137,6 @@
     opacity: 0;
     transform: translateY(-100%);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -159,7 +148,6 @@
     opacity: 0;
     transform: translateY(100%);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -180,24 +168,4 @@
 
 .modal-animate-fade {
   animation: modalFadeIn 0.25s ease-out;
-}
-/* ============================================
-   HERO SECTION FONT FIXES - DO NOT REMOVE
-   ============================================ */
-@media (max-width: 768px) {
-  .heroContainer * {
-    font-size: revert !important;
-  }
-  
-  .heroContainer h1 div:first-child {
-    font-size: 28px !important;
-  }
-  
-  .heroContainer h1 div:last-child {
-    font-size: 48px !important;
-  }
-  
-  .heroContainer p {
-    font-size: 18px !important;
-  }
 }

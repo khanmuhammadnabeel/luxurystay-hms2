@@ -1,32 +1,71 @@
 import React, { forwardRef } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
-import styles from "./Card.module.css";
 
 // ============================================================================
 // VARIANTS - Each with distinct personality
 // ============================================================================
 const VARIANTS = {
-  // Clean, subtle, professional
-  default:
-    "bg-[var(--color-secondary)] border border-[var(--glass-border)] shadow-none",
-
-  // Floating luxury - subtle shadow
-  elevated:
-    "bg-[var(--color-secondary)] border border-[var(--glass-border)] shadow-lg transition-all duration-300 hover:shadow-[0_30px_60px_-12px_rgba(207,175,126,0.3)] hover:-translate-y-1",
-
-  // Minimalist, clean lines
-  outlined:
-    "bg-transparent border border-[var(--glass-border)] shadow-none",
-
-  // Crystal clear glass - premium feel
-  glass:
-    "bg-[rgba(33,31,31,0.9)] backdrop-blur-[50px] border border-[rgba(207,175,126,0.1)] shadow-[0_20px_40px_-12px_rgba(0,0,0,1)] transition-all duration-300 hover:border-[rgba(207,175,126,0.4)] hover:shadow-[0_30px_60px_-12px_rgba(207,175,126,0.15)] relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/25 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500",
-
-  // Interactive with gold shimmer
-  interactive:
-    "bg-[var(--color-secondary)] border border-transparent shadow-[var(--shadow-md)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_30px_60px_-12px_rgba(207,175,126,0.4)] hover:border-[rgba(207,175,126,0.5)] focus-visible:border-[var(--color-accent)] focus-visible:shadow-[0_0_0_3px_rgba(207,175,126,0.3)] relative overflow-hidden",
+  default: "bg-[var(--color-secondary)] border border-[var(--glass-border)] shadow-none",
+  elevated: "bg-[var(--color-secondary)] border border-[var(--glass-border)] shadow-lg transition-all duration-300 hover:shadow-[0_30px_60px_-12px_rgba(207,175,126,0.3)] hover:-translate-y-1",
+  outlined: "bg-transparent border border-[var(--glass-border)] shadow-none",
+  glass: "bg-[rgba(33,31,31,0.9)] backdrop-blur-[50px] border border-[rgba(207,175,126,0.1)] shadow-[0_20px_40px_-12px_rgba(0,0,0,1)] transition-all duration-300 hover:border-[rgba(207,175,126,0.4)] hover:shadow-[0_30px_60px_-12px_rgba(207,175,126,0.15)]",
+  interactive: "bg-[var(--color-secondary)] border border-transparent shadow-[var(--shadow-md)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_30px_60px_-12px_rgba(207,175,126,0.4)] hover:border-[rgba(207,175,126,0.5)] focus-visible:border-[var(--color-accent)] focus-visible:shadow-[0_0_0_3px_rgba(207,175,126,0.3)] relative overflow-hidden",
 };
+
+// ============================================================================
+// SHIMMER ANIMATION - Add to global styles
+// ============================================================================
+if (typeof document !== 'undefined') {
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes goldShimmer {
+      0% {
+        transform: translateX(-100%) translateY(-100%) rotate(25deg);
+      }
+      100% {
+        transform: translateX(100%) translateY(100%) rotate(25deg);
+      }
+    }
+    .gold-shimmer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2147483647 !important; /* Max possible z-index */
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .group:hover .gold-shimmer {
+      opacity: 1;
+    }
+    .gold-shimmer::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(115deg, 
+        transparent 20%, 
+        rgba(207, 175, 126, 0.1) 30%,
+        rgba(207, 175, 126, 0.3) 45%,
+        rgba(207, 175, 126, 0.5) 50%,
+        rgba(207, 175, 126, 0.3) 55%,
+        rgba(207, 175, 126, 0.1) 70%,
+        transparent 80%
+      );
+      transform: translateX(-100%) translateY(-100%) rotate(25deg);
+      animation: goldShimmer 3.5s infinite linear;
+    }
+  `;
+  document.head.appendChild(style);
+}
 
 // ============================================================================
 // MAIN CARD COMPONENT
@@ -48,16 +87,13 @@ const CardRoot = forwardRef(
     const isInteractive = interactive || variant === "interactive";
     const isGlass = variant === "glass";
 
-    // Base classes for all cards
     const baseClasses = clsx(
       "relative rounded-2xl overflow-hidden",
       "text-[var(--color-text-primary)]",
       "transition-all duration-300 ease-out",
-      // Light theme adjustments
       isGlass && "light-theme:bg-[rgb(0, 0, 0)]"
     );
 
-    // Interactive states
     const interactionClasses =
       isInteractive && !disabled
         ? "cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-primary)]"
@@ -67,19 +103,18 @@ const CardRoot = forwardRef(
       ? "opacity-50 pointer-events-none cursor-not-allowed"
       : "";
 
-    // Accessibility for interactive cards
     const roleProps = isInteractive
       ? {
-        role: "button",
-        tabIndex: disabled ? -1 : 0,
-        onKeyDown: (e) => {
-          if (!onClick || disabled) return;
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            onClick(e);
-          }
-        },
-      }
+          role: "button",
+          tabIndex: disabled ? -1 : 0,
+          onKeyDown: (e) => {
+            if (!onClick || disabled) return;
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              onClick(e);
+            }
+          },
+        }
       : {};
 
     return (
@@ -97,13 +132,10 @@ const CardRoot = forwardRef(
         {...roleProps}
         {...rest}
       >
-        {/* Gold shimmer overlay for interactive cards */}
-        {variant === "interactive" && (
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none overflow-hidden">
-            <div className={styles.shimmerOverlay} />
-          </div>
-        )}
         {children}
+        
+        {/* ULTIMATE SHIMMER - Will be on top of EVERYTHING */}
+        {isInteractive && <div className="gold-shimmer" />}
       </Tag>
     );
   }
@@ -113,13 +145,7 @@ CardRoot.displayName = "Card";
 
 CardRoot.propTypes = {
   as: PropTypes.elementType,
-  variant: PropTypes.oneOf([
-    "default",
-    "elevated",
-    "outlined",
-    "glass",
-    "interactive",
-  ]),
+  variant: PropTypes.oneOf(["default", "elevated", "outlined", "glass", "interactive"]),
   interactive: PropTypes.bool,
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
@@ -139,9 +165,7 @@ const CardHeader = ({ className, children, ...rest }) => (
     )}
     {...rest}
   >
-    <span className="font-medium text-[var(--color-text-primary)]">
-      {children}
-    </span>
+    <span className="font-medium text-[var(--color-text-primary)]">{children}</span>
   </div>
 );
 
@@ -168,6 +192,7 @@ const CardImage = ({ src, alt, className, overlay = true, ...rest }) => (
     {overlay && (
       <div
         className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"
+        style={{ zIndex: 1 }}
         aria-hidden="true"
       />
     )}
@@ -185,15 +210,7 @@ CardImage.propTypes = {
 // CARD CONTENT
 // ============================================================================
 const CardContent = ({ className, children, ...rest }) => (
-  <div
-    className={clsx(
-      "px-6 py-4",
-      "space-y-2",
-      "text-[var(--color-text-primary)]",
-      className
-    )}
-    {...rest}
-  >
+  <div className={clsx("px-6 py-4", "space-y-2", "text-[var(--color-text-primary)]", className)} {...rest}>
     {children}
   </div>
 );

@@ -1,0 +1,138 @@
+/* TestimonialsCarousel.module.css */
+
+/* ── Section ────────────────────────────────────────────────── */
+.section {
+    position: relative;
+    padding: 6rem 1.5rem 7rem;
+    /* extra bottom room for pagination dots */
+    background: var(--color-bg-primary);
+    overflow: hidden;
+}
+
+/* Soft gold radial glow */
+.section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 70%,
+            rgba(207, 175, 126, 0.05) 0%,
+            transparent 70%);
+    pointer-events: none;
+}
+
+/* ── Inner container ────────────────────────────────────────── */
+.inner {
+    position: relative;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* ── Swiper override: equal-height slides ───────────────────── */
+.swiper {
+    padding-bottom: 3rem !important;
+    /* space for pagination bullets */
+}
+
+/* Make each slide a flex column so cards stretch to equal height */
+:global(.swiper-slide) {
+    height: auto !important;
+    display: flex;
+}
+
+/* ── Testimonial Card ───────────────────────────────────────── */
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.75rem;
+    height: 100%;
+    width: 100%;
+}
+
+/* ── Author row ─────────────────────────────────────────────── */
+.author {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    flex-shrink: 0;
+}
+
+/* ── Avatar ─────────────────────────────────────────────────── */
+.avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(207, 175, 126, 0.35);
+    flex-shrink: 0;
+}
+
+/* ── Author info ─────────────────────────────────────────────── */
+.authorInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    line-height: 1.2;
+    margin: 0;
+}
+
+.stars {
+    display: flex;
+    gap: 2px;
+}
+
+/* ── Review text ─────────────────────────────────────────────── */
+.review {
+    font-size: 0.875rem;
+    font-style: italic;
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin: 0;
+    flex: 1;
+}
+
+/* Opening quote decoration */
+.review::before {
+    content: '\201C';
+    /* left double quotation mark */
+    font-size: 2.5rem;
+    font-family: Georgia, serif;
+    color: rgba(207, 175, 126, 0.3);
+    line-height: 0;
+    vertical-align: -0.6rem;
+    margin-right: 0.15rem;
+}
+
+/* ── Swiper Pagination bullets ──────────────────────────────── */
+:global(.swiper-pagination-bullet) {
+    background: var(--color-text-secondary) !important;
+    opacity: 0.4;
+    transition: background 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+:global(.swiper-pagination-bullet-active) {
+    background: #CFAF7E !important;
+    opacity: 1;
+    transform: scale(1.25);
+}
+
+/* ── RTL ─────────────────────────────────────────────────────── */
+[dir='rtl'] .author {
+    flex-direction: row-reverse;
+}
+
+[dir='rtl'] .authorInfo {
+    align-items: flex-end;
+}
+
+[dir='rtl'] .review::before {
+    margin-right: 0;
+    margin-left: 0.15rem;
+}

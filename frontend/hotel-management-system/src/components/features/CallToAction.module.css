@@ -1,0 +1,179 @@
+/* CallToAction.module.css */
+
+/* ── Section wrapper ─────────────────────────────────────────── */
+.section {
+    position: relative;
+    padding: 3rem 1.5rem;
+    /* mobile: py-12 */
+    background: var(--color-bg-primary);
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .section {
+        padding: 4rem 2rem;
+        /* desktop: py-16 */
+    }
+}
+
+/* Ambient gold glow */
+.section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 90% 60% at 50% 50%,
+            rgba(207, 175, 126, 0.07) 0%,
+            transparent 70%);
+    pointer-events: none;
+}
+
+/* ── Glassmorphism panel ─────────────────────────────────────── */
+.glass {
+    position: relative;
+    max-width: 48rem;
+    /* max-w-3xl */
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    border-radius: 1.5rem;
+    text-align: center;
+
+    /* Glass effect */
+    background: var(--glass-bg, rgba(33, 31, 31, 0.75));
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid var(--glass-border, rgba(207, 175, 126, 0.15));
+    box-shadow:
+        0 30px 80px -20px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(207, 175, 126, 0.08);
+    overflow: hidden;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.glass:hover {
+    border-color: rgba(207, 175, 126, 0.3);
+    box-shadow:
+        0 40px 100px -20px rgba(0, 0, 0, 0.7),
+        0 0 60px -10px rgba(207, 175, 126, 0.08),
+        inset 0 1px 0 rgba(207, 175, 126, 0.15);
+}
+
+/* Gold gradient sweep on hover */
+.glass::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+            transparent 30%,
+            rgba(207, 175, 126, 0.04) 50%,
+            transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.glass:hover::after {
+    opacity: 1;
+}
+
+/* ── Decorative gold rule ────────────────────────────────────── */
+.rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.rule:last-child {
+    margin-bottom: 0;
+    margin-top: 2rem;
+}
+
+.rule::before,
+.rule::after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 3rem;
+    background: rgba(207, 175, 126, 0.4);
+}
+
+.rule::before {
+    /* left diamond dot via box-shadow trick */
+    width: 3rem;
+}
+
+/* ── Heading ─────────────────────────────────────────────────── */
+.heading {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    line-height: 1.25;
+    margin: 0 0 1rem;
+    letter-spacing: -0.01em;
+}
+
+/* ── Subheading ──────────────────────────────────────────────── */
+.subheading {
+    font-size: 1.0625rem;
+    color: var(--color-text-secondary);
+    font-weight: 300;
+    line-height: 1.6;
+    margin: 0 0 2.5rem;
+}
+
+/* ── Button wrapper ──────────────────────────────────────────── */
+.btnWrap {
+    display: flex;
+    justify-content: center;
+}
+
+/* ── Button overrides ────────────────────────────────────────── */
+.btn {
+    position: relative;
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+    font-size: 1rem !important;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    overflow: hidden;
+    border: 1.5px solid rgba(207, 175, 126, 0.6) !important;
+    box-shadow: 0 0 0 1px rgba(207, 175, 126, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px -8px rgba(207, 175, 126, 0.5) !important;
+}
+
+/* Shimmer sweep on button hover */
+.btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -75%;
+    width: 50%;
+    height: 200%;
+    background: linear-gradient(120deg,
+            transparent,
+            rgba(255, 255, 255, 0.25),
+            transparent);
+    transform: skewX(-20deg);
+    transition: left 0.55s ease;
+    pointer-events: none;
+}
+
+.btn:hover::after {
+    left: 140%;
+}
+
+/* ── RTL support ─────────────────────────────────────────────── */
+[dir='rtl'] .glass {
+    direction: rtl;
+}
+
+[dir='rtl'] .btnWrap {
+    flex-direction: row-reverse;
+}
