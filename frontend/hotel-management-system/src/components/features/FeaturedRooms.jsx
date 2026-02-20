@@ -1,3 +1,4 @@
+// src/components/features/FeaturedRooms.jsx
 import React from 'react';
 import { Card } from '../ui/Card';
 import Badge from '../ui/Badge';
@@ -9,14 +10,15 @@ import styles from './FeaturedRooms.module.css';
 import { ArrowRight, Star } from 'lucide-react';
 
 const FeaturedRooms = () => {
-    const { activeCurrency } = useLocalization();
+    const { activeCurrency, t, language } = useLocalization();
+    const isUrdu = language === 'Urdu';
 
     // Convert a USD base price to the selected currency and format it
     const formatPrice = (usdPrice) => {
         const rate = exchangeRates[activeCurrency?.code] ?? 1;
         const converted = Math.round(usdPrice * rate);
         const formatted = converted.toLocaleString();
-        return `${activeCurrency?.symbol ?? '$'}${formatted} / night`;
+        return `${activeCurrency?.symbol ?? '$'}${formatted} ${t('homepage.rooms.perNight')}`;
     };
 
     return (
@@ -25,9 +27,9 @@ const FeaturedRooms = () => {
 
                 {/* Section Header */}
                 <SectionHeader
-                    preTitle="Curated for You"
-                    title="Featured Accommodations"
-                    subtitle="From intimate hideaways to palatial suites — each room is a world of its own, crafted for those who expect nothing less than extraordinary."
+                    preTitle={t('homepage.rooms.preTitle')}
+                    title={t('homepage.rooms.title')}
+                    subtitle={t('homepage.rooms.subtitle')}
                 />
 
                 {/* Room Grid */}
@@ -41,7 +43,7 @@ const FeaturedRooms = () => {
                             {/* Room Image */}
                             <Card.Image
                                 src={room.images[0]}
-                                alt={room.name}
+                                alt={isUrdu ? room.nameUr : room.name}
                                 className={styles.cardImage}
                             />
 
@@ -49,7 +51,7 @@ const FeaturedRooms = () => {
                             <Card.Header>
                                 <div className="flex items-start justify-between gap-3 w-full">
                                     <span className="font-serif text-[1rem] sm:text-[1.1rem] text-[var(--color-text-primary)] leading-snug">
-                                        {room.name}
+                                        {isUrdu ? room.nameUr : room.name}
                                     </span>
                                     <Badge variant="gold" size="md" className="shrink-0 whitespace-nowrap">
                                         {formatPrice(room.price)}
@@ -60,19 +62,19 @@ const FeaturedRooms = () => {
                             {/* Description + Amenities */}
                             <Card.Content className="flex-1">
                                 <p className={styles.description}>
-                                    {room.description}
+                                    {isUrdu ? room.descriptionUr : room.description}
                                 </p>
 
                                 {/* Top 3 amenity tags */}
                                 <div className={styles.amenitiesList}>
-                                    {room.amenities.slice(0, 3).map((amenity) => (
+                                    {(isUrdu ? room.amenitiesUr : room.amenities).slice(0, 3).map((amenity) => (
                                         <span key={amenity} className={styles.amenityTag}>
                                             {amenity}
                                         </span>
                                     ))}
                                     {room.amenities.length > 3 && (
                                         <span className={styles.amenityTag}>
-                                            +{room.amenities.length - 3} more
+                                            +{room.amenities.length - 3} {t('homepage.rooms.more')}
                                         </span>
                                     )}
                                 </div>
@@ -83,7 +85,7 @@ const FeaturedRooms = () => {
                                 <div className="flex items-center gap-1 text-[var(--color-accent)]">
                                     <Star size={13} fill="currentColor" />
                                     <span className="text-[12px] font-medium text-[var(--color-text-secondary)]">
-                                        5.0 · Luxury
+                                        5.0 · {t('homepage.rooms.luxury')}
                                     </span>
                                 </div>
                                 <Button
@@ -92,7 +94,7 @@ const FeaturedRooms = () => {
                                     rightIcon={<ArrowRight size={14} />}
                                     onClick={() => { }}
                                 >
-                                    Book Now
+                                    {t('homepage.rooms.bookNow')}
                                 </Button>
                             </Card.Footer>
                         </Card>

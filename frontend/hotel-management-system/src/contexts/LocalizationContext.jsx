@@ -48,7 +48,8 @@ export const translations = {
             newBooking: "New Booking",
             actions: "Actions",
             noResults: "No results found.",
-            clear: "Clear search"
+            clear: "Clear search",
+            show: "Show {count} Results"
         },
         pagination: {
             rowsPerPage: "Rows per page:",
@@ -215,6 +216,107 @@ export const translations = {
             pending: "Pending",
             checkedIn: "Checked In",
             cancelled: "Cancelled"
+        },
+        homepage: {
+            rooms: {
+                preTitle: "Curated for You",
+                title: "Featured Accommodations",
+                subtitle: "From intimate hideaways to palatial suites — each room is a world of its own, crafted for those who expect nothing less than extraordinary.",
+                perNight: "/ night",
+                luxury: "Luxury",
+                more: "more",
+                bookNow: "Book Now"
+            },
+            amenities: {
+                preTitle: "HANDCRAFTED FOR YOU",
+                title: "World-Class Amenities",
+                subtitle: "Everything you need for the perfect stay"
+            },
+            testimonials: {
+                preTitle: "GUEST EXPERIENCES",
+                title: "What Our Guests Say",
+                subtitle: "Real stories from real stays"
+            },
+            cta: {
+                heading: "Ready for an unforgettable experience?",
+                subheading: "Book your stay today and indulge in luxury",
+                button: "Book Your Stay"
+            }
+        },
+        rooms_listing: {
+            title: 'Rooms & Suites',
+            available: '{count} rooms available',
+            available_single: '1 room available',
+            filters: 'Filters',
+            sort: {
+                label: 'Sort by:',
+                priceLowToHigh: 'Price: Low to High',
+                priceHighToLow: 'Price: High to Low',
+                topRated: 'Top Rated',
+                mostPopular: 'Most Popular',
+                newest: 'Newest'
+            },
+            noRooms: 'No rooms found',
+            tryAdjusting: 'Try adjusting your filters',
+            clearAll: 'Clear all filters',
+            view: 'View Room',
+            night: 'night',
+            more: 'more',
+            showLess: 'Show less',
+            resultsMore: '+{count} more',
+            section_titles: {
+                dates: 'Check-in / Check-out',
+                guests: 'Guests',
+                price: 'Price per night',
+                roomType: 'Room Type',
+                amenities: 'Amenities',
+                bedType: 'Bed Type',
+                rating: 'Guest Rating'
+            },
+            filter_labels: {
+                // Room Types
+                'Deluxe': 'Deluxe',
+                'Executive': 'Executive',
+                'Presidential': 'Presidential',
+                'Villa': 'Villa',
+                'Classic': 'Classic',
+                'Bungalow': 'Bungalow',
+                'Family': 'Family',
+                'Penthouse': 'Penthouse',
+                // Bed Types
+                'King': 'King',
+                'Queen': 'Queen',
+                'Twin': 'Twin',
+                // Amenities
+                'WiFi': 'WiFi',
+                'Air Conditioning': 'Air Conditioning',
+                'Mini-bar': 'Mini-bar',
+                'Ocean View': 'Ocean View',
+                'King Bed': 'King Bed',
+                'Living Area': 'Living Area',
+                'Work Desk': 'Work Desk',
+                'Private Terrace': 'Private Terrace',
+                'Butler Service': 'Butler Service',
+                'Private Pool': 'Private Pool',
+                'Garden View': 'Garden View',
+                'Outdoor Shower': 'Outdoor Shower',
+                'Courtyard View': 'Courtyard View',
+                'Rain Shower': 'Rain Shower',
+                'Vintage Decor': 'Vintage Decor',
+                'Private Rooftop': 'Private Rooftop',
+                'City View': 'City View',
+                'Home Theatre': 'Home Theatre',
+                'Infinity Pool': 'Infinity Pool',
+                'Spa Bath': 'Spa Bath',
+                'Kids Area': 'Kids Area',
+                'Jacuzzi': 'Jacuzzi',
+                'Soaking Tub': 'Soaking Tub',
+                'Private Dining': 'Private Dining',
+                'Steam Room': 'Steam Room',
+                'Twin Beds': 'Twin Beds',
+                'adults': 'Adults',
+                'children': 'Children'
+            }
         }
     },
     Urdu: {
@@ -250,7 +352,8 @@ export const translations = {
             newBooking: "نئی بکنگ",
             actions: "اقدامات",
             noResults: "کوئی نتیجہ نہیں ملا.",
-            clear: "تلاش صاف کریں"
+            clear: "تلاش صاف کریں",
+            show: "{count} نتائج دکھائیں"
         },
         pagination: {
             rowsPerPage: "قطاریں فی صفحہ:",
@@ -417,6 +520,107 @@ export const translations = {
             pending: "زیر التواء",
             checkedIn: "چیک ان کیا گیا",
             cancelled: "منسوخ"
+        },
+        homepage: {
+            rooms: {
+                preTitle: "آپ کے لیے منتخب",
+                title: "نمایاں قیام گاہیں",
+                subtitle: "چھوٹی خلوت گاہوں سے لے کر شاہانہ سوئٹ تک — ہر کمرہ اپنی دنیا ہے، ان کے لیے تیار کیا گیا جو غیر معمولی سے کم کچھ نہیں چاہتے۔",
+                perNight: "/ رات",
+                luxury: "لگژری",
+                more: "مزید",
+                bookNow: "ابھی بک کریں"
+            },
+            amenities: {
+                preTitle: "آپ کے لیے تیار کردہ",
+                title: "عالمی معیار کی سہولیات",
+                subtitle: "کامل قیام کے لیے آپ کو جو کچھ چاہیے"
+            },
+            testimonials: {
+                preTitle: "مہمانوں کے تجربات",
+                title: "ہمارے مہمان کیا کہتے ہیں",
+                subtitle: "حقیقی قیام کی حقیقی کہانیاں"
+            },
+            cta: {
+                heading: "ایک ناقابلِ فراموش تجربے کے لیے تیار ہیں؟",
+                subheading: "آج ہی اپنا قیام بک کریں اور لگژری سے لطف اندوز ہوں",
+                button: "اپنا قیام بک کریں"
+            }
+        },
+        rooms_listing: {
+            title: 'کمرے اور سوئٹ',
+            available: '{count} کمرے دستیاب ہیں',
+            available_single: '1 کمرہ دستیاب ہے',
+            filters: 'فلٹرز',
+            sort: {
+                label: 'ترتیب دیں:',
+                priceLowToHigh: 'قیمت: کم سے زیادہ',
+                priceHighToLow: 'قیمت: زیادہ سے کم',
+                topRated: 'اعلیٰ درجہ بندی',
+                mostPopular: 'سب سے مقبول',
+                newest: 'جدید ترین'
+            },
+            noRooms: 'کوئی کمرہ نہیں ملا',
+            tryAdjusting: 'اپنے فلٹرز کو تبدیل کرنے کی کوشش کریں',
+            clearAll: 'تمام فلٹرز صاف کریں',
+            view: 'کمرہ دیکھیں',
+            night: 'رات',
+            more: 'مزید',
+            showLess: 'کم دکھائیں',
+            resultsMore: '+{count} مزید',
+            section_titles: {
+                dates: 'چیک ان / چیک آؤٹ',
+                guests: 'مہمان',
+                price: 'قیمت فی رات',
+                roomType: 'کمرے کی قسم',
+                amenities: 'سہولیات',
+                bedType: 'بستر کی قسم',
+                rating: 'مہمانوں کی درجہ بندی'
+            },
+            filter_labels: {
+                // Room Types
+                'Deluxe': 'ڈی لکس',
+                'Executive': 'ایگزیکٹو',
+                'Presidential': 'صدارتی',
+                'Villa': 'ولا',
+                'Classic': 'کلاسک',
+                'Bungalow': 'بنگلہ',
+                'Family': 'خاندانی',
+                'Penthouse': 'پینٹ ہاؤس',
+                // Bed Types
+                'King': 'کنگ',
+                'Queen': 'کوئین',
+                'Twin': 'ٹوین',
+                // Amenities
+                'WiFi': 'وائی فائی',
+                'Air Conditioning': 'ایئر کنڈیشننگ',
+                'Mini-bar': 'منی بار',
+                'Ocean View': 'سمندر کا منظر',
+                'King Bed': 'کنگ بیڈ',
+                'Living Area': 'رہنے کا علاقہ',
+                'Work Desk': 'کام کی میز',
+                'Private Terrace': 'نجی ٹیرس',
+                'Butler Service': 'بٹلر سروس',
+                'Private Pool': 'نجی پول',
+                'Garden View': 'باغ کا منظر',
+                'Outdoor Shower': 'آؤٹ ڈور شاور',
+                'Courtyard View': 'صحن کا منظر',
+                'Rain Shower': 'رین شاور',
+                'Vintage Decor': 'ونٹیج سجاوٹ',
+                'Private Rooftop': 'نجی چھت',
+                'City View': 'شہر کا منظر',
+                'Home Theatre': 'ہوم تھیٹر',
+                'Infinity Pool': 'انفینٹی پول',
+                'Spa Bath': 'سپا غسل',
+                'Kids Area': 'بچوں کا علاقہ',
+                'Jacuzzi': 'جیکوزی',
+                'Soaking Tub': 'باتھ ٹب',
+                'Private Dining': 'نجی ڈائننگ',
+                'Steam Room': 'اسٹیم روم',
+                'Twin Beds': 'ٹوین بیڈز',
+                'adults': 'بالغ',
+                'children': 'بچے'
+            }
         }
     }
 };

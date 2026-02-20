@@ -1,15 +1,16 @@
-/* Radio.module.css */
-
 .radioInner {
-    transform: scale(0);
     transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.radioInput:checked+.radioControl .radioInner {
+.radioInput:checked~.radioControl {
+    border-color: #CFAF7E !important;
+}
+
+.radioInput:checked~.radioControl .radioInner {
     transform: scale(1);
 }
 
-.radioInput:checked+.radioControl {
+.radioInput:checked~.radioControl {
     animation: pulse 0.3s cubic-bezier(0.4, 0, 0.6, 1);
 }
 

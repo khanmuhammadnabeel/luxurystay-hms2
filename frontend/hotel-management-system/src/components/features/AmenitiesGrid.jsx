@@ -2,23 +2,27 @@
 import React from 'react';
 import { Card, SectionHeader } from '../ui';
 import { amenities } from '../../data/homepageData';
+import { useLocalization } from '../../contexts';
 import styles from './AmenitiesGrid.module.css';
 
 const AmenitiesGrid = () => {
+    const { t, language } = useLocalization();
+    const isUrdu = language === 'Urdu';
+
     return (
         <section className={styles.section} aria-labelledby="amenities-heading">
             <div className={styles.inner}>
 
                 {/* Section Header */}
                 <SectionHeader
-                    preTitle="HANDCRAFTED FOR YOU"
-                    title="World-Class Amenities"
-                    subtitle="Everything you need for the perfect stay"
+                    preTitle={t('homepage.amenities.preTitle')}
+                    title={t('homepage.amenities.title')}
+                    subtitle={t('homepage.amenities.subtitle')}
                 />
 
                 {/* Amenities Grid */}
                 <div className={styles.grid}>
-                    {amenities.map(({ id, icon: Icon, title, description }) => (
+                    {amenities.map(({ id, icon: Icon, title, titleUr, description, descriptionUr }) => (
                         <Card
                             key={id}
                             variant="glass"
@@ -34,10 +38,14 @@ const AmenitiesGrid = () => {
                             </div>
 
                             {/* Title */}
-                            <h3 className={styles.title}>{title}</h3>
+                            <h3 className={styles.title}>
+                                {isUrdu ? titleUr : title}
+                            </h3>
 
                             {/* Description */}
-                            <p className={styles.description}>{description}</p>
+                            <p className={styles.description}>
+                                {isUrdu ? descriptionUr : description}
+                            </p>
                         </Card>
                     ))}
                 </div>

@@ -50,20 +50,20 @@ const Radio = forwardRef(({
     };
 
     const radioControlClasses = cn(
-        "rounded-full border flex items-center justify-center transition-all duration-200",
-        "focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2 focus-within:ring-offset-primary",
+        "rounded-full border transition-all duration-200 flex items-center justify-center bg-transparent",
+        "focus-within:ring-2 focus-within:ring-[#CFAF7E] focus-within:ring-offset-2 focus-within:ring-offset-primary",
         disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer",
-        isChecked ? "border-accent" : "border-glass-border hover:border-accent",
+        isChecked ? "border-[#CFAF7E] border-2" : "border-glass-border hover:border-[#CFAF7E]/50 border",
         sizeClasses[size],
         styles.radioControl
     );
 
     return (
         <label className={cn(
-            "inline-flex select-none group cursor-pointer",
+            "inline-flex select-none group cursor-pointer items-center",
             variant === 'card'
-                ? "p-4 border border-glass-border rounded-lg bg-glass hover:bg-accent/5 transition-colors w-full"
-                : "items-start",
+                ? "p-4 border border-glass-border rounded-lg bg-glass hover:bg-[#CFAF7E]/5 transition-colors w-full"
+                : "",
             disabled && "opacity-50 cursor-not-allowed",
             className
         )}>
@@ -81,8 +81,9 @@ const Radio = forwardRef(({
                 />
                 <div className={radioControlClasses}>
                     <div className={cn(
-                        "rounded-full bg-accent",
-                        innerSizeClasses[size],
+                        "rounded-full bg-[#CFAF7E] transition-all duration-200",
+                        isChecked ? "scale-100 opacity-100" : "scale-0 opacity-0",
+                        size === 'md' ? 'w-3 h-3' : innerSizeClasses[size],
                         styles.radioInner
                     )} />
                 </div>

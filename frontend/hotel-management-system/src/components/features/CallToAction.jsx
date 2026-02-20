@@ -1,10 +1,13 @@
 // src/components/features/CallToAction.jsx
 import React from 'react';
 import Button from '../ui/Button';
+import { useLocalization } from '../../contexts';
 import styles from './CallToAction.module.css';
 import { ArrowRight } from 'lucide-react';
 
 const CallToAction = () => {
+    const { t } = useLocalization();
+
     return (
         <section className={styles.section} aria-labelledby="cta-heading">
             {/* Glassmorphism card */}
@@ -15,12 +18,12 @@ const CallToAction = () => {
 
                 {/* Heading */}
                 <h2 id="cta-heading" className={styles.heading}>
-                    Ready for an unforgettable experience?
+                    {t('homepage.cta.heading')}
                 </h2>
 
                 {/* Subheading */}
                 <p className={styles.subheading}>
-                    Book your stay today and indulge in luxury
+                    {t('homepage.cta.subheading')}
                 </p>
 
                 {/* CTA Button */}
@@ -31,7 +34,7 @@ const CallToAction = () => {
                         rightIcon={<ArrowRight size={18} />}
                         className={styles.btn}
                     >
-                        Book Your Stay
+                        {t('homepage.cta.button')}
                     </Button>
                 </div>
 

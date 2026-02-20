@@ -93,7 +93,7 @@ const Dropdown = forwardRef(({
     } : undefined,
     'aria-expanded': isOpen,
     'aria-haspopup': 'menu',
-    className: 'cursor-pointer inline-flex', // Ensure trigger handles events
+    className: 'cursor-pointer inline-flex group', // Added 'group' for child animations
   };
 
   return (
