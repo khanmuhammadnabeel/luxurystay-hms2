@@ -1,0 +1,74 @@
+/* src/components/features/RoomAmenities.module.css */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background-color: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(8px);
+    border-radius: var(--radius-lg);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover {
+    border-color: rgba(207, 175, 126, 0.5);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: var(--shadow-lg);
+}
+
+.cardActive {
+    background-color: var(--color-accent) !important;
+    border-color: transparent !important;
+    transform: scale(0.96);
+}
+
+.cardActive:hover {
+    transform: scale(1);
+    box-shadow: 0 10px 30px -10px rgba(207, 175, 126, 0.5);
+}
+
+.iconWrapper {
+    margin-bottom: 0.75rem;
+    color: var(--color-text-secondary);
+    transition: all 0.3s ease;
+}
+
+.card:hover .iconWrapper {
+    color: var(--color-accent);
+    transform: scale(1.1);
+}
+
+.cardActive .iconWrapper {
+    color: var(--color-primary) !important;
+}
+
+.label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    letter-spacing: 0.02em;
+    transition: color 0.3s ease;
+}
+
+.cardActive .label {
+    color: var(--color-primary) !important;
+}

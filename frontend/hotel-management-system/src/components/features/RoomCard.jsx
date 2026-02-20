@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Star, ArrowRight } from 'lucide-react';
-import { Card, Badge, Button } from '../ui';
+import { Card, Badge, Button, Rating } from '../ui';
 import Lightbox from '../composite/Lightbox';
 import { useLocalization } from '../../contexts';
 import { exchangeRates } from '../../data/roomsData';
@@ -101,12 +101,12 @@ const RoomCard = ({ room, onClick, className = '' }) => {
                 </Card.Content>
 
                 <Card.Footer className="border-t border-[var(--glass-border)] py-4 flex items-center justify-between">
-                    <div className="flex items-center gap-1 text-[#CFAF7E]">
-                        <Star size={13} fill="currentColor" />
+                    <div className="flex items-center gap-2">
+                        <Rating value={room.rating} size={13} />
                         <span className="text-[12px] font-bold text-[var(--color-text-secondary)]">
                             {room.rating} · {isUrdu ? 'لگژری' : 'Luxury'}
                         </span>
-                        <span className="text-[10px] text-[var(--color-text-secondary)] ms-1 opacity-70">
+                        <span className="text-[10px] text-[var(--color-text-secondary)] opacity-70">
                             ({room.reviews} {isUrdu ? 'جائزے' : 'reviews'})
                         </span>
                     </div>
@@ -114,7 +114,7 @@ const RoomCard = ({ room, onClick, className = '' }) => {
                         variant="primary"
                         size="sm"
                         rightIcon={<ArrowRight size={14} />}
-                        className="font-bold tracking-wide"
+                        className="font-bold tracking-wide shrink-0 whitespace-nowrap"
                         onClick={(e) => {
                             e.stopPropagation();
                             navigate(`/rooms/${room.id}`);

@@ -1,0 +1,172 @@
+/* src/pages/public/RoomDetail.module.css */
+.container {
+    width: 100%;
+    max-width: var(--container-xl);
+    margin: 0 auto;
+    padding: 2rem 1.5rem 5rem;
+    /* Increased padding slightly for breathing room */
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: flex-start;
+}
+
+@media (min-width: 1024px) {
+    .layout {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+/* Left Column */
+.mainContent {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+/* Sidebar */
+.sidebar {
+    position: sticky;
+    top: 6rem;
+    z-index: 10;
+}
+
+.bookingCard {
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    box-shadow: var(--shadow-xl);
+}
+
+.priceWrapper {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.price {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    font-family: var(--font-serif);
+}
+
+.perNight {
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+}
+
+.sidebarSection {
+    margin-bottom: 1.5rem;
+}
+
+.sidebarLabel {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.75rem;
+}
+
+.totalRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--glass-border);
+}
+
+.totalLabel {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.totalValue {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.taxesInfo {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    text-align: right;
+    margin-top: 0.25rem;
+}
+
+.cancellation {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    padding: 0.75rem 1rem;
+    background-color: rgba(207, 175, 126, 0.1);
+    border-radius: var(--radius-md);
+    color: var(--color-accent);
+    font-size: 0.8125rem;
+    font-weight: 500;
+}
+
+.stepper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--glass-border);
+}
+
+.stepperActions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stepperBtn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.stepperBtn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    border-color: var(--color-text-placeholder);
+    color: var(--color-text-placeholder);
+}
+
+.stepperBtn:hover:not(:disabled) {
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+}
+
+.stepperValue {
+    font-weight: 600;
+    min-width: 1.5rem;
+    text-align: center;
+}
+
+@media (max-width: 1023px) {
+    .sidebar {
+        position: static;
+    }
+}

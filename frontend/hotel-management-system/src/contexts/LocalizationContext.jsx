@@ -317,6 +317,32 @@ export const translations = {
                 'adults': 'Adults',
                 'children': 'Children'
             }
+        },
+        ui: {
+            reviews: "reviews",
+            luxury: "Luxury",
+            more: "more"
+        },
+        roomDetail: {
+            sleeps: 'Sleeps {count}',
+            sleeps_plural: 'Sleeps {count} guests',
+            description: 'About this room',
+            amenities: 'Amenities',
+            reviews: 'Reviews',
+            writeReview: 'Write a review',
+            similarRooms: 'You might also like',
+            share: 'Share',
+            favorite: 'Save to favorites',
+            location: 'Location'
+        },
+        booking: {
+            dates: 'Check-in / Check-out',
+            guests: 'Guests',
+            total: 'Total',
+            includesTaxes: 'Includes taxes & fees',
+            bookNow: 'Book Now',
+            freeCancellation: 'Free cancellation up to 48 hours',
+            perNight: '/ night'
         }
     },
     Urdu: {
@@ -621,8 +647,34 @@ export const translations = {
                 'adults': 'بالغ',
                 'children': 'بچے'
             }
+        },
+        ui: {
+            reviews: "جائزے",
+            luxury: "لگژری",
+            more: "مزید"
+        },
+        roomDetail: {
+            sleeps: '{count} افراد کے لیے',
+            sleeps_plural: '{count} مہمانوں کے لیے',
+            description: 'کمرے کے بارے میں',
+            amenities: 'سہولیات',
+            reviews: 'جائزے',
+            writeReview: 'جائزہ لکھیں',
+            similarRooms: 'آپ کو یہ بھی پسند آ سکتا ہے',
+            share: 'شیئر کریں',
+            favorite: 'پسندیدہ میں شامل کریں',
+            location: 'مقام'
+        },
+        booking: {
+            dates: 'چیک ان / چیک آؤٹ',
+            guests: 'مہمان',
+            total: 'کل رقم',
+            includesTaxes: 'ٹیکس اور فیس شامل ہے',
+            bookNow: 'ابھی بک کریں',
+            freeCancellation: '۴۸ گھنٹے پہلے مفت منسوخی',
+            perNight: '/ رات'
         }
-    }
+    },
 };
 
 export const LocalizationProvider = ({ children }) => {

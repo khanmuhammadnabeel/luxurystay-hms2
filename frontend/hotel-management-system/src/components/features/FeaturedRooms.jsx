@@ -7,7 +7,8 @@ import Button from '../ui/Button';
 import { featuredRooms, exchangeRates } from '../../data/homepageData';
 import { useLocalization } from '../../contexts';
 import styles from './FeaturedRooms.module.css';
-import { ArrowRight, Star } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { Rating } from '../ui';
 
 const FeaturedRooms = () => {
     const { activeCurrency, t, language } = useLocalization();
@@ -82,10 +83,10 @@ const FeaturedRooms = () => {
 
                             {/* Footer: Rating + Book Now */}
                             <Card.Footer>
-                                <div className="flex items-center gap-1 text-[var(--color-accent)]">
-                                    <Star size={13} fill="currentColor" />
+                                <div className="flex items-center gap-2">
+                                    <Rating value={5} size={13} />
                                     <span className="text-[12px] font-medium text-[var(--color-text-secondary)]">
-                                        5.0 · {t('homepage.rooms.luxury')}
+                                        5.0 · {t('ui.luxury')}
                                     </span>
                                 </div>
                                 <Button
