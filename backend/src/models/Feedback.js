@@ -12,7 +12,7 @@ const feedbackSchema = new mongoose.Schema({
     required: [true, 'Booking ID is required']
   },
   roomId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Number,
     ref: 'Room',
     required: [true, 'Room ID is required']
   },
@@ -112,9 +112,10 @@ feedbackSchema.virtual('bookingDetails', {
  * @returns {Promise<Object>} { average: Number|null, count: Number }
  */
 feedbackSchema.statics.getAverageRating = async function (roomId) {
-  const roomObjectId = typeof roomId === 'string' ? new mongoose.Types.ObjectId(roomId) : roomId;
+  // Handle both Number and string-numeric IDs
+  const parsedRoomId = typeof roomId === 'string' ? Number(roomId) : roomId;
   const result = await this.aggregate([
-    { $match: { roomId: roomObjectId, status: 'approved' } },
+    { $match: { roomId: parsedRoomId, status: 'approved' } },
     { $group: { _id: '$roomId', avgRating: { $avg: '$rating' }, count: { $sum: 1 } } }
   ]);
 

@@ -9,6 +9,8 @@ const Home = lazy(() => import('../pages/public/Home'));
 const Rooms = lazy(() => import('../pages/public/Rooms'));
 const RoomDetail = lazy(() => import('../pages/public/RoomDetail'));
 const Contact = lazy(() => import('../pages/public/Contact'));
+const Booking = lazy(() => import('../pages/public/Booking'));
+const BookingConfirmation = lazy(() => import('../pages/public/BookingConfirmation'));
 
 // Auth
 const Login = lazy(() => import('../pages/auth/Login'));
@@ -49,6 +51,8 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: 'rooms', element: <Rooms /> },
       { path: 'rooms/:id', element: <RoomDetail /> },
+      { path: 'booking/:roomId', element: <Booking /> },
+      { path: 'booking/confirmation/:id', element: <BookingConfirmation /> },
       { path: 'contact', element: <Contact /> },
 
       // Color-Theme route

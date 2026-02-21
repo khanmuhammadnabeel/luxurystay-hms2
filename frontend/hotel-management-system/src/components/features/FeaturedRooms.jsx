@@ -82,7 +82,7 @@ const FeaturedRooms = () => {
                             </Card.Content>
 
                             {/* Footer: Rating + Book Now */}
-                            <Card.Footer>
+                            <Card.Footer className="px-6">
                                 <div className="flex items-center gap-2">
                                     <Rating value={5} size={13} />
                                     <span className="text-[12px] font-medium text-[var(--color-text-secondary)]">

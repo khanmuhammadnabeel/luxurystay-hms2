@@ -4,10 +4,14 @@ const bookingSchema = new mongoose.Schema({
   guestId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: false   // Optional — guest bookings don't have an account
   },
+  guestName: { type: String, trim: true },
+  email: { type: String, trim: true },
+  phone: { type: String, trim: true },
+  paymentMethod: { type: String, default: 'hotel' },
   roomId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Number,
     ref: 'Room',
     required: true
   },
@@ -32,7 +36,7 @@ const bookingSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['confirmed', 'checked-in', 'checked-out', 'cancelled'],
+    enum: ['pending', 'confirmed', 'checked-in', 'checked-out', 'cancelled'],
     default: 'confirmed'
   },
   paymentStatus: {
@@ -55,7 +59,7 @@ const bookingSchema = new mongoose.Schema({
 });
 
 // Update timestamp on save
-bookingSchema.pre('save', function(next) {
+bookingSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
   next();
 });

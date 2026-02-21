@@ -1,11 +1,12 @@
 // src/hooks/useRoom.js
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
+import { getRoomById } from '../services/roomService';
 import { roomDetailData } from '../data/roomDetailData';
 import { roomsData } from '../data/roomsData';
 
 /**
  * Custom hook to fetch a single room's detail.
- * Currently uses mock data, will be updated to fetch from API later.
+ * Now tries to fetch from API, with fallback to mock data.
  */
 export const useRoom = (id) => {
     const [room, setRoom] = useState(null);
@@ -13,15 +14,24 @@ export const useRoom = (id) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchRoom = () => {
+        const fetchRoom = async () => {
             setLoading(true);
             try {
-                const roomId = parseInt(id, 10);
+                // 1. Try to fetch from API first
+                try {
+                    const result = await getRoomById(id);
+                    if (result.data) {
+                        setRoom(result.data);
+                        return;
+                    }
+                } catch (apiErr) {
+                    console.warn('API fetch failed, falling back to mock data', apiErr);
+                }
 
-                // 1. Try to find in detailed data first
+                // 2. Fallback to mock data
+                const roomId = parseInt(id, 10);
                 let foundRoom = roomDetailData.find(r => r.id === roomId);
 
-                // 2. Fallback to basic roomsData if not found in detailed
                 if (!foundRoom) {
                     const basicRoom = roomsData.find(r => r.id === roomId);
                     if (basicRoom) {

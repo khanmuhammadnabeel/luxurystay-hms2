@@ -42,7 +42,13 @@ exports.getBookingById = async (req, res) => {
  */
 exports.createBooking = async (req, res) => {
   try {
-    const { roomId, checkInDate, checkOutDate, numberOfGuests } = req.body;
+    const { checkInDate, checkOutDate, numberOfGuests } = req.body;
+
+    // Coerce roomId to Number — frontend sends it as a string
+    const roomId = Number(req.body.roomId);
+    if (isNaN(roomId)) {
+      return res.status(400).json({ success: false, error: 'Invalid room ID' });
+    }
 
     const room = await Room.findById(roomId);
     if (!room) {
@@ -76,10 +82,18 @@ exports.createBooking = async (req, res) => {
     const totalAmount = nights * room.price;
 
     const bookingData = {
-      ...req.body,
-      totalAmount,
+      roomId,                             // already a Number (coerced above)
       checkInDate: checkIn,
-      checkOutDate: checkOut
+      checkOutDate: checkOut,
+      guestName: req.body.guestName || '',
+      email: req.body.email || '',
+      phone: req.body.phone || '',
+      numberOfGuests: Number(numberOfGuests) || 1,
+      totalAmount,
+      paymentMethod: req.body.paymentMethod || 'hotel',
+      paymentStatus: req.body.paymentStatus || 'pending',
+      specialRequests: req.body.specialRequests || '',
+      ...(req.body.guestId ? { guestId: req.body.guestId } : {})
     };
 
     const booking = await Booking.create(bookingData);
@@ -131,7 +145,7 @@ exports.updateBookingStatus = async (req, res) => {
         // emit room status via socket
         const emitted = socketHelper.emitRoomStatus(booking.roomId, 'Occupied');
         if (!emitted) console.warn('Socket: emitRoomStatus returned false (checked-in)');
-        
+
         // Notify housekeeping about check-in with guest name
         try {
           let guestName = 'Guest';
@@ -146,13 +160,13 @@ exports.updateBookingStatus = async (req, res) => {
         } catch (sErr) {
           console.error('Socket notifyCheckIn failed:', sErr);
         }
-        
+
       } else if (status === 'checked-out') {
         // Set room to Cleaning (housekeeping will later mark as Available)
         await Room.findByIdAndUpdate(booking.roomId, { status: 'Cleaning' });
         const emitted = socketHelper.emitRoomStatus(booking.roomId, 'Cleaning');
         if (!emitted) console.warn('Socket: emitRoomStatus returned false (checked-out)');
-        
+
       } else if (status === 'cancelled') {
         await Room.findByIdAndUpdate(booking.roomId, { status: 'Available' });
         const emitted = socketHelper.emitRoomStatus(booking.roomId, 'Available');

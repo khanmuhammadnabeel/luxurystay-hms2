@@ -12,7 +12,7 @@ const complaintSchema = new mongoose.Schema({
     required: [true, 'Booking ID is required']
   },
   roomId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Number,
     ref: 'Room',
     required: [true, 'Room ID is required']
   },

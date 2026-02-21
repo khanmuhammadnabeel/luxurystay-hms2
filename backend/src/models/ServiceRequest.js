@@ -7,7 +7,7 @@ const serviceRequestSchema = new mongoose.Schema({
     required: [true, 'Guest ID is required']
   },
   roomId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Number,
     ref: 'Room',
     required: [true, 'Room ID is required']
   },
@@ -86,12 +86,12 @@ serviceRequestSchema.virtual('serviceDetails', {
  * Auto-update updatedAt timestamp on every save
  * Calculate totalPrice if serviceId or quantity changes
  */
-serviceRequestSchema.pre('save', function(next) {
+serviceRequestSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
-  
+
   // Note: We'll calculate totalPrice in controller
   // This keeps model clean and avoids circular dependencies
-  
+
   next();
 });
 

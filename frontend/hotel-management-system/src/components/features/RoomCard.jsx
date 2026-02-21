@@ -94,20 +94,20 @@ const RoomCard = ({ room, onClick, className = '' }) => {
                         ))}
                         {room.amenities.length > 3 && (
                             <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-bold text-[#CFAF7E] border border-[#CFAF7E]/10 bg-[#CFAF7E]/5">
-                                +{room.amenities.length - 3} {isUrdu ? 'مزید' : 'more'}
+                                +{room.amenities.length - 3} {t('homepage.rooms.more')}
                             </span>
                         )}
                     </div>
                 </Card.Content>
 
-                <Card.Footer className="border-t border-[var(--glass-border)] py-4 flex items-center justify-between">
+                <Card.Footer className="px-6 py-4">
                     <div className="flex items-center gap-2">
                         <Rating value={room.rating} size={13} />
                         <span className="text-[12px] font-bold text-[var(--color-text-secondary)]">
-                            {room.rating} · {isUrdu ? 'لگژری' : 'Luxury'}
+                            {room.rating} · {t('ui.luxury')}
                         </span>
                         <span className="text-[10px] text-[var(--color-text-secondary)] opacity-70">
-                            ({room.reviews} {isUrdu ? 'جائزے' : 'reviews'})
+                            ({room.reviews} {t('ui.reviews')})
                         </span>
                     </div>
                     <Button

@@ -1,0 +1,116 @@
+.container {
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.methodsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.methodCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg-secondary);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.methodCard:hover {
+    border-color: rgba(207, 175, 126, 0.4);
+    transform: translateY(-2px);
+}
+
+.methodSelected {
+    border-color: var(--color-accent);
+    background-color: rgba(207, 175, 126, 0.05);
+    box-shadow: 0 4px 20px rgba(207, 175, 126, 0.1);
+}
+
+.methodIcon {
+    color: var(--color-text-muted);
+    transition: color 0.3s ease;
+}
+
+.methodSelected .methodIcon {
+    color: var(--color-accent);
+}
+
+.methodLabel {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+/* Credit Card Form */
+.cardForm {
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.fullWidth {
+    grid-column: 1 / -1;
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 3rem;
+    gap: 1.5rem;
+}
+
+.securityNote {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    opacity: 0.6;
+}
+
+.confirmBtn {
+    min-width: 200px;
+}
+
+@media (max-width: 640px) {
+    .methodsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
+}

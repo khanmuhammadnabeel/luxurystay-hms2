@@ -1,13 +1,14 @@
 // src/pages/public/RoomDetail.jsx
 import React, { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Check, Info, Loader2 } from 'lucide-react';
+import { Check, Info, Loader2, ArrowLeft } from 'lucide-react';
 import { differenceInDays } from 'date-fns';
 
 import { useLocalization } from '../../contexts';
 import { useRoom } from '../../hooks/useRoom';
 import { Button, Badge } from '../../components/ui';
 import RangePicker from '../../components/composite/RangePicker';
+import { useNotification } from '../../contexts/NotificationContext';
 
 // Components                         
 import RoomGallery from '../../components/features/RoomGallery';
@@ -20,13 +21,16 @@ import styles from './RoomDetail.module.css';
 
 const RoomDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { t, activeCurrency, language } = useLocalization();
+  const { showWarning } = useNotification();
   const { room, loading, error } = useRoom(id);
   const isUrdu = language === 'Urdu';
 
   // Booking State
   const [dateRange, setDateRange] = useState({ start: null, end: null });
   const [guests, setGuests] = useState(2);
+  const [showDatePickerError, setShowDatePickerError] = useState(false);
 
   // Calculations
   const nights = useMemo(() => {
@@ -42,7 +46,7 @@ const RoomDetail = () => {
 
   const formatPrice = (val) => {
     const converted = val * (activeCurrency.rate || 1);
-    return `${activeCurrency.symbol}${Math.round(converted)}`;
+    return `${activeCurrency.symbol}${Math.round(converted)} `;
   };
 
   if (loading) {
@@ -66,6 +70,25 @@ const RoomDetail = () => {
       </div>
     );
   }
+
+  const handleBookNow = () => {
+    if (!dateRange.start || !dateRange.end) {
+      showWarning(t('booking.selectDates'));
+      setShowDatePickerError(true);
+      setTimeout(() => setShowDatePickerError(false), 3000);
+      return;
+    }
+
+    navigate(`/booking/${id}`, {
+      state: {
+        dates: {
+          checkIn: dateRange.start,
+          checkOut: dateRange.end
+        },
+        guests: guests
+      }
+    });
+  };
 
   return (
     <div className={styles.container}>
@@ -111,12 +134,14 @@ const RoomDetail = () => {
             {/* Date Picker */}
             <div className={styles.sidebarSection}>
               <label className={styles.sidebarLabel}>{t('booking.dates')}</label>
-              <RangePicker
-                value={dateRange}
-                onChange={setDateRange}
-                minDate={new Date()}
-                className="w-full"
-              />
+              <div className={showDatePickerError ? styles.datePickerError : ''}>
+                <RangePicker
+                  value={dateRange}
+                  onChange={setDateRange}
+                  minDate={new Date()}
+                  className="w-full"
+                />
+              </div>
             </div>
 
             {/* Guest Stepper */}
@@ -158,7 +183,7 @@ const RoomDetail = () => {
               size="lg"
               fullWidth
               className="mt-6 font-bold"
-              disabled={!dateRange.start || !dateRange.end}
+              onClick={handleBookNow}
             >
               {t('booking.bookNow')}
             </Button>
@@ -170,6 +195,14 @@ const RoomDetail = () => {
           </div>
         </aside>
       </div>
+
+      <button
+        className={styles.floatingBack}
+        onClick={() => navigate('/rooms')}
+        aria-label="Back to Rooms"
+      >
+        <ArrowLeft size={24} />
+      </button>
 
       {/* Recommendations Grid */}
       <SimilarRooms currentRoomId={room.id} type={room.type} />

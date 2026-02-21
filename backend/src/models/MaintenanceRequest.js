@@ -4,9 +4,9 @@ const User = require('./User');
 
 const maintenanceRequestSchema = new mongoose.Schema({
   roomId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Number,
     ref: 'Room',
-    required: [true, 'Room ID is required']
+    required: true
   },
   reportedBy: {
     type: mongoose.Schema.Types.ObjectId,
@@ -44,7 +44,7 @@ const maintenanceRequestSchema = new mongoose.Schema({
     type: [String],
     default: [],
     validate: {
-      validator: function(urls) {
+      validator: function (urls) {
         return urls.every(url => {
           try {
             new URL(url);
@@ -97,7 +97,7 @@ maintenanceRequestSchema.virtual('assignedUserDetails', {
   justOne: true
 });
 
-maintenanceRequestSchema.pre('save', function(next) {
+maintenanceRequestSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
 
   if (this.isModified('status') && this.status === 'resolved' && !this.resolvedAt) {
@@ -107,7 +107,7 @@ maintenanceRequestSchema.pre('save', function(next) {
   next();
 });
 
-maintenanceRequestSchema.pre('save', async function(next) {
+maintenanceRequestSchema.pre('save', async function (next) {
   if (this.isModified('status')) {
     const roomStatusMap = {
       'reported': 'Maintenance',
@@ -115,7 +115,7 @@ maintenanceRequestSchema.pre('save', async function(next) {
       'in_progress': 'Maintenance',
       'resolved': 'Available'
     };
-    
+
     if (roomStatusMap[this.status]) {
       try {
         await Room.findByIdAndUpdate(
@@ -131,22 +131,22 @@ maintenanceRequestSchema.pre('save', async function(next) {
   next();
 });
 
-maintenanceRequestSchema.methods.assign = async function(userId) {
+maintenanceRequestSchema.methods.assign = async function (userId) {
   if (this.status === 'resolved') {
     throw new Error('Cannot assign a resolved maintenance request');
   }
-  
+
   const user = await User.findById(userId);
   if (!user || user.role !== 'housekeeping') {
     throw new Error('Can only assign to housekeeping staff');
   }
-  
+
   this.assignedTo = userId;
   this.status = 'assigned';
   return this.save();
 };
 
-maintenanceRequestSchema.methods.startWork = function() {
+maintenanceRequestSchema.methods.startWork = function () {
   if (this.status !== 'assigned') {
     throw new Error('Only assigned requests can be started');
   }
@@ -154,7 +154,7 @@ maintenanceRequestSchema.methods.startWork = function() {
   return this.save();
 };
 
-maintenanceRequestSchema.methods.resolve = function() {
+maintenanceRequestSchema.methods.resolve = function () {
   if (this.status !== 'in_progress') {
     throw new Error('Only in-progress requests can be resolved');
   }
@@ -163,7 +163,7 @@ maintenanceRequestSchema.methods.resolve = function() {
   return this.save();
 };
 
-maintenanceRequestSchema.methods.addImages = function(imageUrls = []) {
+maintenanceRequestSchema.methods.addImages = function (imageUrls = []) {
   if (!Array.isArray(imageUrls)) {
     throw new Error('Images must be an array');
   }
@@ -171,11 +171,11 @@ maintenanceRequestSchema.methods.addImages = function(imageUrls = []) {
   return this.save();
 };
 
-maintenanceRequestSchema.methods.toJSON = function() {
+maintenanceRequestSchema.methods.toJSON = function () {
   const obj = this.toObject();
-  
+
   const convertId = (id) => id ? id.toString() : id;
-  
+
   return {
     id: convertId(obj._id),
     roomId: convertId(obj.roomId),
@@ -191,7 +191,7 @@ maintenanceRequestSchema.methods.toJSON = function() {
   };
 };
 
-maintenanceRequestSchema.statics.findByRoomId = function(roomId) {
+maintenanceRequestSchema.statics.findByRoomId = function (roomId) {
   return this.find({ roomId })
     .populate('reportedBy')
     .populate('assignedUserDetails')
@@ -199,42 +199,42 @@ maintenanceRequestSchema.statics.findByRoomId = function(roomId) {
     .sort({ createdAt: -1 });
 };
 
-maintenanceRequestSchema.statics.findPendingRequests = function() {
+maintenanceRequestSchema.statics.findPendingRequests = function () {
   return this.find({ status: 'reported' })
     .populate('reporterDetails')
     .populate('roomDetails')
     .sort({ createdAt: 1 });
 };
 
-maintenanceRequestSchema.statics.findActiveRequests = function() {
+maintenanceRequestSchema.statics.findActiveRequests = function () {
   return this.find({ status: { $in: ['assigned', 'in_progress'] } })
     .populate('assignedUserDetails')
     .populate('roomDetails')
     .sort({ createdAt: -1 });
 };
 
-maintenanceRequestSchema.statics.findByAssignedTo = function(userId) {
+maintenanceRequestSchema.statics.findByAssignedTo = function (userId) {
   return this.find({ assignedTo: userId, status: { $ne: 'resolved' } })
     .populate('roomDetails')
     .populate('reporterDetails')
     .sort({ createdAt: 1 });
 };
 
-maintenanceRequestSchema.statics.findByIssueType = function(issueType) {
+maintenanceRequestSchema.statics.findByIssueType = function (issueType) {
   return this.find({ issueType })
     .populate('assignedUserDetails')
     .populate('roomDetails')
     .sort({ createdAt: -1 });
 };
 
-maintenanceRequestSchema.statics.getStatistics = async function() {
+maintenanceRequestSchema.statics.getStatistics = async function () {
   const stats = await this.aggregate([
     { $group: { _id: '$status', count: { $sum: 1 } } },
     { $sort: { count: -1 } }
   ]);
-  
+
   const total = stats.reduce((sum, item) => sum + item.count, 0);
-  
+
   return {
     byStatus: stats.map(item => ({
       status: item._id,

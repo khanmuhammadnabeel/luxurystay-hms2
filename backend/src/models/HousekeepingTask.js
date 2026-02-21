@@ -4,7 +4,7 @@ const User = require('./User');
 
 const housekeepingTaskSchema = new mongoose.Schema({
   roomId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Number,
     ref: 'Room',
     required: [true, 'Room ID is required']
   },
@@ -13,7 +13,7 @@ const housekeepingTaskSchema = new mongoose.Schema({
     ref: 'User',
     required: [true, 'Must assign task to a housekeeping staff member'],
     validate: {
-      validator: async function(userId) {
+      validator: async function (userId) {
         const user = await User.findById(userId);
         return user && user.role === 'housekeeping';
       },
@@ -93,7 +93,7 @@ housekeepingTaskSchema.virtual('verifierDetails', {
   justOne: true
 });
 
-housekeepingTaskSchema.pre('save', function(next) {
+housekeepingTaskSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
 
   if (this.isModified('status') && this.status === 'completed' && !this.completedAt) {
@@ -103,14 +103,14 @@ housekeepingTaskSchema.pre('save', function(next) {
   next();
 });
 
-housekeepingTaskSchema.pre('save', async function(next) {
+housekeepingTaskSchema.pre('save', async function (next) {
   if (this.isModified('status')) {
     const roomStatusMap = {
       'in_progress': 'Cleaning',
       'completed': 'Cleaning',
       'verified': 'Available'
     };
-    
+
     if (roomStatusMap[this.status]) {
       try {
         await Room.findByIdAndUpdate(
@@ -126,7 +126,7 @@ housekeepingTaskSchema.pre('save', async function(next) {
   next();
 });
 
-housekeepingTaskSchema.methods.startTask = function() {
+housekeepingTaskSchema.methods.startTask = function () {
   if (this.status !== 'pending') {
     throw new Error('Only pending tasks can be started');
   }
@@ -134,7 +134,7 @@ housekeepingTaskSchema.methods.startTask = function() {
   return this.save();
 };
 
-housekeepingTaskSchema.methods.completeTask = function() {
+housekeepingTaskSchema.methods.completeTask = function () {
   if (this.status !== 'in_progress') {
     throw new Error('Only in-progress tasks can be completed');
   }
@@ -143,7 +143,7 @@ housekeepingTaskSchema.methods.completeTask = function() {
   return this.save();
 };
 
-housekeepingTaskSchema.methods.verifyTask = function(userId) {
+housekeepingTaskSchema.methods.verifyTask = function (userId) {
   if (this.status !== 'completed') {
     throw new Error('Only completed tasks can be verified');
   }
@@ -152,11 +152,11 @@ housekeepingTaskSchema.methods.verifyTask = function(userId) {
   return this.save();
 };
 
-housekeepingTaskSchema.methods.toJSON = function() {
+housekeepingTaskSchema.methods.toJSON = function () {
   const obj = this.toObject();
-  
+
   const convertId = (id) => id ? id.toString() : id;
-  
+
   return {
     id: convertId(obj._id),
     roomId: convertId(obj.roomId),
@@ -173,30 +173,30 @@ housekeepingTaskSchema.methods.toJSON = function() {
   };
 };
 
-housekeepingTaskSchema.statics.findByRoomId = function(roomId) {
+housekeepingTaskSchema.statics.findByRoomId = function (roomId) {
   return this.find({ roomId }).populate('assignedTo').populate('roomDetails');
 };
 
-housekeepingTaskSchema.statics.findPendingTasks = function(userId) {
+housekeepingTaskSchema.statics.findPendingTasks = function (userId) {
   return this.find({ assignedTo: userId, status: 'pending' })
     .populate('roomDetails')
     .sort({ priority: -1, scheduledDate: 1 });
 };
 
-housekeepingTaskSchema.statics.findInProgressTasks = function() {
+housekeepingTaskSchema.statics.findInProgressTasks = function () {
   return this.find({ status: 'in_progress' })
     .populate('assignedUser')
     .populate('roomDetails');
 };
 
-housekeepingTaskSchema.statics.findAwaitingVerification = function() {
+housekeepingTaskSchema.statics.findAwaitingVerification = function () {
   return this.find({ status: 'completed' })
     .populate('assignedUser')
     .populate('roomDetails')
     .sort({ completedAt: -1 });
 };
 
-housekeepingTaskSchema.statics.findUrgentTasks = function() {
+housekeepingTaskSchema.statics.findUrgentTasks = function () {
   return this.find({ priority: 'urgent', status: { $ne: 'verified' } })
     .populate('assignedUser')
     .populate('roomDetails')

@@ -34,6 +34,12 @@ exports.checkRoomAvailability = async (req, res) => {
     const checkInDate = new Date(checkIn);
     const checkOutDate = new Date(checkOut);
 
+    // Verify room existence first
+    const room = await Room.findById(req.params.id);
+    if (!room) {
+      return res.status(404).json({ success: false, error: 'Room not found' });
+    }
+
     const overlappingBookings = await Booking.find({
       roomId: req.params.id,
       status: { $in: ['confirmed', 'checked-in'] },
@@ -146,11 +152,11 @@ exports.updateRoomStatus = async (req, res) => {
     }
 
     // Emit socket update, but don't let it break the response
-          try {
-          socketHelper.emitRoomStatus(req.params.id, newStatus);
-          } catch (socketErr) {
-          console.error('Socket emit failed in updateRoomStatus:', socketErr);
-          }
+    try {
+      socketHelper.emitRoomStatus(req.params.id, newStatus);
+    } catch (socketErr) {
+      console.error('Socket emit failed in updateRoomStatus:', socketErr);
+    }
 
     return res.json({ success: true, data: room, message: 'Room status updated successfully' });
   } catch (error) {

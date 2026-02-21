@@ -10,7 +10,7 @@ const endpoints = {
   update: (id) => `/api/bookings/${id}`,
   cancel: (id) => `/api/bookings/${id}`,
   myBookings: '/api/bookings/my',
-  availability: (roomId) => `/api/bookings/availability/${roomId}`,
+  availability: (roomId) => `/api/rooms/${roomId}/availability`,
   invoice: (id) => `/api/bookings/${id}/invoice`,
 };
 
@@ -190,16 +190,11 @@ export async function cancelBooking(id) {
  * GET /api/bookings/availability/:roomId. Query: checkInDate, checkOutDate.
  * Returns: { available: boolean, conflictingBookings?: [] }
  */
-export async function checkRoomAvailability(roomId, checkInDate, checkOutDate) {
+export async function checkRoomAvailability(roomId, checkIn, checkOut) {
   try {
-    const params = buildParams({ checkInDate, checkOutDate });
+    const params = { checkIn, checkOut };
     const response = await api.get(endpoints.availability(roomId), { params });
-    return {
-      available: response?.available ?? false,
-      ...(response?.conflictingBookings != null && {
-        conflictingBookings: response.conflictingBookings,
-      }),
-    };
+    return response.data || response;
   } catch (error) {
     if (error?.response?.status === 404) {
       return { available: false };
@@ -233,3 +228,14 @@ export async function getBookingInvoice(id) {
     throw new Error(message);
   }
 }
+// Export as a service object for centralized access
+export const bookingService = {
+  getBookings,
+  getMyBookings,
+  getBookingById,
+  createBooking,
+  updateBooking,
+  cancelBooking,
+  checkRoomAvailability,
+  getBookingInvoice
+};

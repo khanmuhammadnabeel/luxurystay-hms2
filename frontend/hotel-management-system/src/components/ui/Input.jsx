@@ -6,7 +6,7 @@ import ErrorMessage from "./ErrorMessage";
 
 const variantStyles = {
   default:
-    "border border-border bg-transparent",
+    "border border-[var(--glass-border)] bg-[var(--color-secondary)]",
   filled:
     "border border-transparent bg-input",
   flushed:
@@ -136,21 +136,19 @@ const Input = forwardRef(function Input(
           className={cn(
             // Base
             "w-full font-sans text-foreground placeholder:text-muted-foreground",
-            "transition-colors duration-150",
+            "transition-all duration-150",
             "focus-visible:outline-none",
+            "bg-transparent",
             // Variant
             variantStyles[variant],
             // Size (padding adjusted if icons present)
             sizeStyles[size],
             // Rounded (skip for flushed)
-            variant !== "flushed" && variant !== "unstyled" && "rounded-[var(--radius-md)]",
-            // Focus ring
-            variant === "flushed"
-              ? "focus-visible:border-primary"
-              : variant !== "unstyled" &&
-              "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background",
+            variant !== "flushed" && variant !== "unstyled" && "rounded-[var(--radius-lg)]",
+            // Focus ring (Gold Luxury)
+            "focus:border-accent focus:ring-2 focus:ring-accent/20 focus:outline-none",
             // Error state
-            hasError && variant !== "unstyled" && "border-[var(--color-error-light)] focus-visible:ring-[var(--color-error-light)]",
+            hasError && variant !== "unstyled" && "border-[var(--color-error-light)] focus:ring-[var(--color-error-light)]/20",
             // Disabled
             disabled && "opacity-50 cursor-not-allowed",
             // Left icon padding
@@ -159,7 +157,7 @@ const Input = forwardRef(function Input(
             hasRightAccessories && (size === "sm" ? "pr-8" : size === "lg" ? "pr-11" : "pr-9"),
             className
           )}
-        // Filter out any non-DOM props by not spreading props directly
+          {...props}
         />
 
         {/* Right accessories */}
