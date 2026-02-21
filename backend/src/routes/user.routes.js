@@ -150,12 +150,14 @@
 const express = require('express');
 const { authenticate } = require('../middleware/auth');
 const { getCurrentUser, updateProfile } = require('../controllers/userController');
+const { getCurrentUser, updateProfile, updateAvatar } = require('../controllers/userController');
 
 const router = express.Router();
 
 router.use(authenticate);
 
 router.get('/me', getCurrentUser);
+router.get('/profile', getCurrentUser); // Alias for consistency
 router.put('/profile', updateProfile);
-
+router.post('/avatar', updateAvatar);
 module.exports = router;

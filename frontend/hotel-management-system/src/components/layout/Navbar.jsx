@@ -14,9 +14,9 @@ import {
   Settings,
   ChevronDown
 } from 'lucide-react';
-import { Button, Dropdown, Badge, Drawer } from '../ui';
+import { Button, Dropdown, Badge, Drawer, Modal } from '../ui';
 import { SearchBar } from '../composite';
-import { useTheme, useLocalization } from '../../contexts';
+import { useTheme, useLocalization, useAuth } from '../../contexts';
 import styles from './Navbar.module.css';
 
 const Navbar = ({ variant = 'public' }) => {
@@ -31,6 +31,8 @@ const Navbar = ({ variant = 'public' }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const { logout, authActionLoading } = useAuth();
 
   // Scroll Logic
   useEffect(() => {
@@ -184,8 +186,8 @@ const Navbar = ({ variant = 'public' }) => {
                   <Settings size={14} className="mr-2" /> Dashboard
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item destructive>
-                  <LogOut size={14} className="mr-2" /> Sign Out
+                <Dropdown.Item destructive onClick={() => setShowLogoutConfirm(true)}>
+                  <LogOut size={14} className="mr-2" /> {t('dashboard.logout') || 'Sign Out'}
                 </Dropdown.Item>
               </Dropdown>
             </div>
@@ -339,6 +341,46 @@ const Navbar = ({ variant = 'public' }) => {
           </div>
         </div>
       )}
+
+      {/* Logout Confirmation Modal */}
+      <Modal
+        isOpen={showLogoutConfirm}
+        onClose={() => setShowLogoutConfirm(false)}
+        size="sm"
+      >
+        <Modal.Header title={t('common.logout_confirm_title')} />
+        <Modal.Body className="py-6">
+          <p className="text-text-secondary text-center">
+            {t('common.logout_confirm_msg')}
+          </p>
+          <div className="flex gap-4 mt-8">
+            <Button
+              variant="outline"
+              fullWidth
+              onClick={() => setShowLogoutConfirm(false)}
+              disabled={authActionLoading}
+            >
+              {t('common.logout_stay')}
+            </Button>
+            <Button
+              variant="primary"
+              fullWidth
+              disabled={authActionLoading}
+              onClick={async () => {
+                await logout();
+                setShowLogoutConfirm(false);
+                navigate('/login');
+              }}
+            >
+              {authActionLoading ? (
+                <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+              ) : (
+                t('dashboard.logout')
+              )}
+            </Button>
+          </div>
+        </Modal.Body>
+      </Modal>
     </>
   );
 };

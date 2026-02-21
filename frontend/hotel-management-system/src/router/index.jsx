@@ -15,11 +15,17 @@ const BookingConfirmation = lazy(() => import('../pages/public/BookingConfirmati
 // Auth
 const Login = lazy(() => import('../pages/auth/Login'));
 const Register = lazy(() => import('../pages/auth/Register'));
+const ForgotPassword = lazy(() => import('../pages/auth/ForgotPassword'));
+const ResetPassword = lazy(() => import('../pages/auth/ResetPassword'));
+const AuthLayout = lazy(() => import('../layouts/AuthLayout'));
 
 // Guest
 const Dashboard = lazy(() => import('../pages/guest/Dashboard'));
 const Bookings = lazy(() => import('../pages/guest/Bookings'));
 const Profile = lazy(() => import('../pages/guest/Profile'));
+const Invoices = lazy(() => import('../pages/guest/Invoices'));
+const ServiceRequests = lazy(() => import('../pages/guest/ServiceRequests'));
+const GuestLayout = lazy(() => import('../pages/guest/GuestLayout'));
 
 // Staff
 const Receptionist = lazy(() => import('../pages/staff/Receptionist'));
@@ -43,6 +49,18 @@ const CompositeShowcase = lazy(() => import('../pages/showcase/CompositeShowcase
 import MainLayout from '../layouts/MainLayout';
 
 const router = createBrowserRouter([
+  // Auth routes (Completely isolated, NO Navbar/Footer)
+  {
+    element: <AuthLayout />,
+    children: [
+      { path: 'login', element: <Login /> },
+      { path: 'register', element: <Register /> },
+      { path: 'forgot-password', element: <ForgotPassword /> },
+      { path: 'reset-password', element: <ResetPassword /> },
+    ]
+  },
+
+  // Main Website routes (WITH Navbar/Footer)
   {
     path: '/',
     element: <MainLayout />,
@@ -62,16 +80,6 @@ const router = createBrowserRouter([
       { path: 'components', element: <ComponentShowcase /> },
       { path: 'composite', element: <CompositeShowcase /> },
 
-      // Auth routes (Usually don't have footer/navbar, but following user request to wrap routes)
-      // If we want minimal layout for auth, we could create an AuthLayout
-      { path: 'login', element: <Login /> },
-      { path: 'register', element: <Register /> },
-
-      // Guest routes
-      { path: 'dashboard', element: <Dashboard /> },
-      { path: 'bookings', element: <Bookings /> },
-      { path: 'profile', element: <Profile /> },
-
       // Staff routes
       { path: 'receptionist', element: <Receptionist /> },
       { path: 'housekeeping', element: <Housekeeping /> },
@@ -84,7 +92,20 @@ const router = createBrowserRouter([
       // 404 route
       { path: '*', element: <NotFound /> }
     ]
-  }
+  },
+
+  // Guest Dashboard routes (Nested under Guest Layout)
+  {
+    path: 'dashboard',
+    element: <GuestLayout />,
+    children: [
+      { index: true, element: <Dashboard /> },
+      { path: 'bookings', element: <Bookings /> },
+      { path: 'invoices', element: <Invoices /> },
+      { path: 'services', element: <ServiceRequests /> },
+      { path: 'profile', element: <Profile /> },
+    ]
+  },
 ]);
 
 export default router;

@@ -17,10 +17,10 @@ async function calculateInvoice(booking, room, additionalCharges = {}) {
   try {
     const checkIn = new Date(booking.checkInDate);
     const checkOut = new Date(booking.checkOutDate);
-    
+
     // Calculate nights
     const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
-    
+
     // Create line items
     const lineItems = [
       {
@@ -30,7 +30,7 @@ async function calculateInvoice(booking, room, additionalCharges = {}) {
         total: nights * room.price
       }
     ];
-    
+
     // Add any service charges from booking
     if (booking.specialRequests && booking.specialRequests.length > 0) {
       lineItems.push({
@@ -40,23 +40,23 @@ async function calculateInvoice(booking, room, additionalCharges = {}) {
         total: 0
       });
     }
-    
+
     // Calculate subtotal (room + booking service charges if any)
     const lineItemsTotal = lineItems.reduce((sum, item) => sum + item.total, 0);
-    
+
     // Add additional charges
     const additionalChargesArray = Array.isArray(additionalCharges) ? additionalCharges : Object.entries(additionalCharges || {}).map(([desc, amount]) => ({ description: desc, amount }));
     const additionalChargesTotal = additionalChargesArray.reduce((sum, charge) => sum + (charge.amount || 0), 0);
-    
+
     const subtotal = lineItemsTotal + additionalChargesTotal;
-    
+
     // Calculate tax (default 16%)
     const TAX_RATE = 0.16;
     const taxAmount = subtotal * TAX_RATE;
-    
+
     // Calculate final total
     const totalAmount = subtotal + taxAmount;
-    
+
     return {
       lineItems,
       additionalCharges: additionalChargesArray,
@@ -80,7 +80,7 @@ async function calculateInvoice(booking, room, additionalCharges = {}) {
 exports.getAllInvoices = asyncHandler(async (req, res) => {
   try {
     const { status, startDate, endDate } = req.query;
-    
+
     let filter = {};
     if (status) filter.status = status;
     if (startDate && endDate) {
@@ -89,13 +89,13 @@ exports.getAllInvoices = asyncHandler(async (req, res) => {
         $lte: new Date(endDate)
       };
     }
-    
+
     const invoices = await Invoice.find(filter)
       .populate('bookingId', 'checkInDate checkOutDate numberOfGuests')
       .populate('guestId', 'name email phone')
       .populate('roomId', 'roomNumber type price')
       .sort({ issueDate: -1 });
-    
+
     return res.json({ success: true, data: invoices, message: 'Invoices retrieved successfully' });
   } catch (error) {
     return res.status(500).json({ success: false, error: error.message });
@@ -113,11 +113,11 @@ exports.getInvoiceById = asyncHandler(async (req, res) => {
       .populate('bookingId')
       .populate('guestId', 'name email phone')
       .populate('roomId');
-    
+
     if (!invoice) {
       return res.status(404).json({ success: false, error: 'Invoice not found' });
     }
-    
+
     return res.json({ success: true, data: invoice });
   } catch (error) {
     return res.status(500).json({ success: false, error: error.message });
@@ -135,11 +135,11 @@ exports.getInvoiceByBooking = asyncHandler(async (req, res) => {
       .populate('bookingId')
       .populate('guestId', 'name email phone')
       .populate('roomId');
-    
+
     if (!invoice) {
       return res.status(404).json({ success: false, error: 'Invoice not found for this booking' });
     }
-    
+
     return res.json({ success: true, data: invoice });
   } catch (error) {
     return res.status(500).json({ success: false, error: error.message });
@@ -155,36 +155,36 @@ exports.getInvoiceByBooking = asyncHandler(async (req, res) => {
 exports.createInvoice = asyncHandler(async (req, res) => {
   try {
     const { bookingId, additionalCharges, notes, createdBy } = req.body;
-    
+
     // Validate booking exists
     const booking = await Booking.findById(bookingId);
     if (!booking) {
       return res.status(404).json({ success: false, error: 'Booking not found' });
     }
-    
+
     // Check if invoice already exists for this booking
     const existingInvoice = await Invoice.findOne({ bookingId });
     if (existingInvoice) {
       return res.status(400).json({ success: false, error: 'Invoice already exists for this booking' });
     }
-    
+
     // Fetch room and guest details
     const room = await Room.findById(booking.roomId);
     if (!room) {
       return res.status(404).json({ success: false, error: 'Room not found' });
     }
-    
+
     const guest = await User.findById(booking.guestId);
     if (!guest) {
       return res.status(404).json({ success: false, error: 'Guest not found' });
     }
-    
+
     // Calculate invoice totals
     const invoiceCalc = await calculateInvoice(booking, room, additionalCharges || {});
-    
+
     // Generate invoice number
     const invoiceNumber = await Invoice.generateInvoiceNumber();
-    
+
     // Create invoice document
     const invoiceData = {
       invoiceNumber,
@@ -204,9 +204,9 @@ exports.createInvoice = asyncHandler(async (req, res) => {
       notes: notes || '',
       createdBy: createdBy || null
     };
-    
+
     const invoice = await Invoice.create(invoiceData);
-    
+
     // Emit socket notification (non-blocking)
     try {
       if (socketHelper.getIO()) {
@@ -223,7 +223,7 @@ exports.createInvoice = asyncHandler(async (req, res) => {
     } catch (socketErr) {
       console.error('Socket error (createInvoice):', socketErr);
     }
-    
+
     return res.status(201).json({ success: true, data: invoice, message: 'Invoice created successfully' });
   } catch (error) {
     return res.status(400).json({ success: false, error: error.message });
@@ -241,27 +241,27 @@ exports.updateInvoiceStatus = asyncHandler(async (req, res) => {
   try {
     const { status, paymentMethod, paymentDate } = req.body;
     const allowedStatuses = ['draft', 'issued', 'paid', 'overdue', 'cancelled', 'refunded'];
-    
+
     if (!allowedStatuses.includes(status)) {
       return res.status(400).json({ success: false, error: 'Invalid invoice status' });
     }
-    
+
     const invoice = await Invoice.findById(req.params.id);
     if (!invoice) {
       return res.status(404).json({ success: false, error: 'Invoice not found' });
     }
-    
+
     // Update status
     invoice.status = status;
-    
+
     // Set payment details if status is 'paid'
     if (status === 'paid') {
       invoice.paymentMethod = paymentMethod || 'cash';
       invoice.paymentDate = paymentDate || new Date();
     }
-    
+
     const updatedInvoice = await invoice.save();
-    
+
     // Emit socket notification (non-blocking)
     try {
       if (socketHelper.getIO()) {
@@ -273,9 +273,9 @@ exports.updateInvoiceStatus = asyncHandler(async (req, res) => {
           timestamp: new Date().toISOString(),
           type: 'INVOICE_STATUS_UPDATE'
         };
-        
+
         socketHelper.getIO().to('admins').emit('invoice_status_updated', payload);
-        
+
         // If paid, also notify accounting
         if (status === 'paid') {
           socketHelper.getIO().to('accounting').emit('payment_received', {
@@ -288,7 +288,7 @@ exports.updateInvoiceStatus = asyncHandler(async (req, res) => {
     } catch (socketErr) {
       console.error('Socket error (updateInvoiceStatus):', socketErr);
     }
-    
+
     return res.json({ success: true, data: updatedInvoice, message: `Invoice status updated to ${status}` });
   } catch (error) {
     return res.status(400).json({ success: false, error: error.message });
@@ -307,11 +307,11 @@ exports.deleteInvoice = asyncHandler(async (req, res) => {
     if (!invoice) {
       return res.status(404).json({ success: false, error: 'Invoice not found' });
     }
-    
+
     // Soft delete by setting status to cancelled
     invoice.status = 'cancelled';
     await invoice.save();
-    
+
     // Emit socket notification (non-blocking)
     try {
       if (socketHelper.getIO()) {
@@ -326,9 +326,34 @@ exports.deleteInvoice = asyncHandler(async (req, res) => {
     } catch (socketErr) {
       console.error('Socket error (deleteInvoice):', socketErr);
     }
-    
+
     return res.json({ success: true, message: 'Invoice cancelled successfully' });
   } catch (error) {
     return res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+/**
+ * Get current user's invoices
+ */
+exports.getMyInvoices = asyncHandler(async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const { status } = req.query;
+
+    const filter = { guestId: userId };
+    if (status) filter.status = status;
+
+    const invoices = await Invoice.find(filter)
+      .populate('bookingId', 'checkInDate checkOutDate')
+      .populate('roomId', 'roomNumber type')
+      .sort({ issueDate: -1 });
+
+    res.json({
+      success: true,
+      data: invoices
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
   }
 });

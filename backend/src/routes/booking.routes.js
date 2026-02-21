@@ -186,6 +186,9 @@ const express = require('express');
 const router = express.Router();
 const bookingController = require('../controllers/bookingController');
 
+const { authenticate } = require('../middleware/auth');
+
+router.get('/my', authenticate, bookingController.getMyBookings);
 router.get('/', bookingController.getAllBookings);
 router.get('/:id', bookingController.getBookingById);
 router.post('/', bookingController.createBooking);

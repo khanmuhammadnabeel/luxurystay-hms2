@@ -12,7 +12,7 @@ axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
 // loading: true until initial verification completes
 // error: string or null
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 /**
  * AuthProvider – manages auth state, token verification, login, register, logout.
@@ -22,6 +22,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(() => localStorage.getItem('token') || null);
   const [loading, setLoading] = useState(true);
+  const [authActionLoading, setAuthActionLoading] = useState(false);
   const [error, setError] = useState(null);
   const [initialized, setInitialized] = useState(false);
 
@@ -60,14 +61,14 @@ export function AuthProvider({ children }) {
       }
     }
     verifyToken();
-  }, []);
+  }, [token]);
 
   // ---------------------------------------------------------------------------
   // Clear error after 3 seconds
   // ---------------------------------------------------------------------------
   useEffect(() => {
     if (!error) return;
-    const timer = setTimeout(() => setError(null), 3000);
+    const timer = setTimeout(() => setError(null), 5000);
     return () => clearTimeout(timer);
   }, [error]);
 
@@ -76,7 +77,7 @@ export function AuthProvider({ children }) {
   // ---------------------------------------------------------------------------
   async function login(email, password) {
     setError(null);
-    setLoading(true);
+    setAuthActionLoading(true);
     try {
       const { data } = await axios.post('/api/auth/login', { email, password });
       const newToken = data.token ?? data.accessToken;
@@ -98,7 +99,7 @@ export function AuthProvider({ children }) {
       setToken(null);
       setUser(null);
     } finally {
-      setLoading(false);
+      setAuthActionLoading(false);
     }
   }
 
@@ -107,7 +108,7 @@ export function AuthProvider({ children }) {
   // ---------------------------------------------------------------------------
   async function register(userData) {
     setError(null);
-    setLoading(true);
+    setAuthActionLoading(true);
     try {
       const { data } = await axios.post('/api/auth/register', userData);
       const newToken = data.token ?? data.accessToken;
@@ -128,7 +129,43 @@ export function AuthProvider({ children }) {
         'Registration failed';
       setError(message);
     } finally {
-      setLoading(false);
+      setAuthActionLoading(false);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // forgotPassword(email)
+  // ---------------------------------------------------------------------------
+  async function forgotPassword(email) {
+    setError(null);
+    setAuthActionLoading(true);
+    try {
+      await axios.post('/api/auth/forgot-password', { email });
+      return true;
+    } catch (err) {
+      const message = err.response?.data?.message ?? 'Failed to send recovery email';
+      setError(message);
+      return false;
+    } finally {
+      setAuthActionLoading(false);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // resetPassword(token, password)
+  // ---------------------------------------------------------------------------
+  async function resetPassword(resetToken, password) {
+    setError(null);
+    setAuthActionLoading(true);
+    try {
+      await axios.post('/api/auth/reset-password', { token: resetToken, newPassword: password });
+      return true;
+    } catch (err) {
+      const message = err.response?.data?.message ?? 'Failed to reset password';
+      setError(message);
+      return false;
+    } finally {
+      setAuthActionLoading(false);
     }
   }
 
@@ -137,6 +174,7 @@ export function AuthProvider({ children }) {
   // ---------------------------------------------------------------------------
   async function logout() {
     setError(null);
+    setAuthActionLoading(true);
     try {
       await axios.post('/api/auth/logout');
     } catch {
@@ -144,6 +182,7 @@ export function AuthProvider({ children }) {
     } finally {
       setToken(null);
       setUser(null);
+      setAuthActionLoading(false);
     }
   }
 
@@ -166,10 +205,13 @@ export function AuthProvider({ children }) {
     user,
     token,
     loading,
+    authActionLoading,
     error,
     login,
     register,
     logout,
+    forgotPassword,
+    resetPassword,
     updateUser,
     isAdmin,
     isManager,

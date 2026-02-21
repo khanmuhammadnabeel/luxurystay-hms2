@@ -49,7 +49,10 @@ export const translations = {
             actions: "Actions",
             noResults: "No results found.",
             clear: "Clear search",
-            show: "Show {count} Results"
+            show: "Show {count} Results",
+            logout_confirm_title: "Confirm Sign Out",
+            logout_confirm_msg: "Are you sure you want to sign out from your luxury journey?",
+            logout_stay: "Stay",
         },
         pagination: {
             rowsPerPage: "Rows per page:",
@@ -342,6 +345,126 @@ export const translations = {
         },
         ui: {
             luxury: "Luxury"
+        },
+        dashboard: {
+            welcome: "Welcome back",
+            overview_msg: "Here's what's happening with your stay",
+            logout: "Logout",
+            register: {
+                title: "Join LuxuryStay",
+                subtitle: "Create an account to unlock exclusive member privileges and seamless bookings.",
+                fullname: "Full Name",
+                email: "Email Address",
+                phone: "Phone Number",
+                password: "Password",
+                confirm_password: "Confirm Password",
+                submit: "Create Account",
+                already_account: "Already have an account?",
+                login_here: "Login here"
+            },
+            login: {
+                title: "Welcome Back",
+                subtitle: "Enter your credentials to access your luxury account.",
+                email: "Email Address",
+                password: "Password",
+                submit: "Sign In",
+                no_account: "New to LuxuryStay?",
+                register_here: "Create Account",
+                forgot_password: "Forgot Password?"
+            },
+            forgot: {
+                title: "Recover Password",
+                subtitle: "Enter your email and we'll send you instructions to reset your password.",
+                email: "Email Address",
+                submit: "Send Link",
+                back_to_login: "Return to Login",
+                success_title: "Check Your Email",
+                success_subtitle: "We've sent password reset instructions to"
+            },
+            reset: {
+                title: "New Password",
+                subtitle: "Set a strong password to protect your account.",
+                new_password: "New Password",
+                confirm_password: "Confirm New Password",
+                submit: "Update Password",
+                success: "Password updated successfully!",
+                success_msg: "Password updated successfully! Please login."
+            },
+            nav: {
+                overview: "Dashboard",
+                bookings: "My Bookings",
+                invoices: "Invoices",
+                services: "Service Requests",
+                profile: "Profile Settings"
+            },
+            stats: {
+                active_bookings: "Active Bookings",
+                pending_invoices: "Pending Invoices",
+                active_requests: "Active Requests"
+            },
+            recent_bookings: "Recent Bookings",
+            no_bookings: "No recent bookings found.",
+            stay_insights: "Stay Insights",
+            insights: {
+                loyalty_title: "Gold Member Status",
+                loyalty_desc: "You're 2 stays away from Platinum status!",
+                checkin_title: "Express Check-in",
+                checkin_desc: "Use our mobile app for faster check-in on arrival."
+            },
+            bookings: {
+                title: "My Bookings",
+                subtitle: "Manage your upcoming and past stays",
+                upcoming: "Upcoming",
+                past: "Past",
+                cancelled: "Cancelled",
+                view_details: "View Details",
+                request_cancellation: "Request Cancellation",
+                empty_title: "No bookings found",
+                empty_desc: "You haven't made any bookings yet. Explore our luxury rooms to start your journey.",
+                book_now: "Book a Room"
+            },
+            invoices: {
+                title: "Invoice History",
+                subtitle: "View and download your billing statements",
+                number: "Invoice #",
+                date: "Issue Date",
+                room: "Room",
+                amount: "Amount",
+                status: "Status",
+                view: "View Invoice",
+                download: "Download PDF",
+                empty_title: "No invoices yet",
+                empty_desc: "Your billing history will appear here once you've made a booking.",
+                payment_help_title: "Questions about billing?",
+                payment_help_desc: "Our financial team is here to assist with any payment-related inquiries.",
+                contact_billing: "Contact Support"
+            },
+            services: {
+                title: "Service Requests",
+                subtitle: "Enhance your stay with our premium services",
+                new_request: "New Request",
+                select_service: "Select Service",
+                quantity: "Quantity",
+                instructions: "Special Instructions",
+                instructions_placeholder: "e.g., extra towels, dietary preferences...",
+                submit: "Submit Request",
+                empty_title: "No service requests",
+                empty_desc: "Request room service, laundry, or spa treatments directly from here."
+            },
+            profile: {
+                title: "Personal Profile",
+                subtitle: "Manage your personal information and preferences",
+                full_name: "Full Name",
+                email_address: "Email Address",
+                phone_number: "Phone Number",
+                save_changes: "Save Changes",
+                change_avatar: "Change Avatar",
+                stays: "Total Stays",
+                status: "Membership",
+                security: "Security & Privacy",
+                password_msg: "Update your password or manage account security settings.",
+                change_password: "Change Password"
+            }
         }
     },
     Urdu: {
@@ -378,7 +501,10 @@ export const translations = {
             actions: "اقدامات",
             noResults: "کوئی نتیجہ نہیں ملا.",
             clear: "تلاش صاف کریں",
-            show: "{count} نتائج دکھائیں"
+            show: "{count} نتائج دکھائیں",
+            logout_confirm_title: "لاگ آؤٹ کی تصدیق",
+            logout_confirm_msg: "کیا آپ واقعی اپنے لگژری سفر سے لاگ آؤٹ کرنا چاہتے ہیں؟",
+            logout_stay: "رکیں",
         },
         pagination: {
             rowsPerPage: "قطاریں فی صفحہ:",
@@ -671,6 +797,126 @@ export const translations = {
         },
         ui: {
             luxury: "لگژری"
+        },
+        dashboard: {
+            welcome: "خوش آمدید",
+            overview_msg: "آپ کے قیام کے بارے میں تازہ ترین معلومات",
+            logout: "لاگ آؤٹ",
+            register: {
+                title: "لگژری اسٹے میں شامل ہوں",
+                subtitle: "خصوصی ممبر مراعات اور ہموار بکنگ کے لیے اکاؤنٹ بنائیں۔",
+                fullname: "پورا نام",
+                email: "ای میل ایڈریس",
+                phone: "فون نمبر",
+                password: "پاس ورڈ",
+                confirm_password: "پاس ورڈ کی تصدیق کریں",
+                submit: "اکاؤنٹ بنائیں",
+                already_account: "پہلے سے اکاؤنٹ ہے؟",
+                login_here: "یہاں لاگ ان کریں"
+            },
+            login: {
+                title: "خوش آمدید",
+                subtitle: "اپنے لگژری اکاؤنٹ تک رسائی کے لیے اپنی معلومات درج کریں۔",
+                email: "ای میل ایڈریس",
+                password: "پاس ورڈ",
+                submit: "سائن ان کریں",
+                no_account: "لگژری اسٹے میں نئے ہیں؟",
+                register_here: "اکاؤنٹ بنائیں",
+                forgot_password: "پاس ورڈ بھول گئے؟"
+            },
+            forgot: {
+                title: "پاس ورڈ دوبارہ حاصل کریں",
+                subtitle: "اپنا ای میل درج کریں اور ہم آپ کو پاس ورڈ دوبارہ ترتیب دینے کی ہدایات بھیجیں گے۔",
+                email: "ای میل ایڈریس",
+                submit: "لنک بھیجیں",
+                back_to_login: "لاگ ان پر واپس جائیں",
+                success_title: "اپنا ای میل چیک کریں",
+                success_subtitle: "ہم نے پاس ورڈ کی تبدیلی کی ہدایات اس ای میل پر بھیج دی ہیں:"
+            },
+            reset: {
+                title: "نیا پاس ورڈ",
+                subtitle: "اپنے اکاؤنٹ کی حفاظت کے لیے ایک مضبوط پاس ورڈ ترتیب دیں۔",
+                new_password: "نیا پاس ورڈ",
+                confirm_password: "نئے پاس ورڈ کی تصدیق کریں",
+                submit: "پاس ورڈ اپ ڈیٹ کریں",
+                success: "پاس ورڈ کامیابی سے اپ ڈیٹ ہو گیا!",
+                success_msg: "پاس ورڈ کامیابی سے اپ ڈیٹ ہو گیا! براہ کرم لاگ ان کریں۔"
+            },
+            nav: {
+                overview: "ڈیش بورڈ",
+                bookings: "میری بکنگ",
+                invoices: "انوائسز",
+                services: "سروس کی درخواستیں",
+                profile: "پروفائل ترتیبات"
+            },
+            stats: {
+                active_bookings: "فعال بکنگ",
+                pending_invoices: "واجب الادا انوائسز",
+                active_requests: "فعال درخواستیں"
+            },
+            recent_bookings: "حالیہ بکنگ",
+            no_bookings: "کوئی حالیہ بکنگ نہیں ملی۔",
+            stay_insights: "قیام کی بصیرت",
+            insights: {
+                loyalty_title: "گولڈ ممبر کا درجہ",
+                loyalty_desc: "آپ پلاٹینم درجے سے صرف 2 قیام دور ہیں!",
+                checkin_title: "ایکسپریس چیک ان",
+                checkin_desc: "آمد پر تیز رفتار چیک ان کے لیے ہماری موبائل ایپ استعمال کریں۔"
+            },
+            bookings: {
+                title: "میری بکنگ",
+                subtitle: "اپنے آنے والے اور گزشتہ قیام کا انتظام کریں",
+                upcoming: "آنے والے",
+                past: "گزشتہ",
+                cancelled: "منسوخ شدہ",
+                view_details: "تفصیلات دیکھیں",
+                request_cancellation: "منسوخی کی درخواست",
+                empty_title: "کوئی بکنگ نہیں ملی",
+                empty_desc: "آپ نے ابھی تک کوئی بکنگ نہیں کی ہے۔ اپنا سفر شروع کرنے کے لیے ہمارے لگژری کمرے دیکھیں۔",
+                book_now: "کمرہ بک کریں"
+            },
+            invoices: {
+                title: "انوائس کی تاریخ",
+                subtitle: "اپنے بلنگ بیانات دیکھیں اور ڈاؤن لوڈ کریں",
+                number: "انوائس نمبر",
+                date: "تاریخ اجراء",
+                room: "کمرہ",
+                amount: "رقم",
+                status: "حیثیت",
+                view: "انوائس دیکھیں",
+                download: "پی ڈی ایف ڈاؤن لوڈ کریں",
+                empty_title: "ابھی تک کوئی انوائس نہیں ہے",
+                empty_desc: "بکنگ کرنے کے بعد آپ کی بلنگ کی تاریخ یہاں ظاہر ہوگی۔",
+                payment_help_title: "بلنگ کے بارے میں سوالات؟",
+                payment_help_desc: "ہماری مالیاتی ٹیم ادائیگی سے متعلق کسی بھی پوچھ گچھ میں مدد کے لیے یہاں موجود ہے۔",
+                contact_billing: "سپورٹ سے رابطہ کریں"
+            },
+            services: {
+                title: "سروس کی درخواستیں",
+                subtitle: "ہماری پریمیم سروسز کے ساتھ اپنے قیام کو بہتر بنائیں",
+                new_request: "نئی درخواست",
+                select_service: "سروس منتخب کریں",
+                quantity: "مقدار",
+                instructions: "خصوصی ہدایات",
+                instructions_placeholder: "مثلاً اضافی تولیے، غذائی ترجیحات...",
+                submit: "درخواست جمع کروائیں",
+                empty_title: "کوئی سروس درخواست نہیں",
+                empty_desc: "روم سروس، لانڈری یا سپا ٹریٹمنٹ کی درخواست براہ راست یہاں سے کریں۔"
+            },
+            profile: {
+                title: "ذاتی پروفائل",
+                subtitle: "اپنی ذاتی معلومات اور ترجیحات کا انتظام کریں",
+                full_name: "پورا نام",
+                email_address: "ای میل ایڈریس",
+                phone_number: "فون نمبر",
+                save_changes: "تبدیلیاں محفوظ کریں",
+                change_avatar: "اواتار تبدیل کریں",
+                stays: "کل قیام",
+                status: "ممبرشپ",
+                security: "سیکیورٹی اور پرائیویسی",
+                password_msg: "اپنا پاس ورڈ اپ ڈیٹ کریں یا اکاؤنٹ کی سیکیورٹی سیٹنگز کا انتظام کریں۔",
+                change_password: "پاس ورڈ تبدیل کریں"
+            }
         }
     },
 };

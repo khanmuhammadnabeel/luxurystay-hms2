@@ -4,8 +4,8 @@ const bcrypt = require('bcryptjs');
 const SALT_ROUNDS = 12;
 
 const userSchema = new mongoose.Schema({
-  name: { 
-    type: String, 
+  name: {
+    type: String,
     required: [true, 'Name is required'],
     trim: true,
     minlength: [2, 'Name must be at least 2 characters'],
@@ -19,18 +19,18 @@ const userSchema = new mongoose.Schema({
     trim: true,
     match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Please provide a valid email address']
   },
-  password: { 
-    type: String, 
+  password: {
+    type: String,
     required: [true, 'Password is required'],
     minlength: [8, 'Password must be at least 8 characters']
   },
-  role: { 
-    type: String, 
+  role: {
+    type: String,
     enum: ['admin', 'manager', 'receptionist', 'housekeeping', 'guest'],
     default: 'guest'
   },
-  phone: { 
-    type: String, 
+  phone: {
+    type: String,
     trim: true,
     match: [/^[\+]?[1-9][0-9]{7,14}$/, 'Please provide a valid phone number']
   },
@@ -42,22 +42,26 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: null
   },
-  createdAt: { 
-    type: Date, 
-    default: Date.now 
+  createdAt: {
+    type: Date,
+    default: Date.now
   },
-  updatedAt: { 
-    type: Date, 
-    default: Date.now 
+  updatedAt: {
+    type: Date,
+    default: Date.now
+  },
+  avatar: {
+    type: String,
+    default: null
   }
 });
 
-userSchema.pre('save', function(next) {
+userSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
   next();
 });
 
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
 
   try {
@@ -69,24 +73,25 @@ userSchema.pre('save', async function(next) {
   }
 });
 
-userSchema.methods.comparePassword = async function(candidatePassword) {
+userSchema.methods.comparePassword = async function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-userSchema.methods.toProfileJSON = function() {
+userSchema.methods.toProfileJSON = function () {
   return {
     id: this._id,
     name: this.name,
     email: this.email,
     role: this.role,
     phone: this.phone,
+    avatar: this.avatar,
     isActive: this.isActive,
     lastLogin: this.lastLogin,
     createdAt: this.createdAt
   };
 };
 
-userSchema.statics.findByEmail = function(email) {
+userSchema.statics.findByEmail = function (email) {
   return this.findOne({ email: email.toLowerCase().trim() });
 };
 

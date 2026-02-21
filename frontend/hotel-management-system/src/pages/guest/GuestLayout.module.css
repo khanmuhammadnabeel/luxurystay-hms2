@@ -1,0 +1,45 @@
+.layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--color-primary);
+    position: relative;
+}
+
+.sidebarWrapper {
+    flex-shrink: 0;
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    /* Prevent flex blowout */
+}
+
+.content {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+@media (max-width: 1024px) {
+    .layout {
+        flex-direction: column;
+    }
+
+    .sidebarWrapper {
+        display: none;
+    }
+
+    .content {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .content {
+        padding: 1rem;
+    }
+}

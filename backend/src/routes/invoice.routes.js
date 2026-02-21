@@ -114,6 +114,11 @@ const express = require('express');
 const router = express.Router();
 const invoiceController = require('../controllers/invoiceController');
 
+const { authenticate } = require('../middleware/auth');
+
+// GET current user's invoices
+router.get('/my', authenticate, invoiceController.getMyInvoices);
+
 // GET all invoices with optional filters (status, date range)
 router.get('/', invoiceController.getAllInvoices);
 

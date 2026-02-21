@@ -16,3 +16,6 @@ export { default as Badge } from "./Badge";
 export { default as Toggle } from "./Toggle";
 export { default as SectionHeader } from "./SectionHeader";
 export { default as Rating } from "./Rating";
+export { default as Avatar } from "./Avatar";
+export { default as DataTable } from "./DataTable";
+export { default as PhoneInput } from "./PhoneInput";

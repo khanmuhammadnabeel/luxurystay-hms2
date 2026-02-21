@@ -167,6 +167,7 @@ const validateRegister = [
   body('name').trim().notEmpty().withMessage('Name is required'),
   body('email').isEmail().normalizeEmail().withMessage('Valid email is required'),
   body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
+  body('phone').trim().notEmpty().withMessage('Phone number is required'),
   body('role').optional().isIn(['admin', 'manager', 'receptionist', 'housekeeping', 'guest'])
 ];
 
@@ -182,14 +183,14 @@ router.post('/register', validateRegister, async (req, res) => {
   }
 
   try {
-    const { name, email, password, role = 'guest' } = req.body;
+    const { name, email, password, phone, role = 'guest' } = req.body;
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: 'Email already registered' });
     }
 
-    const user = new User({ name, email, password, role });
+    const user = new User({ name, email, password, phone, role });
     await user.save();
 
     const token = generateToken(user._id, user.role);

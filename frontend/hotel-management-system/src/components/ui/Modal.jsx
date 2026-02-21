@@ -6,6 +6,7 @@ import React, {
   createContext,
   useContext,
 } from "react";
+import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import styles from "./Modal.module.css";
@@ -34,9 +35,9 @@ const VARIANT_OVERLAY = {
 };
 
 const OVERLAY_BASE =
-  "fixed inset-0 z-50 flex transition-opacity duration-300 ease-out";
+  "fixed inset-0 z-[10000] flex transition-opacity duration-300 ease-out";
 const MODAL_BASE =
-  "relative z-50 w-full overflow-hidden rounded-xl border border-[rgba(207,175,126,0.2)] bg-[var(--color-secondary)] text-[var(--color-text-primary)] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.4)] transition-all duration-300 ease-out";
+  "relative z-[10001] w-full overflow-hidden rounded-xl border border-[rgba(207,175,126,0.2)] bg-[var(--color-secondary)] text-[var(--color-text-primary)] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.4)] transition-all duration-300 ease-out";
 
 // ============================================================================
 // FOCUS TRAP HELPERS
@@ -161,7 +162,7 @@ function ModalRoot({
     variant === "fullscreen" ? "h-full max-h-screen w-full" : SIZES[size];
   const overlayVisible = show && !exiting;
 
-  return (
+  return createPortal(
     <ModalContext.Provider value={{ onClose: handleClose, showCloseButton }}>
       <div
         ref={overlayRef}
@@ -169,7 +170,7 @@ function ModalRoot({
         aria-modal="true"
         className={clsx(
           OVERLAY_BASE,
-          overlayVisible ? "opacity-100" : "opacity-0 pointer-events-none",
+          overlayVisible ? "opacity-100 visible pointer-events-auto" : "opacity-0 invisible pointer-events-none",
           "bg-[var(--glass-bg)] backdrop-blur-[var(--glass-blur)]",
           VARIANT_OVERLAY[variant]
         )}
@@ -195,7 +196,8 @@ function ModalRoot({
           {children}
         </div>
       </div>
-    </ModalContext.Provider>
+    </ModalContext.Provider>,
+    document.body
   );
 }
 

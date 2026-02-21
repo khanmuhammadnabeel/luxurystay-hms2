@@ -210,3 +210,35 @@ exports.deleteBooking = async (req, res) => {
     return res.status(500).json({ success: false, error: error.message });
   }
 };
+
+/**
+ * Get current user's bookings
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ */
+exports.getMyBookings = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const { status } = req.query;
+
+    const filter = {
+      $or: [
+        { guestId: userId },
+        { email: req.user.email } // Fallback for transition or guest bookings
+      ]
+    };
+
+    if (status) filter.status = status;
+
+    const bookings = await Booking.find(filter)
+      .populate('roomId', 'roomNumber type price images')
+      .sort({ createdAt: -1 });
+
+    return res.json({
+      success: true,
+      data: bookings
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+};

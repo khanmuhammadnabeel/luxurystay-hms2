@@ -1,0 +1,194 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.title {
+    font-family: var(--font-display);
+    font-size: 2.25rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+}
+
+.loading {
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.statLink {
+    text-decoration: none;
+}
+
+.statCard {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    background-color: var(--color-secondary);
+}
+
+.statIconWrapper {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background-color: rgba(207, 175, 126, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+}
+
+.statInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.statLabel {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.statValue {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.statArrow {
+    color: var(--color-text-secondary);
+    opacity: 0.5;
+    transition: all 0.2s ease;
+}
+
+.statCard:hover .statArrow {
+    opacity: 1;
+    transform: translateX(4px);
+    color: var(--color-accent);
+}
+
+.mainGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.viewAll {
+    color: var(--color-accent);
+    font-size: 0.875rem;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.viewAll:hover {
+    text-decoration: underline;
+}
+
+.bookingList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.bookingCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem;
+}
+
+.roomType {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.bookingDates {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.insightCard {
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem;
+    background-color: rgba(207, 175, 126, 0.03);
+    border: 1px dashed var(--glass-border);
+}
+
+.insightIcon {
+    color: var(--color-accent);
+}
+
+.insightContent h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.insightContent p {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+}
+
+.emptyState {
+    padding: 3rem;
+    text-align: center;
+    color: var(--color-text-secondary);
+    background-color: var(--color-secondary);
+    border-radius: 1rem;
+    border: 1px dashed var(--glass-border);
+}
+
+@media (max-width: 1024px) {
+    .mainGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .title {
+        font-size: 1.75rem;
+    }
+
+    .statValue {
+        font-size: 1.25rem;
+    }
+}
